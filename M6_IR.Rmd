@@ -1,0 +1,61 @@
+---
+title: "M6 1/n Returns 3/4/22 through 9/20/22"
+output:
+  html_document:
+    df_print: paged
+---
+
+```{r}
+# Download data
+assets = read.csv("assets_m6.csv")
+
+# Reshape to wide
+aggregate_data = reshape2::dcast(assets, date~symbol, value.var = "price")
+
+# Name rows with dates
+rownames(aggregate_data) = as.Date(aggregate_data$date)
+aggregate_data$date = NULL 
+
+# Fill 0 prices with NA and then fill NA with last price
+aggregate_data[aggregate_data==0] <- NA
+complete_aggregate_data = apply(aggregate_data, 2, function(x) as.numeric(zoo::na.locf(x)))
+
+# Keep rownames
+rownames(complete_aggregate_data) = rownames(aggregate_data)
+
+# Specify dates...change the date from 09-20 to 09-19, never positive!
+final_data = 
+  complete_aggregate_data[rownames(complete_aggregate_data)<="2022-09-20" &
+                            rownames(complete_aggregate_data)>="2022-03-04",]
+
+# Verify initial and end dates
+head(final_data)
+
+# Yup, through 9-20
+tail(final_data)
+
+# Weights
+w = rep(.01, 100)
+
+# P_t / P_{t-1}
+RET = apply(final_data, 2, function(x) data.table::shift(x, -1)/x) ### 1 + format
+RET2 = apply(final_data, 2, function(x) diff(x)/head(x, length(x) - 1))
+
+RET = RET[complete.cases(RET),]
+RET2 = RET2[complete.cases(RET2),]
+
+# 1/n equal weight portfolio returns
+ew_port_returns = t(t(RET))%*%w
+ew_port_returns2 = t(t(RET2))%*%w
+
+
+# Take log, already in 1 + form...
+ret = as.vector(log(ew_port_returns))
+
+# Add 1 to get geom form
+ret2 = as.vector(log(1 + ew_port_returns2))
+
+# IR
+sum(ret)/sd(ret)
+sum(ret2)/sd(ret2)
+```

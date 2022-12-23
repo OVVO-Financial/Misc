@@ -32,6 +32,6 @@ repeat{
     print(paste("Resting for: ", max(0, 60-eclipsed)))
     
     Sys.sleep(max(0, 60-eclipsed))
-  } else {if(data.table::minute(start.time)>59)  print(paste0("Market closed: ", start.time))}
+  } else {if(data.table::minute(start.time)>59)  print(paste0("Market closed: ", start.time)); Sys.sleep(60)}
 }
 

@@ -15,7 +15,7 @@ repeat{
   weekend = any(weekdays(Sys.time())%in%c("Saturday", "Sunday"))
   if(!weekend){
     if((data.table::hour(start.time)==9 && data.table::minute(start.time)>=30) ||  
-       (data.table::hour(start.time)>=10 && Sys.time() - data.table::hour(start.time)<16 )){    
+       (data.table::hour(start.time)>=10 && data.table::hour(start.time)<16 )){    
       combined_quotes = data.table::data.table(quantmod::getQuote(combined_securities, what = yahooQF("Last Trade (Price Only)")))
       combined_quotes$ID = combined_securities
       print(combined_quotes)

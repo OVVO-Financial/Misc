@@ -12,6 +12,8 @@ rdps_securities = toupper(as.character(unlist(rdps_securities_raw)))
 
 combined_securities = c(yarx_securities, rdps_securities)
 
+sponsor_write_key = "6a1248f2cf43d78cebb54861fea2401c" 
+
 repeat{
   start.time = Sys.time()
   if(data.table::hour(start.time)>=9 && data.table::minute(start.time)>=30 && data.table::hour(start.time)<16){    

@@ -4,21 +4,18 @@ library(quantmod) # For quote downloads
 library(httr) # If you want to publish prices as streams
 library(data.table) # If you want to store the values locally efficiently, can append, let me know...
 
+yarx_securities_raw = jsonlite::fromJSON("https://raw.githubusercontent.com/microprediction/microprediction/master/microprediction/live/xraytickers.json")
+yarx_securities = toupper(as.character(unlist(yarx_securities_raw)))
+    
+rdps_securities_raw = jsonlite::fromJSON("https://raw.githubusercontent.com/microprediction/microprediction/master/microprediction/live/rdpstickers.json")
+rdps_securities = toupper(as.character(unlist(rdps_securities_raw)))
 
+combined_securities = c(yarx_securities, rdps_securities)
 
 repeat{
   start.time = Sys.time()
-  if(data.table::hour(start.time)>=9 && data.table::minute(start.time)>=30 && data.table::hour(start.time)<16){
-    # This way if you add securities it will automatically grab them / else define outside
-    yarx_securities_raw = jsonlite::fromJSON("https://raw.githubusercontent.com/microprediction/microprediction/master/microprediction/live/xraytickers.json")
-    yarx_securities = toupper(as.character(unlist(yarx_securities_raw)))
-    
-    rdps_securities_raw = jsonlite::fromJSON("https://raw.githubusercontent.com/microprediction/microprediction/master/microprediction/live/rdpstickers.json")
-    rdps_securities = toupper(as.character(unlist(rdps_securities_raw)))
-    
-    combined_securities = c(yarx_securities, rdps_securities)
-    
-    combined_quotes = data.table::data.table(quantmod::getQuote(combined_securities))
+  if(data.table::hour(start.time)>=9 && data.table::minute(start.time)>=30 && data.table::hour(start.time)<16){    
+    combined_quotes = data.table::data.table(quantmod::getQuote(combined_securities, what = yahooQF("Last Trade (Price Only)")))
     combined_quotes$ID = combined_securities
     print(combined_quotes)
     

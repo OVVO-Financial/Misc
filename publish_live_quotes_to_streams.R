@@ -1,5 +1,9 @@
 Sys.setenv(TZ='America/New_York')
 
+library(httr)
+library(data.table)
+library(quantmod)
+
 yarx_securities_raw = jsonlite::fromJSON("https://raw.githubusercontent.com/microprediction/microprediction/master/microprediction/live/xraytickers.json")
 yarx_securities = toupper(as.character(unlist(yarx_securities_raw)))
 

@@ -1,4 +1,4 @@
-Sys.setenv(TZ='US')
+Sys.setenv(TZ='America/New_York')
 
 library(quantmod) # For quote downloads
 library(httr) # If you want to publish prices as streams

@@ -54,7 +54,9 @@ repeat{
         Sys.sleep(1770)
       }
     }
-  }      
+  }  else { 
+    print(paste0("Weekend: ", start.time))
+    Sys.sleep(60*60*6)
 }
 
 

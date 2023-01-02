@@ -17,7 +17,8 @@ sponsor_write_key = "6a1248f2cf43d78cebb54861fea2401c"
 repeat{
   start.time = Sys.time()
   weekend = any(weekdays(Sys.time())%in%c("Saturday", "Sunday"))
-  if(!weekend){
+  holiday = any(Sys.Date()%in%c("2023-01-02", "2023-01-16", "2023-02-20", "2023-04-07", "2023-05-29", "2023-06-19", "2023-09-04", "2023-12-25"))
+  if(!weekend && !holiday){
     if((data.table::hour(start.time)==9 && data.table::minute(start.time)>=30) ||  (data.table::hour(start.time)>=10 && data.table::hour(start.time)<16)){ 
       # Check for early close / holiday with active index
       if(as.numeric(start.time - quantmod::getQuote("^GSPC", what = yahooQF("marketstate")), units = "secs")<60){    
@@ -55,7 +56,8 @@ repeat{
       }
     }
   }  else { 
-    print(paste0("Weekend: ", start.time))
+    if(weekend) print(paste0("Weekend: ", start.time))
+    if(holiday) print(paste0("Holiday: ", start.time))
     Sys.sleep(60*60*6)
   }
 }

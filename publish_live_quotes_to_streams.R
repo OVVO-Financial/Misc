@@ -3,6 +3,7 @@ Sys.setenv(TZ='America/New_York')
 library(httr)
 library(data.table)
 library(quantmod)
+library(R.utils)
 
 yarx_securities_raw = jsonlite::fromJSON("https://raw.githubusercontent.com/microprediction/microprediction/master/microprediction/live/xraytickers.json")
 yarx_securities = toupper(as.character(unlist(yarx_securities_raw)))
@@ -21,8 +22,16 @@ repeat{
   if(!weekend && !holiday){
     if((data.table::hour(start.time)==9 && data.table::minute(start.time)>=30) ||  (data.table::hour(start.time)>=10 && data.table::hour(start.time)<16)){ 
       # Check for early close / holiday with active index
-      if(as.numeric(start.time - quantmod::getQuote("^GSPC", what = yahooQF("marketstate")), units = "secs")<60){    
-        combined_quotes = data.table::data.table(quantmod::getQuote(combined_securities, what = yahooQF("Last Trade (Price Only)")))
+      if(as.numeric(start.time - quantmod::getQuote("^GSPC", what = yahooQF("marketstate")), units = "secs")<60){
+        TIMEOUT = TRUE
+        while(TIMEOUT){
+          TIMEOUT = FALSE
+          combined_quotes = tryCatch(R.utils::withTimeout(data.table::data.table(quantmod::getQuote(combined_securities, what = yahooQF("Last Trade (Price Only)"))),
+                                                timeout = 10),  error = function(e){ 
+            print(e)
+            TIMEOUT = TRUE})
+        }
+        
         combined_quotes$ID = combined_securities
         print(combined_quotes)
         

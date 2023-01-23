@@ -54,7 +54,8 @@ repeat{
     } else {
       if(data.table::minute(start.time)>=59){  
         yarx_securities_raw = jsonlite::fromJSON("https://raw.githubusercontent.com/microprediction/microprediction/master/microprediction/live/xraytickers.json")
-        yarx_securities = toupper(as.character(unlist(yarx_securities_raw)))
+        yarx_securities = toupper(as.character(unlist(c('brk.b', 'meta', 'vz', 'wba', 'wfc', 'wmt', 'xom', yarx_securities_raw))))
+        yarx_securities = gsub(pattern = ".", replacement = "-", x = yarx_securities, fixed = TRUE)
         
         rdps_securities_raw = jsonlite::fromJSON("https://raw.githubusercontent.com/microprediction/microprediction/master/microprediction/live/rdpstickers.json")
         rdps_securities = toupper(as.character(unlist(rdps_securities_raw)))

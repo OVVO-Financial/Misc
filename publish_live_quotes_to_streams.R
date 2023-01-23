@@ -22,7 +22,7 @@ repeat{
   weekend = any(weekdays(Sys.time())%in%c("Saturday", "Sunday"))
   holiday = any(Sys.Date()==c("2023-01-02", "2023-01-16", "2023-02-20", "2023-04-07", "2023-05-29", "2023-06-19", "2023-09-04", "2023-12-25"))
   if(!weekend && !holiday){
-    if((data.table::hour(start.time)==9 && data.table::minute(start.time)>=30) ||  (data.table::hour(start.time)>=10 && (data.table::hour(start.time)<16))){ 
+    if((data.table::hour(start.time)==9 && data.table::minute(start.time)>=30) ||  (data.table::hour(start.time)>=10 && (start.time < as.POSIXct("16:02:00", format = "%H:%M:%S")))){ 
       # Check for early close / holiday with active index
       if(as.numeric(start.time - quantmod::getQuote("^GSPC", what = yahooQF("marketstate")), units = "secs")<60){
         TIMEOUT = TRUE

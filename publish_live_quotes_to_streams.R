@@ -32,8 +32,10 @@ repeat{
           TIMEOUT = FALSE
           combined_quotes = tryCatch(R.utils::withTimeout(data.table::data.table(quantmod::getQuote(combined_securities, what = yahooQF("Last Trade (Price Only)"))),
                                                 timeout = 10),  error = function(e){ 
-            print(e)
-            TIMEOUT = TRUE})
+                                                                                    TIMEOUT = TRUE
+                                                                                    print(e)
+                                                                                    }
+                                    )
         }
         
         combined_quotes$ID = combined_securities

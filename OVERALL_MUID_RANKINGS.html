@@ -359,7 +359,7 @@ display: none;
 
 <div id="get-contest-information" class="section level1">
 <h1>Get Contest Information</h1>
-<pre class="r"><code>contest_weights = c(100, 100, 100, 50, 50, 50, 20, 11, 8, 5) 
+<pre class="r"><code>contest_weights = c(100, 70, 70, 60, 60, 20, 10, 10, 10, 5) 
 
 
 HL_leaderboard = jsonlite::read_json(&quot;https://api.microprediction.org/regular/6ebd03ad1eec6897b9414ff2a1b4501a&quot;)
@@ -405,11 +405,13 @@ FS_names = names(FS_leaderboard)
 complete_muid_list = unique(c(DT_names, HL_names, Bivariate_HL_names, OH_names, CC_names, FS_names, OB_names, FG_names, EM_names, OG_names))
 
 
-contest_list = list(DT_leaderboard, HL_leaderboard,
-                 Bivariate_HL_leaderborad, OH_leaderboard,
-                 CC_leaderboard, FS_leaderboard,
-                 OB_leaderboard, FG_leaderboard,
-                 EM_leaderboard, OG_leaderboard)</code></pre>
+contest_list = list(CC_leaderboard, OH_leaderboard,
+                    DT_leaderboard, HL_leaderboard,
+                 Bivariate_HL_leaderborad, OG_leaderboard,
+                 EM_leaderboard, OB_leaderboard,
+                 FG_leaderboard, FS_leaderboard)
+
+contest_list_names = c(&quot;CC&quot;, &quot;OH&quot;, &quot;DT&quot;, &quot;HL&quot;, &quot;HL_Biv&quot;, &quot;OG&quot;,&quot;EM&quot;, &quot;OB&quot;, &quot;FG&quot;, &quot;FS&quot;)</code></pre>
 </div>
 <div id="get-rankings" class="section level1">
 <h1>Get Rankings</h1>
@@ -419,1180 +421,1443 @@ for(i in 1:length(complete_muid_list)){
   MUID = complete_muid_list[i]
   for(j in 1:length(contest_list)){
     contestants = names(unlist(contest_list[j])) 
-    if(MUID%in%contestants) ranks[j] = which(MUID==contestants) else ranks[j] = length(contestants)
+    if(MUID%in%contestants) ranks[j] = which(MUID==contestants) else ranks[j] = length(contestants)  # last if not submitting
   }
-
+names(ranks) = contest_list_names
 overall_rankings[[i]] = ranks
 }
 
 names(overall_rankings) = complete_muid_list
-overall_rankings</code></pre>
-<pre><code>## $`Cloam Gayal`
-##  [1]  1  1 11  5 11 31 50 90 98 56
-## 
-## $`Salat Bobcat`
-##  [1]  2  9  5 10  7 31 38 90 98 56
-## 
-## $`Mesole Moth`
-##  [1]  3 91 54  1 61 31 50 90 98 56
-## 
-## $`Catty Bobcat`
-##  [1]  4 18 54 48 31 31 50 90 98 56
-## 
-## $`Feelable Eel`
-##  [1]   5 125  54  11   9  31  50  90  98  56
-## 
-## $`Ale Damselfly`
-##  [1]  6 21 54 18 57 31 50 20 21 56
-## 
-## $`Algal Hedgehog`
-##  [1]   7 123  49  61  64   4  41   5   4  55
-## 
-## $`Tylose Moose`
-##  [1]   8 120  10  16  47  31  40  90  98  56
-## 
-## $`Fable Sole`
-##  [1]   9 125  54   9  12   3   5  90  98  56
-## 
-## $`Tastable Bat`
-##  [1] 10 13  7 54 63 26 50 88 95 32
-## 
-## $`Zax Cheetah`
-##  [1]  11 125  54  53  44  31  50  90  98  56
-## 
-## $`Eldest Leech`
-##  [1]  12 117  26  20  14  16  50   7  98  56
-## 
-## $`Mystax Stoat`
-##  [1]  13 125  54  12  59  31  50  90  98  56
-## 
-## $`Excyst Flea`
-##  [1] 14 28 54 29 17 31 50 61 11 56
-## 
-## $`Glottal Sloth`
-##  [1] 15 14  9 52 54 27 47 83 91 31
-## 
-## $`Dyeable Flea`
-##  [1]  16 125  54  62  65  31  50  90  98  56
-## 
-## $`Soshed Boa`
-##  [1]  17 121  41  46  30  20  34  13  10  48
-## 
-## $`Boost Beetle`
-##  [1] 18  8  4 51 58 25 44 87 90 24
-## 
-## $`Gemeled Flea`
-##  [1]  19 125  54  62  65  31  50  90  98  56
-## 
-## $`Locable Dog`
-##  [1]  20 125  54  25  43  31  50  90  98  56
-## 
-## $`Masoola Moth`
-##  [1]  21 125  46  62  65  31  50  90  98  56
-## 
-## $`Bless Cattle`
-##  [1]  22 105  34  62  65  31  50  90  98  56
-## 
-## $`Mesole Mammal`
-##  [1]  23 118  37  44  21  18   6  15  74  47
-## 
-## $`Soggy Bat`
-##  [1] 24 95 13 21 22  6 50 59 15 30
-## 
-## $`Classy Camel`
-##  [1]  25 115  54  27  65  31  50  63  61  42
-## 
-## $`Dale Leech`
-##  [1]  26 119  54  14  15  10  31  16  73  38
-## 
-## $`Cest Gazelle`
-##  [1] 27 20 54 24 20 31 50 90 98 56
-## 
-## $`Leadable Boa`
-##  [1]  28 125  54  62  65  31  50  90  98  56
-## 
-## $`Toastable Fox`
-##  [1] 29  7 43 17 26 11 21 64 72 43
-## 
-## $`Seeable Goat`
-##  [1]  30 125  54  62  65  31  50  90  98  56
-## 
-## $`Leech Beetle`
-##  [1]  31 125  54  62  65  31  25  90  98  56
-## 
-## $`Stable Camel`
-##  [1]  32 125  54  62  35  31  50  90  98  56
-## 
-## $`Floatable Bee`
-##  [1] 33 43 54 62 65  9 20 73 75 49
-## 
-## $`Molest Goose`
-##  [1] 34 98 39 40 37  8 32 71 83 53
-## 
-## $`Hoodshy Toad`
-##  [1]  35 125  54  62  65  31  22  90  98  56
-## 
-## $`Elatcha Toad`
-##  [1]  36 125  54  34  65  31  50  90  98  56
-## 
-## $`Bloody Eagle`
-##  [1]  37 125  54  62  65  31  50  90  98  56
-## 
-## $`Foldless Fly`
-##  [1] 38  5 47 58 53 31 37 90 98 56
-## 
-## $`Chatsome Eel`
-##  [1]  39 125  54  32  65  31  19  90  98  56
-## 
-## $`Amethyst Eel`
-##  [1]  40 125  54  62  65  31  50  90  98  56
-## 
-## $`Teach Beetle`
-##  [1]  41 104  27  62  65  31  50  90  98  56
-## 
-## $`Teethy Goose`
-##  [1]  42 125  54  13  50  31  50  90  98  56
-## 
-## $`Saccade Bee`
-##  [1] 43 96 51 62 38 17 35 17 60 46
-## 
-## $`Emyd Mammal`
-##  [1]  44 122  48  47  34  22   7  70  79  51
-## 
-## $`Gageable Flea`
-##  [1] 45 94 54 60 48 31 50 90 98 56
-## 
-## $`Healthy Eel`
-##  [1]  46 124  50  31  41  21  36  68  42  50
-## 
-## $`Stagy Beetle`
-##  [1]  47 109   6  49  62  23  48  89  92  23
-## 
-## $`Calymma Cod`
-##  [1] 48  6 14 57 60 28 45 84 94 33
-## 
-## $`Booze Leech`
-##  [1] 49  3  8  2  2  7 39  1  2  2
-## 
-## $`Smolt Bat`
-##  [1] 50 62 54 62 65 31 50 28 29 10
-## 
-## $`Azoxazole Eel`
-##  [1]  51 125  54   6   6   1   2  90  98  56
-## 
-## $`Helmless Flea`
-##  [1] 52 90 54 59 51 31 50 90 98 56
-## 
-## $`Tameless Fly`
-##  [1]  53 116  12   3   3  29  46  82  96  21
-## 
-## $`Adlay Stoat`
-##  [1]  54 125  54   4   5  31  50   8   1  56
-## 
-## $`Sellable Boa`
-##  [1] 55 10 16 55 55 24 49 86 93 34
-## 
-## $`Delegable Toad`
-##  [1]  56 125  54  62  65  31  50  90  98  56
-## 
-## $`Oogamete Mole`
-##  [1] 57 12 52 56 56 30 42 85 97 22
-## 
-## $`Ootheca Moth`
-##  [1]  58 125  54  62  65  31  43  90  98  25
-## 
-## $`Gabgab Moose`
-##  [1] 58  2  3 62 65 31 50 90 98 56
-## 
-## $`Loamy Fly`
-##  [1] 58  4 15 62 65 31 13 30 18  6
-## 
-## $`Bal Hedgehog`
-##  [1] 58 11 17 62 65 31 50 90 98 56
-## 
-## $`Fall Gazelle`
-##  [1] 58 15 54 62 65 31 50 90 98 56
-## 
-## $`Behead Gayal`
-##  [1] 58 16 40 62 65 31 50 90 98 56
-## 
-## $`Chalaco Eagle`
-##  [1] 58 17 54 62 65 31 50 47 44 18
-## 
-## $`Adlay Bee`
-##  [1] 58 19 54 62 23 31 50 90 98 56
-## 
-## $`Shammy Stoat`
-##  [1] 58 22 54 62 10 31 50 90 98 56
-## 
-## $`Odso Coyote`
-##  [1] 58 23 54 62 65 15 50 62 64 56
-## 
-## $`Cottagey Boa`
-##  [1] 58 24 54 62 65 31 50 90 98 56
-## 
-## $`Chattel Moose`
-##  [1] 58 25 54 62 65 31 50 18  9 56
-## 
-## $`Shotty Moth`
-##  [1] 58 26 54 62 65 31 50 90 98 56
-## 
-## $`Mobbable Flea`
-##  [1] 58 27 54 62 65 31 50 90 98 56
-## 
-## $`Shabble Sole`
-##  [1] 58 29 54 62 65 31 50 90 98 56
-## 
-## $`Fest Hedgehog`
-##  [1] 58 30 54 62 65 31 50 65 68 56
-## 
-## $`Flosh Bat`
-##  [1] 58 31 54 62 65 31 50 90 98 56
-## 
-## $`Obsolete Flea`
-##  [1] 58 32 54 62 65 31 50 90 98 56
-## 
-## $`Female Goose`
-##  [1] 58 33 54 62 65 31 50 90 22 56
-## 
-## $`Ambassy Llama`
-##  [1] 58 34 54 62 65 31 50  9 53 56
-## 
-## $`Toshy Cat`
-##  [1] 58 35 54 62 65 31 50 90 98 56
-## 
-## $`Scallola Bee`
-##  [1] 58 36 54 23 65 31 50 90 71 56
-## 
-## $`Megohm Toad`
-##  [1] 58 37 54 62 65 31 50 90 98 56
-## 
-## $`Cacodoxy Mole`
-##  [1] 58 38 54 62 65 31 50 90 98 56
-## 
-## $`Bestayed Boa`
-##  [1] 58 39 54 62 65 31 50 53 55 56
-## 
-## $`Mallee Smelt`
-##  [1] 58 40 54 62 65 31 50 90 98 56
-## 
-## $`Smeech Sloth`
-##  [1] 58 41 54 62 65 31 50 90 98 56
-## 
-## $`Godhead Bass`
-##  [1] 58 42 54 62 65 31 50  4 20  7
-## 
-## $`Exhalable Cat`
-##  [1] 58 44 54 62 65 31 50 49 43 19
-## 
-## $`Comal Cheetah`
-##  [1] 58 45 54 62 65 31 50 48 45 20
-## 
-## $`Callable Flea`
-##  [1] 58 46 54 62 65 31 50 90 98 56
-## 
-## $`Odso Eagle`
-##  [1] 58 47 54 62 65 31 50 27  5  4
-## 
-## $`Choosy Beetle`
-##  [1] 58 48 54 62 65 31 50 43 98 56
-## 
-## $`Medal Goose`
-##  [1] 58 49 54 62 65 31 50 90 98 56
-## 
-## $`Delete Bass`
-##  [1] 58 50 54 62 65 31 50 90 98 56
-## 
-## $`Last Cattle`
-##  [1] 58 51 54 62 65 31 50 52 50 56
-## 
-## $`Hosel Bass`
-##  [1] 58 52 54 62 65 31 50 90 98 56
-## 
-## $`Loadless Cat`
-##  [1] 58 53 54 62 65 31 50 90 98 56
-## 
-## $`Statesboy Cat`
-##  [1] 58 54 54 42 16 14 50 69 13 44
-## 
-## $`Stagy Cod`
-##  [1] 58 55 54 62 65 31 50 23  3  8
-## 
-## $`Fathead Moth`
-##  [1] 58 56 54 62 65 31 50 25 52 56
-## 
-## $`Zee Leech`
-##  [1] 58 57 54 62 65 31 50 90 98 56
-## 
-## $`Oda Camel`
-##  [1] 58 58 54 62 65 31 50 90 98 56
-## 
-## $`Eclat Fly`
-##  [1] 58 59 54 62 65 31 50 90 98 56
-## 
-## $`Azoxy Beetle`
-##  [1] 58 60 54 62 65 31 50 90 98 56
-## 
-## $`Momble Goat`
-##  [1] 58 61 54 62 65 31 50 90 98 56
-## 
-## $`Tat Hedgehog`
-##  [1] 58 63 54 62 65 31 50 90 98 56
-## 
-## $`Attest Eagle`
-##  [1] 58 64 54 62 65 31 50 55 19 35
-## 
-## $`Melasma Mole`
-##  [1] 58 65 54 62 65 31 50 90 98 56
-## 
-## $`Salable Bee`
-##  [1] 58 66 54 62 65 31 50 90 54 56
-## 
-## $`Effable Stoat`
-##  [1] 58 67 54 62 65 31 50 90 98 56
-## 
-## $`Fledge Goat`
-##  [1] 58 68 54 62 65 31 50 90 69 56
-## 
-## $`Doodle Fox`
-##  [1] 58 69 54 62 65 31 14 90 62 56
-## 
-## $`Table Beetle`
-##  [1] 58 70 54 62 65 31 50 90 98 56
-## 
-## $`Stooge Booby`
-##  [1] 58 71 54 62 65 31 50 90 49 26
-## 
-## $`Commot Dog`
-##  [1] 58 72 54 62 65 31 50 90 98 56
-## 
-## $`Bolete Eagle`
-##  [1] 58 73 54 62 65 31 50 90 51 56
-## 
-## $`Glazy Fly`
-##  [1] 58 74 54  7 65 12 50 57 59 36
-## 
-## $`Cloam Bee`
-##  [1] 58 75 54 22 65 31  1 56 98 56
-## 
-## $`Loathe Fox`
-##  [1] 58 76 54 62 65 31 50 90 98 56
-## 
-## $`Thallodal Cat`
-##  [1] 58 77 54 50 52 19 50 79 82 45
-## 
-## $`Tasty Ocelot`
-##  [1] 58 78 54 62 65 31 50 24 56 56
-## 
-## $`Mete Bobcat`
-##  [1] 58 79 54 62 65 31 50 90 98 56
-## 
-## $`Albetad Eel`
-##  [1] 58 80 54 62 65 31 50 90 87 56
-## 
-## $`Babloh Camel`
-##  [1] 58 81 54 62 65 31 50 54 57 56
-## 
-## $`Foeless Stoat`
-##  [1] 58 82 54 62 65 31 50 21 58 28
-## 
-## $`Seemable Bass`
-##  [1] 58 83 54 62 65 31 50 90 85 56
-## 
-## $`Acyloxy Booby`
-##  [1] 58 84 54 62 65 31 50 90 12 56
-## 
-## $`Hamble Fox`
-##  [1] 58 85 54 62 65 31 50 90 98 56
-## 
-## $`Seeable Flea`
-##  [1] 58 86 54 62 65 31 50 90 48 56
-## 
-## $`Bafta Beetle`
-##  [1] 58 87 54 62 65 31 50 90 98 56
-## 
-## $`Coestate Clam`
-##  [1] 58 88 54 62 65 31 50 90 98 56
-## 
-## $`Caddle Bobcat`
-##  [1] 58 89 54 62 65 31 50 90 88 56
-## 
-## $`Lactam Gazelle`
-##  [1] 58 92 54 62 65 31 50 90 98 56
-## 
-## $`Beggable Moose`
-##  [1] 58 93 54 62 65 31 50 90 86 56
-## 
-## $`Fly Booby`
-##  [1] 58 97  1 62 65 13 50 31 30  9
-## 
-## $`Cabal Cattle`
-##  [1] 58 99 54 62 65 31 50 90 98 56
-## 
-## $`Goosy Beetle`
-##  [1]  58 100  54  19  65  31  50  90  98  56
-## 
-## $`Talose Smelt`
-##  [1]  58 101  54  62  65  31  18  90  98  56
-## 
-## $`Close Mammal`
-##  [1]  58 102  32  62  65  31  50  90  98  56
-## 
-## $`Hoose Bobcat`
-##  [1]  58 103  54  62  65  31  28  72  98  56
-## 
-## $`Teasable Eel`
-##  [1]  58 106  54  62  65  31  50  90  98  56
-## 
-## $`Hebdomad Leech`
-##  [1]  58 107  53  62  65  31  50  90  98  56
-## 
-## $`Smeech Clam`
-##  [1]  58 108  54  62  25  31  23  60  41  37
-## 
-## $`Lob Hedgehog`
-##  [1]  58 110  23  62  45  31  50  90  98  56
-## 
-## $`Oothecal Eel`
-##  [1]  58 111  30  39  65  31  50  90  98  56
-## 
-## $`Selfheal Bat`
-##  [1]  58 112  54  62  65  31  50  90  98  56
-## 
-## $`Scaly Beetle`
-##  [1]  58 113  22  15  65  31  27  90  98  56
-## 
-## $`Haggaday Cod`
-##  [1]  58 114  24  62  65  31  50  90  98  56
-## 
-## $`Boxy Gazelle`
-##  [1]  58 125   2  62  65  31  50  90  98  56
-## 
-## $`Lactam Smelt`
-##  [1]  58 125  18  62  65  31  50  90  98  56
-## 
-## $`Haec Moth`
-##  [1]  58 125  19  62  65  31  50  40  16   1
-## 
-## $`Effable Goat`
-##  [1]  58 125  20  30  65  31  50  90  98  56
-## 
-## $`Settle Smelt`
-##  [1]  58 125  21  62  65  31  50  90  98  56
-## 
-## $`Goodsome Eel`
-##  [1]  58 125  25  62  65  31  50  90  98  56
-## 
-## $`Caecal Booby`
-##  [1]  58 125  28  62  65  31  50  90  98  56
-## 
-## $`Oleose Sloth`
-##  [1]  58 125  29  62  65  31  50  90  98  56
-## 
-## $`Lofty Mammal`
-##  [1]  58 125  31  62  65  31  17  90  98  56
-## 
-## $`Baldhead Boa`
-##  [1]  58 125  33  62  65  31  50  90  98  56
-## 
-## $`Messe Mammal`
-##  [1]  58 125  35  62  65  31  33  90  98  56
+overall_rankings[order(complete_muid_list)]</code></pre>
+<pre><code>## $`Acyloxy Booby`
+##     CC     OH     DT     HL HL_Biv     OG     EM     OB     FG     FS 
+##     65     62     59     83     54     56     12     50     90     31 
 ## 
 ## $`Acyloxy Clam`
-##  [1]  58 125  36  62  65  31  50  90  98  56
+##     CC     OH     DT     HL HL_Biv     OG     EM     OB     FG     FS 
+##     65     62     59    125     23     56     98     50     90     31 
 ## 
-## $`Amethyst Cod`
-##  [1]  58 125  38  62  65  31  50  90  98  56
+## $`Adlay Bee`
+##     CC     OH     DT     HL HL_Biv     OG     EM     OB     FG     FS 
+##     29     62     59     18     54     56     98     50     90     31 
 ## 
-## $`Aldose Booby`
-##  [1]  58 125  42  62  65  31  29  90  98  56
-## 
-## $`Semball Goat`
-##  [1]  58 125  44  62  65  31   9  90  98  56
-## 
-## $`Yabble Goose`
-##  [1]  58 125  45  62  49  31  50  90  98  56
-## 
-## $`Octose Hedgehog`
-##  [1]  58 125  54   8  65  31  50  90  98  56
-## 
-## $`Leasable Eel`
-##  [1]  58 125  54  26  24  31  50  90  98  56
-## 
-## $`Ashamed Eagle`
-##  [1]  58 125  54  28  65  31  50  90  80  56
-## 
-## $`Malady Moose`
-##  [1]  58 125  54  33  65  31  50  90  98  56
-## 
-## $`Asbest Smelt`
-##  [1]  58 125  54  35  65  31  50  90  76  56
-## 
-## $`Amomal Llama`
-##  [1]  58 125  54  36  18  31  10  90  84  56
-## 
-## $`Gest Cheetah`
-##  [1]  58 125  54  37  36  31  50  90  98  56
-## 
-## $`Shoddy Smelt`
-##  [1]  58 125  54  38  65  31  24  90  98  56
-## 
-## $`Coscet Goose`
-##  [1]  58 125  54  41  65  31  50  90  98  56
-## 
-## $`Safe Gazelle`
-##  [1]  58 125  54  43  65  31  50  90  98  56
-## 
-## $`Doghead Bass`
-##  [1]  58 125  54  45  65  31  50  90  98  56
-## 
-## $`Beest Bee`
-##  [1]  58 125  54  62   1  31  50  29  28   5
-## 
-## $`Cymbalo Coyote`
-##  [1]  58 125  54  62   4  31  50  90  98  56
-## 
-## $`Bobble Booby`
-##  [1]  58 125  54  62   8  31  50  90  98  56
-## 
-## $`Tabog Smelt`
-##  [1]  58 125  54  62  13  31  50  90  98  56
-## 
-## $`Leadable Eel`
-##  [1]  58 125  54  62  19  31  16  90  98  56
-## 
-## $`Shalt Cattle`
-##  [1]  58 125  54  62  27  31  50  90  98  56
-## 
-## $`Bafta Cattle`
-##  [1]  58 125  54  62  28  31  50  90  98  56
-## 
-## $`Oxy Hedgehog`
-##  [1]  58 125  54  62  29  31  50  90  98  56
-## 
-## $`Leafless Boa`
-##  [1]  58 125  54  62  32  31  50  90  98  56
-## 
-## $`Foothalt Fly`
-##  [1]  58 125  54  62  33  31   8  90  98  56
-## 
-## $`Fleysome Cod`
-##  [1]  58 125  54  62  39  31  50  90  98  56
-## 
-## $`Boxy Cheetah`
-##  [1]  58 125  54  62  40  31  50  90  98  56
-## 
-## $`Faceable Eel`
-##  [1]  58 125  54  62  42  31  50  90  98  56
-## 
-## $`Daghesh Cod`
-##  [1]  58 125  54  62  46  31  50  90  98  56
-## 
-## $`Flathat Stoat`
-##  [1]  58 125  54  62  65   2  50  90  98  56
-## 
-## $`Statable Bat`
-##  [1]  58 125  54  62  65   5  50  90  98  56
-## 
-## $`Choosy Sloth`
-##  [1]  58 125  54  62  65  31   3  90  98  56
-## 
-## $`Octadecyl Bee`
-##  [1]  58 125  54  62  65  31   4  90  98  56
-## 
-## $`Dashy Beetle`
-##  [1]  58 125  54  62  65  31  11  90  98  56
-## 
-## $`Shoad Bee`
-##  [1]  58 125  54  62  65  31  12  22  17  11
-## 
-## $`Somegate Cat`
-##  [1]  58 125  54  62  65  31  15  90  81  56
-## 
-## $`Fathead Flea`
-##  [1]  58 125  54  62  65  31  26  90  98  56
-## 
-## $`Mesh Gazelle`
-##  [1]  58 125  54  62  65  31  30  90  98  56
-## 
-## $`Mescal Leech`
-##  [1]  58 125  54  62  65  31  50   2  98  56
-## 
-## $`Salaam Smelt`
-##  [1]  58 125  54  62  65  31  50   3  98  56
-## 
-## $`Fathom Gazelle`
-##  [1]  58 125  54  62  65  31  50   6  98  56
-## 
-## $`Cystose Eel`
-##  [1]  58 125  54  62  65  31  50  10   6  56
-## 
-## $`Mesh Toad`
-##  [1]  58 125  54  62  65  31  50  11  98  56
-## 
-## $`Hemal Toad`
-##  [1]  58 125  54  62  65  31  50  12  98  56
-## 
-## $`Hoggy Cat`
-##  [1]  58 125  54  62  65  31  50  14  98  56
-## 
-## $`Becomma Eagle`
-##  [1]  58 125  54  62  65  31  50  19   7  56
-## 
-## $`Yex Cheetah`
-##  [1]  58 125  54  62  65  31  50  26  46  56
-## 
-## $`Cloacal Bee`
-##  [1]  58 125  54  62  65  31  50  32  37  56
-## 
-## $`Ohelo Eel`
-##  [1]  58 125  54  62  65  31  50  33  98  56
-## 
-## $`Doest Cod`
-##  [1]  58 125  54  62  65  31  50  34  32  13
-## 
-## $`Agee Mole`
-##  [1]  58 125  54  62  65  31  50  35  98  56
-## 
-## $`Last Flea`
-##  [1]  58 125  54  62  65  31  50  36  33  56
-## 
-## $`Tasty Bat`
-##  [1]  58 125  54  62  65  31  50  37  31  12
-## 
-## $`Faff Cheetah`
-##  [1]  58 125  54  62  65  31  50  38  98  56
-## 
-## $`Ambassy Fox`
-##  [1]  58 125  54  62  65  31  50  39  35  56
-## 
-## $`Eme Cattle`
-##  [1]  58 125  54  62  65  31  50  41  98  56
+## $`Adlay Stoat`
+##     CC     OH     DT     HL HL_Biv     OG     EM     OB     FG     FS 
+##      4      6     54    125     54     56      1     50     10     31 
 ## 
 ## $`Affable Cod`
-##  [1]  58 125  54  62  65  31  50  42  98  56
+##     CC     OH     DT     HL HL_Biv     OG     EM     OB     FG     FS 
+##     65     62     59    125     54     56     98     50     41     31 
 ## 
-## $`Egest Gayal`
-##  [1]  58 125  54  62  65  31  50  44  25  56
-## 
-## $`Datable Llama`
-##  [1]  58 125  54  62  65  31  50  45  36  14
+## $`Agee Mole`
+##     CC     OH     DT     HL HL_Biv     OG     EM     OB     FG     FS 
+##     65     62     59    125     54     56     98     50     34     31 
 ## 
 ## $`Albahaca Mole`
-##  [1]  58 125  54  62  65  31  50  46  38  16
+##     CC     OH     DT     HL HL_Biv     OG     EM     OB     FG     FS 
+##     65     62     59    125     54     16     38     50     45     31 
 ## 
-## $`Shole Gazelle`
-##  [1]  58 125  54  62  65  31  50  50  40  17
+## $`Albetad Eel`
+##     CC     OH     DT     HL HL_Biv     OG     EM     OB     FG     FS 
+##     65     62     59     79     54     56     87     50     90     31 
 ## 
-## $`Bedabble Toad`
-##  [1]  58 125  54  62  65  31  50  51  98  56
+## $`Aldose Booby`
+##     CC     OH     DT     HL HL_Biv     OG     EM     OB     FG     FS 
+##     65     62     59    125     44     56     98     25     90     31 
 ## 
-## $`Smolt Beetle`
-##  [1]  58 125  54  62  65  31  50  58  98  56
+## $`Ale Damselfly`
+##     CC     OH     DT     HL HL_Biv     OG     EM     OB     FG     FS 
+##     16     12      6     20     54     56     21     50     19     31 
 ## 
-## $`Staboy Gayal`
-##  [1]  58 125  54  62  65  31  50  66  70  56
+## $`Algal Hedgehog`
+##     CC     OH     DT     HL HL_Biv     OG     EM     OB     FG     FS 
+##     64     61     45    125     50     55      5     50      4      4 
 ## 
-## $`Osmose Sloth`
-##  [1]  58 125  54  62  65  31  50  67  67  56
+## $`Ambassy Fox`
+##     CC     OH     DT     HL HL_Biv     OG     EM     OB     FG     FS 
+##     65     62     59    125     54     56     35     50     38     31 
 ## 
-## $`Dotal Ocelot`
-##  [1]  58 125  54  62  65  31  50  74  98  56
+## $`Ambassy Llama`
+##     CC     OH     DT     HL HL_Biv     OG     EM     OB     FG     FS 
+##     65     62     59     33     54     56     53     50      8     31 
 ## 
-## $`Mobable Bass`
-##  [1]  58 125  54  62  65  31  50  75  98  56
+## $`Amethyst Cod`
+##     CC     OH     DT     HL HL_Biv     OG     EM     OB     FG     FS 
+##     65     62     59    125     32     56     98     50     90     31 
 ## 
-## $`Chose Dog`
-##  [1]  58 125  54  62  65  31  50  76  98  56
+## $`Amethyst Eel`
+##     CC     OH     DT     HL HL_Biv     OG     EM     OB     FG     FS 
+##     65     62     40    125     54     56     98     50     90     31 
 ## 
-## $`Ghetto Camel`
-##  [1]  58 125  54  62  65  31  50  77  98  56
+## $`Amomal Llama`
+##     CC     OH     DT     HL HL_Biv     OG     EM     OB     FG     FS 
+##     24     37     59    125     54     56     85      9     90     31 
 ## 
-## $`Bold Stoat`
-##  [1]  58 125  54  62  65  31  50  78  98  56
+## $`Asbest Smelt`
+##     CC     OH     DT     HL HL_Biv     OG     EM     OB     FG     FS 
+##     65     36     59    125     54     56     76     50     90     31 
 ## 
-## $`Oda Gayal`
-##  [1]  58 125  54  62  65  31  50  80  98  56
+## $`Ashamed Eagle`
+##     CC     OH     DT     HL HL_Biv     OG     EM     OB     FG     FS 
+##     65     30     59    125     54     56     81     50     90     31 
 ## 
-## $`Malaxable Fox`
-##  [1]  58 125  54  62  65  31  50  81  89  56
+## $`Attest Eagle`
+##     CC     OH     DT     HL HL_Biv     OG     EM     OB     FG     FS 
+##     65     62     59     63     54     35     19     50     54     31 
 ## 
-## $`Emblossom Moth`
-##  [1]  58 125  54  62  65  31  50  90   8  56
+## $`Azoxazole Eel`
+##     CC     OH     DT     HL HL_Biv     OG     EM     OB     FG     FS 
+##      3      5      7    125     54     56     98      2     90      1 
 ## 
-## $`Boatable Clam`
-##  [1]  58 125  54  62  65  31  50  90  14  52
+## $`Azoxy Beetle`
+##     CC     OH     DT     HL HL_Biv     OG     EM     OB     FG     FS 
+##     65     62     59     59     54     56     98     50     90     31 
 ## 
-## $`Oxazole Goose`
-##  [1]  58 125  54  62  65  31  50  90  23  56
+## $`Babloh Camel`
+##     CC     OH     DT     HL HL_Biv     OG     EM     OB     FG     FS 
+##     65     62     59     80     54     56     57     50     53     31 
 ## 
-## $`Cotty Leech`
-##  [1]  58 125  54  62  65  31  50  90  24  56
+## $`Bafta Beetle`
+##     CC     OH     DT     HL HL_Biv     OG     EM     OB     FG     FS 
+##     65     62     59     86     54     56     98     50     90     31 
 ## 
-## $`Dagoba Moth`
-##  [1]  58 125  54  62  65  31  50  90  26  56
+## $`Bafta Cattle`
+##     CC     OH     DT     HL HL_Biv     OG     EM     OB     FG     FS 
+##     34     62     59    125     54     56     98     50     90     31 
 ## 
-## $`Bombo Eagle`
-##  [1]  58 125  54  62  65  31  50  90  27  56
+## $`Bal Hedgehog`
+##     CC     OH     DT     HL HL_Biv     OG     EM     OB     FG     FS 
+##     65     62     59     14     31     56     98     50     90     31 
 ## 
-## $`Sachem Bobcat`
-##  [1]  58 125  54  62  65  31  50  90  34  56
-## 
-## $`Lathy Smelt`
-##  [1]  58 125  54  62  65  31  50  90  39  56
-## 
-## $`Small Smelt`
-##  [1]  58 125  54  62  65  31  50  90  47  56
-## 
-## $`Stomatal Goat`
-##  [1]  58 125  54  62  65  31  50  90  63  56
-## 
-## $`Obtest Sole`
-##  [1]  58 125  54  62  65  31  50  90  65  56
-## 
-## $`Gobble Eel`
-##  [1]  58 125  54  62  65  31  50  90  66  56
-## 
-## $`Gala Cheetah`
-##  [1]  58 125  54  62  65  31  50  90  77  56
-## 
-## $`Haggaday Bee`
-##  [1]  58 125  54  62  65  31  50  90  78  56
-## 
-## $`Decollete Fly`
-##  [1]  58 125  54  62  65  31  50  90  98   3
+## $`Baldhead Boa`
+##     CC     OH     DT     HL HL_Biv     OG     EM     OB     FG     FS 
+##     65     62     59    125     17     56     98     50     90     31 
 ## 
 ## $`Bebog Smelt`
-##  [1]  58 125  54  62  65  31  50  90  98  15
+##     CC     OH     DT     HL HL_Biv     OG     EM     OB     FG     FS 
+##     65     62     59    125     54     15     98     50     90     31 
 ## 
-## $`Eatable Clam`
-##  [1]  58 125  54  62  65  31  50  90  98  27
+## $`Becomma Eagle`
+##     CC     OH     DT     HL HL_Biv     OG     EM     OB     FG     FS 
+##     65     62     59    125     54     56      7     50     18     31 
+## 
+## $`Bedabble Toad`
+##     CC     OH     DT     HL HL_Biv     OG     EM     OB     FG     FS 
+##     65     62     59    125     54     56     98     50     50     31 
+## 
+## $`Beest Bee`
+##     CC     OH     DT     HL HL_Biv     OG     EM     OB     FG     FS 
+##      2     62     59    125     54      5     28     50     28     31 
+## 
+## $`Beggable Moose`
+##     CC     OH     DT     HL HL_Biv     OG     EM     OB     FG     FS 
+##     65     62     59     92     54     56     86     50     90     31 
+## 
+## $`Behead Gayal`
+##     CC     OH     DT     HL HL_Biv     OG     EM     OB     FG     FS 
+##     65     62     59     99     28     56     98     50     90     31 
+## 
+## $`Bestayed Boa`
+##     CC     OH     DT     HL HL_Biv     OG     EM     OB     FG     FS 
+##     65     62     59     38     54     56     55     50     52     31 
+## 
+## $`Bless Cattle`
+##     CC     OH     DT     HL HL_Biv     OG     EM     OB     FG     FS 
+##     65     62     36    101     16     56     98     50     90     31 
+## 
+## $`Bloody Eagle`
+##     CC     OH     DT     HL HL_Biv     OG     EM     OB     FG     FS 
+##     65     62     42    125     54     56     98     50     90     31 
+## 
+## $`Boatable Clam`
+##     CC     OH     DT     HL HL_Biv     OG     EM     OB     FG     FS 
+##     65     62     59    125     54     52     14     50     90     31 
+## 
+## $`Bobble Booby`
+##     CC     OH     DT     HL HL_Biv     OG     EM     OB     FG     FS 
+##     11     62     59    125     54     56     98     50     90     31 
+## 
+## $`Bold Stoat`
+##     CC     OH     DT     HL HL_Biv     OG     EM     OB     FG     FS 
+##     65     62     59    125     54     56     98     50     76     31 
+## 
+## $`Bolete Eagle`
+##     CC     OH     DT     HL HL_Biv     OG     EM     OB     FG     FS 
+##     65     62     59     72     54     56     51     50     90     31 
 ## 
 ## $`Bolete Mammal`
-##  [1]  58 125  54  62  65  31  50  90  98  29
+##     CC     OH     DT     HL HL_Biv     OG     EM     OB     FG     FS 
+##     65     62     59    125     54     29     98     50     90     31 
 ## 
-## $`Testy Coyote`
-##  [1]  58 125  54  62  65  31  50  90  98  39
+## $`Bombo Eagle`
+##     CC     OH     DT     HL HL_Biv     OG     EM     OB     FG     FS 
+##     65     62     59    125     54     56     27     50     90     31 
+## 
+## $`Boost Beetle`
+##     CC     OH     DT     HL HL_Biv     OG     EM     OB     FG     FS 
+##     59     50     10     10      4     24     91     42     87     25 
+## 
+## $`Booze Leech`
+##     CC     OH     DT     HL HL_Biv     OG     EM     OB     FG     FS 
+##      1      3     56      7     10      2      2     49      1      7 
+## 
+## $`Boxy Cheetah`
+##     CC     OH     DT     HL HL_Biv     OG     EM     OB     FG     FS 
+##     45     62     59    125     54     56     98     50     90     31 
+## 
+## $`Boxy Gazelle`
+##     CC     OH     DT     HL HL_Biv     OG     EM     OB     FG     FS 
+##     65     62     59    125      2     56     98     50     90     31 
+## 
+## $`Cabal Cattle`
+##     CC     OH     DT     HL HL_Biv     OG     EM     OB     FG     FS 
+##     65     62     59    105     54     56     98     50     90     31 
+## 
+## $`Cacodoxy Mole`
+##     CC     OH     DT     HL HL_Biv     OG     EM     OB     FG     FS 
+##     65     62     59     37     54     56     98     50     90     31 
+## 
+## $`Caddle Bobcat`
+##     CC     OH     DT     HL HL_Biv     OG     EM     OB     FG     FS 
+##     65     62     59     88     54     56     88     50     90     31 
+## 
+## $`Caecal Booby`
+##     CC     OH     DT     HL HL_Biv     OG     EM     OB     FG     FS 
+##     65     62     59    125     24     56     98     50     90     31 
+## 
+## $`Callable Flea`
+##     CC     OH     DT     HL HL_Biv     OG     EM     OB     FG     FS 
+##     65     62     59     45     54     56     98     50     90     31 
+## 
+## $`Calymma Cod`
+##     CC     OH     DT     HL HL_Biv     OG     EM     OB     FG     FS 
+##     61     55     49    116      8     33     95     43     84     28 
+## 
+## $`Catty Bobcat`
+##     CC     OH     DT     HL HL_Biv     OG     EM     OB     FG     FS 
+##     12     52     11    122     54     56     98     50     90     31 
+## 
+## $`Cest Gazelle`
+##     CC     OH     DT     HL HL_Biv     OG     EM     OB     FG     FS 
+##     26     26     27     19     54     56     98     50     90     31 
+## 
+## $`Chalaco Eagle`
+##     CC     OH     DT     HL HL_Biv     OG     EM     OB     FG     FS 
+##     65     62     59     13     54     18     44     50     46     31 
+## 
+## $`Chatsome Eel`
+##     CC     OH     DT     HL HL_Biv     OG     EM     OB     FG     FS 
+##     65     33     39    125     54     56     98     19     90     31 
+## 
+## $`Chattel Moose`
+##     CC     OH     DT     HL HL_Biv     OG     EM     OB     FG     FS 
+##     65     62     59     24     54     56      9     50     17     31 
+## 
+## $`Choosy Beetle`
+##     CC     OH     DT     HL HL_Biv     OG     EM     OB     FG     FS 
+##     65     62     59     47     54     56     98     50     42     31 
+## 
+## $`Choosy Sloth`
+##     CC     OH     DT     HL HL_Biv     OG     EM     OB     FG     FS 
+##     65     62     59    125     54     56     98      3     90     31 
+## 
+## $`Chose Dog`
+##     CC     OH     DT     HL HL_Biv     OG     EM     OB     FG     FS 
+##     65     62     59    125     54     56     98     50     75     31 
+## 
+## $`Classy Camel`
+##     CC     OH     DT     HL HL_Biv     OG     EM     OB     FG     FS 
+##     65     29     25    113     54     42     61     50     62     31 
+## 
+## $`Cloacal Bee`
+##     CC     OH     DT     HL HL_Biv     OG     EM     OB     FG     FS 
+##     65     62     59    125     54     56     37     50     31     31 
+## 
+## $`Cloam Bee`
+##     CC     OH     DT     HL HL_Biv     OG     EM     OB     FG     FS 
+##     65     24     59     74     54     56     98      1     55     31 
+## 
+## $`Cloam Gayal`
+##     CC     OH     DT     HL HL_Biv     OG     EM     OB     FG     FS 
+##     14      4      4      1     12     56     98     50     90     31 
+## 
+## $`Close Mammal`
+##     CC     OH     DT     HL HL_Biv     OG     EM     OB     FG     FS 
+##     65     62     59      8     36     56     98     50     90     31 
+## 
+## $`Coestate Clam`
+##     CC     OH     DT     HL HL_Biv     OG     EM     OB     FG     FS 
+##     65     62     59     87     54     56     98     50     90     31 
+## 
+## $`Comal Cheetah`
+##     CC     OH     DT     HL HL_Biv     OG     EM     OB     FG     FS 
+##     65     62     59     44     54     20     45     50     47     31 
+## 
+## $`Commot Dog`
+##     CC     OH     DT     HL HL_Biv     OG     EM     OB     FG     FS 
+##     65     62     59     71     54     56     98     50     90     31 
+## 
+## $`Coscet Goose`
+##     CC     OH     DT     HL HL_Biv     OG     EM     OB     FG     FS 
+##     65     42     59    125     54     56     98     50     90     31 
+## 
+## $`Cottagey Boa`
+##     CC     OH     DT     HL HL_Biv     OG     EM     OB     FG     FS 
+##     65     62     59     23     54     56     98     50     90     31 
+## 
+## $`Cotty Leech`
+##     CC     OH     DT     HL HL_Biv     OG     EM     OB     FG     FS 
+##     65     62     59    125     54     56     24     50     90     31 
+## 
+## $`Cymbalo Coyote`
+##     CC     OH     DT     HL HL_Biv     OG     EM     OB     FG     FS 
+##      7     62     59    125     54     56     98     50     90     31 
+## 
+## $`Cystose Eel`
+##     CC     OH     DT     HL HL_Biv     OG     EM     OB     FG     FS 
+##     65     62     59    125     54     56      6     50      9     31 
+## 
+## $`Daghesh Cod`
+##     CC     OH     DT     HL HL_Biv     OG     EM     OB     FG     FS 
+##     20     62     59    125     54     56     98     50     90     31 
+## 
+## $`Dagoba Moth`
+##     CC     OH     DT     HL HL_Biv     OG     EM     OB     FG     FS 
+##     65     62     59    125     54     56     26     50     90     31 
+## 
+## $`Dale Leech`
+##     CC     OH     DT     HL HL_Biv     OG     EM     OB     FG     FS 
+##     18     21     26    115     54     38     73     26     15     11 
+## 
+## $`Dashy Beetle`
+##     CC     OH     DT     HL HL_Biv     OG     EM     OB     FG     FS 
+##     65     62     59    125     54     56     98     11     90     31 
+## 
+## $`Datable Llama`
+##     CC     OH     DT     HL HL_Biv     OG     EM     OB     FG     FS 
+##     65     62     59    125     54     14     36     50     44     31 
+## 
+## $`Decollete Fly`
+##     CC     OH     DT     HL HL_Biv     OG     EM     OB     FG     FS 
+##     65     62     59    125     54      3     98     50     90     31 
+## 
+## $`Delegable Toad`
+##     CC     OH     DT     HL HL_Biv     OG     EM     OB     FG     FS 
+##     65     62     58    125     54     56     98     50     90     31 
+## 
+## $`Delete Bass`
+##     CC     OH     DT     HL HL_Biv     OG     EM     OB     FG     FS 
+##     65     62     59     49     54     56     98     50     90     31 
+## 
+## $`Doest Cod`
+##     CC     OH     DT     HL HL_Biv     OG     EM     OB     FG     FS 
+##     65     62     59    125     54     13     32     50     33     31 
+## 
+## $`Doghead Bass`
+##     CC     OH     DT     HL HL_Biv     OG     EM     OB     FG     FS 
+##     65     47     59    125     54     56     98     50     90     31 
+## 
+## $`Doodle Fox`
+##     CC     OH     DT     HL HL_Biv     OG     EM     OB     FG     FS 
+##     65     62     59     68     54     56     62     14     90     31 
+## 
+## $`Dotal Ocelot`
+##     CC     OH     DT     HL HL_Biv     OG     EM     OB     FG     FS 
+##     65     62     59    125     54     56     98     50     73     31 
+## 
+## $`Dyeable Flea`
+##     CC     OH     DT     HL HL_Biv     OG     EM     OB     FG     FS 
+##     65     62     16    125     54     56     98     50     90     31 
+## 
+## $`Eatable Clam`
+##     CC     OH     DT     HL HL_Biv     OG     EM     OB     FG     FS 
+##     65     62     59    125     54     27     98     50     90     31 
+## 
+## $`Eclat Fly`
+##     CC     OH     DT     HL HL_Biv     OG     EM     OB     FG     FS 
+##     65     62     59     58     54     56     98     50     90     31 
+## 
+## $`Effable Goat`
+##     CC     OH     DT     HL HL_Biv     OG     EM     OB     FG     FS 
+##     65     31     59    125     29     56     98     50     90     31 
+## 
+## $`Effable Stoat`
+##     CC     OH     DT     HL HL_Biv     OG     EM     OB     FG     FS 
+##     65     62     59     66     54     56     98     50     90     31 
+## 
+## $`Egest Gayal`
+##     CC     OH     DT     HL HL_Biv     OG     EM     OB     FG     FS 
+##     65     62     59    125     54     56     25     50     43     31 
+## 
+## $`Elatcha Toad`
+##     CC     OH     DT     HL HL_Biv     OG     EM     OB     FG     FS 
+##     65     35     44    125     54     56     98     50     90     31 
+## 
+## $`Eldest Leech`
+##     CC     OH     DT     HL HL_Biv     OG     EM     OB     FG     FS 
+##     21     13     15      6     27     56     98     50      7     17 
+## 
+## $`Emblossom Moth`
+##     CC     OH     DT     HL HL_Biv     OG     EM     OB     FG     FS 
+##     65     62     59    125     54     56      8     50     90     31 
+## 
+## $`Eme Cattle`
+##     CC     OH     DT     HL HL_Biv     OG     EM     OB     FG     FS 
+##     65     62     59    125     54     56     98     50     40     31 
+## 
+## $`Emyd Mammal`
+##     CC     OH     DT     HL HL_Biv     OG     EM     OB     FG     FS 
+##     49     48     38    117     48     51     79      8     69      8 
+## 
+## $`Excyst Flea`
+##     CC     OH     DT     HL HL_Biv     OG     EM     OB     FG     FS 
+##     23     18     22     27     54     56     11     50     60     31 
+## 
+## $`Exhalable Cat`
+##     CC     OH     DT     HL HL_Biv     OG     EM     OB     FG     FS 
+##     65     62     59     43     54     19     43     50     48     31 
+## 
+## $`Fable Sole`
+##     CC     OH     DT     HL HL_Biv     OG     EM     OB     FG     FS 
+##      5      2      2    125     54     56     98      5     90      3 
+## 
+## $`Faceable Eel`
+##     CC     OH     DT     HL HL_Biv     OG     EM     OB     FG     FS 
+##     46     62     59    125     54     56     98     50     90     31 
+## 
+## $`Faff Cheetah`
+##     CC     OH     DT     HL HL_Biv     OG     EM     OB     FG     FS 
+##     65     62     59    125     54     56     98     50     37     31 
+## 
+## $`Fall Gazelle`
+##     CC     OH     DT     HL HL_Biv     OG     EM     OB     FG     FS 
+##     65     62     59     98     54     56     98     50     90     31 
+## 
+## $`Fathead Flea`
+##     CC     OH     DT     HL HL_Biv     OG     EM     OB     FG     FS 
+##     65     62     59    125     54     56     98     33     90     31 
+## 
+## $`Fathead Moth`
+##     CC     OH     DT     HL HL_Biv     OG     EM     OB     FG     FS 
+##     65     62     59     55     54     56     52     50     24     31 
+## 
+## $`Fathom Gazelle`
+##     CC     OH     DT     HL HL_Biv     OG     EM     OB     FG     FS 
+##     65     62     59    125     54     56     98     50      6     31 
+## 
+## $`Feelable Eel`
+##     CC     OH     DT     HL HL_Biv     OG     EM     OB     FG     FS 
+##      9     10      9    125     54     56     98     50     90     31 
+## 
+## $`Female Goose`
+##     CC     OH     DT     HL HL_Biv     OG     EM     OB     FG     FS 
+##     65     62     59     32     54     56     22     50     90     31 
+## 
+## $`Fest Hedgehog`
+##     CC     OH     DT     HL HL_Biv     OG     EM     OB     FG     FS 
+##     65     62     59     29     54     56     68     50     64     31 
+## 
+## $`Flathat Stoat`
+##     CC     OH     DT     HL HL_Biv     OG     EM     OB     FG     FS 
+##     65     62     59    125     54     56     98     50     90      2 
+## 
+## $`Fledge Goat`
+##     CC     OH     DT     HL HL_Biv     OG     EM     OB     FG     FS 
+##     65     62     59     67     54     56     69     50     90     31 
+## 
+## $`Fleysome Cod`
+##     CC     OH     DT     HL HL_Biv     OG     EM     OB     FG     FS 
+##     43     62     59    125     54     56     98     50     90     31 
+## 
+## $`Floatable Bee`
+##     CC     OH     DT     HL HL_Biv     OG     EM     OB     FG     FS 
+##     65     62     37     42     54     49     75     20     72     10 
+## 
+## $`Flosh Bat`
+##     CC     OH     DT     HL HL_Biv     OG     EM     OB     FG     FS 
+##     65     62     59     30     54     56     98     50     90     31 
+## 
+## $`Fly Booby`
+##     CC     OH     DT     HL HL_Biv     OG     EM     OB     FG     FS 
+##     65     62     59     95      3      9     30     50     30     14 
+## 
+## $`Foeless Stoat`
+##     CC     OH     DT     HL HL_Biv     OG     EM     OB     FG     FS 
+##     65     62     59     81     54     28     58     50     20     31 
+## 
+## $`Foldless Fly`
+##     CC     OH     DT     HL HL_Biv     OG     EM     OB     FG     FS 
+##     54     60      8      3     49     56     98     37     90     31 
+## 
+## $`Foothalt Fly`
+##     CC     OH     DT     HL HL_Biv     OG     EM     OB     FG     FS 
+##     37     62     59    125     54     56     98      7     90     31 
+## 
+## $`Gabgab Moose`
+##     CC     OH     DT     HL HL_Biv     OG     EM     OB     FG     FS 
+##     65     62     59      4      1     56     98     50     90     31 
+## 
+## $`Gageable Flea`
+##     CC     OH     DT     HL HL_Biv     OG     EM     OB     FG     FS 
+##     22     59     48     93     54     56     98     50     90     31 
+## 
+## $`Gala Cheetah`
+##     CC     OH     DT     HL HL_Biv     OG     EM     OB     FG     FS 
+##     65     62     59    125     54     56     77     50     90     31 
+## 
+## $`Gemeled Flea`
+##     CC     OH     DT     HL HL_Biv     OG     EM     OB     FG     FS 
+##     65     62     18    125     54     56     98     50     90     31 
+## 
+## $`Gest Cheetah`
+##     CC     OH     DT     HL HL_Biv     OG     EM     OB     FG     FS 
+##     39     38     59    125     54     56     98     50     90     31 
+## 
+## $`Ghetto Camel`
+##     CC     OH     DT     HL HL_Biv     OG     EM     OB     FG     FS 
+##     65     62     59    125     54     56     98     50     78     31 
 ## 
 ## $`Gladeye Moth`
-##  [1]  58 125  54  62  65  31  50  90  98  40
+##     CC     OH     DT     HL HL_Biv     OG     EM     OB     FG     FS 
+##     65     62     59    125     54     40     98     50     90     31 
 ## 
-## $`Sambal Sloth`
-##  [1]  58 125  54  62  65  31  50  90  98  41
+## $`Glazy Fly`
+##     CC     OH     DT     HL HL_Biv     OG     EM     OB     FG     FS 
+##     65     15     59     73     54     36     59     50     56     13 
+## 
+## $`Glottal Sloth`
+##     CC     OH     DT     HL HL_Biv     OG     EM     OB     FG     FS 
+##     60     58     12     15      7     31     96     45     83     26 
+## 
+## $`Gobble Eel`
+##     CC     OH     DT     HL HL_Biv     OG     EM     OB     FG     FS 
+##     65     62     59    125     54     56     66     50     90     31 
+## 
+## $`Godhead Bass`
+##     CC     OH     DT     HL HL_Biv     OG     EM     OB     FG     FS 
+##     65     62     59     41     54      7     20     50      5     31 
+## 
+## $`Goodsome Eel`
+##     CC     OH     DT     HL HL_Biv     OG     EM     OB     FG     FS 
+##     65     62     59    125     22     56     98     50     90     31 
+## 
+## $`Goosy Beetle`
+##     CC     OH     DT     HL HL_Biv     OG     EM     OB     FG     FS 
+##     65     43     59    104     54     56     98     50     90     31 
+## 
+## $`Haec Moth`
+##     CC     OH     DT     HL HL_Biv     OG     EM     OB     FG     FS 
+##     65     62     59    125     25      1     16     50     39     31 
+## 
+## $`Haggaday Bee`
+##     CC     OH     DT     HL HL_Biv     OG     EM     OB     FG     FS 
+##     65     62     59    125     54     56     78     50     90     31 
+## 
+## $`Haggaday Cod`
+##     CC     OH     DT     HL HL_Biv     OG     EM     OB     FG     FS 
+##     65     62     59    106     33     56     98     50     90     31 
+## 
+## $`Hamble Fox`
+##     CC     OH     DT     HL HL_Biv     OG     EM     OB     FG     FS 
+##     65     62     59     84     54     56     98     50     90     31 
+## 
+## $`Healthy Eel`
+##     CC     OH     DT     HL HL_Biv     OG     EM     OB     FG     FS 
+##     44     32     47    120     47     50     42     36     67     22 
+## 
+## $`Hebdomad Leech`
+##     CC     OH     DT     HL HL_Biv     OG     EM     OB     FG     FS 
+##     65     62     59    103     53     56     98     50     90     31 
+## 
+## $`Helmless Flea`
+##     CC     OH     DT     HL HL_Biv     OG     EM     OB     FG     FS 
+##     15     56     52     89     54     56     98     50     90     31 
+## 
+## $`Hemal Toad`
+##     CC     OH     DT     HL HL_Biv     OG     EM     OB     FG     FS 
+##     65     62     59    125     54     56     98     50     11     31 
+## 
+## $`Hoggy Cat`
+##     CC     OH     DT     HL HL_Biv     OG     EM     OB     FG     FS 
+##     65     62     59    125     54     56     98     50     77     31 
+## 
+## $`Hoodshy Toad`
+##     CC     OH     DT     HL HL_Biv     OG     EM     OB     FG     FS 
+##     65     62     34    125     54     56     98     29     90     31 
+## 
+## $`Hoose Bobcat`
+##     CC     OH     DT     HL HL_Biv     OG     EM     OB     FG     FS 
+##     65     62     59    107     54     56     98     31     71     31 
+## 
+## $`Hosel Bass`
+##     CC     OH     DT     HL HL_Biv     OG     EM     OB     FG     FS 
+##     65     62     59     51     54     56     98     50     90     31 
+## 
+## $`Lactam Gazelle`
+##     CC     OH     DT     HL HL_Biv     OG     EM     OB     FG     FS 
+##     65     62     59     91     54     56     98     50     90     31 
+## 
+## $`Lactam Smelt`
+##     CC     OH     DT     HL HL_Biv     OG     EM     OB     FG     FS 
+##     65     62     59    125     26     56     98     50     90     31 
+## 
+## $`Last Cattle`
+##     CC     OH     DT     HL HL_Biv     OG     EM     OB     FG     FS 
+##     65     62     59     50     54     56     50     50     51     31 
+## 
+## $`Last Flea`
+##     CC     OH     DT     HL HL_Biv     OG     EM     OB     FG     FS 
+##     65     62     59    125     54     56     33     50     35     31 
+## 
+## $`Lathy Smelt`
+##     CC     OH     DT     HL HL_Biv     OG     EM     OB     FG     FS 
+##     65     62     59    125     54     56     39     50     90     31 
+## 
+## $`Leadable Boa`
+##     CC     OH     DT     HL HL_Biv     OG     EM     OB     FG     FS 
+##     65     62     28    125     54     56     98     50     90     31 
+## 
+## $`Leadable Eel`
+##     CC     OH     DT     HL HL_Biv     OG     EM     OB     FG     FS 
+##     25     62     59    125     54     56     98     16     90     31 
+## 
+## $`Leafless Boa`
+##     CC     OH     DT     HL HL_Biv     OG     EM     OB     FG     FS 
+##     36     62     59    125     54     56     98     50     90     31 
+## 
+## $`Leasable Eel`
+##     CC     OH     DT     HL HL_Biv     OG     EM     OB     FG     FS 
+##     30     28     59    125     54     56     98     50     90     31 
+## 
+## $`Leech Beetle`
+##     CC     OH     DT     HL HL_Biv     OG     EM     OB     FG     FS 
+##     65     62     41    125     54     56     98     23     90     31 
+## 
+## $`Loadless Cat`
+##     CC     OH     DT     HL HL_Biv     OG     EM     OB     FG     FS 
+##     65     62     59     52     54     56     98     50     90     31 
+## 
+## $`Loamy Fly`
+##     CC     OH     DT     HL HL_Biv     OG     EM     OB     FG     FS 
+##     65     62     59      9     19      6     18     13     29     31 
+## 
+## $`Loathe Fox`
+##     CC     OH     DT     HL HL_Biv     OG     EM     OB     FG     FS 
+##     65     62     59     75     54     56     98     50     90     31 
+## 
+## $`Lob Hedgehog`
+##     CC     OH     DT     HL HL_Biv     OG     EM     OB     FG     FS 
+##     48     62     59    110     18     56     98     50     90     31 
+## 
+## $`Locable Dog`
+##     CC     OH     DT     HL HL_Biv     OG     EM     OB     FG     FS 
+##     41     27     20    125     54     56     98     50     90     31 
 ## 
 ## $`Loessal Flea`
-##  [1]  58 125  54  62  65  31  50  90  98  54
+##     CC     OH     DT     HL HL_Biv     OG     EM     OB     FG     FS 
+##     65     62     59    125     54     54     98     50     90     31 
+## 
+## $`Lofty Mammal`
+##     CC     OH     DT     HL HL_Biv     OG     EM     OB     FG     FS 
+##     65     62     59    125     37     56     98     17     90     31 
+## 
+## $`Malady Moose`
+##     CC     OH     DT     HL HL_Biv     OG     EM     OB     FG     FS 
+##     65     34     59    125     54     56     98     50     90     31 
+## 
+## $`Malaxable Fox`
+##     CC     OH     DT     HL HL_Biv     OG     EM     OB     FG     FS 
+##     65     62     59    125     54     56     89     50     81     31 
+## 
+## $`Mallee Smelt`
+##     CC     OH     DT     HL HL_Biv     OG     EM     OB     FG     FS 
+##     65     62     59     39     54     56     98     50     90     31 
+## 
+## $`Masoola Moth`
+##     CC     OH     DT     HL HL_Biv     OG     EM     OB     FG     FS 
+##     65     62     35    125     46     56     98     50     90     31 
+## 
+## $`Medal Goose`
+##     CC     OH     DT     HL HL_Biv     OG     EM     OB     FG     FS 
+##     65     62     59     48     54     56     98     50     90     31 
+## 
+## $`Megohm Toad`
+##     CC     OH     DT     HL HL_Biv     OG     EM     OB     FG     FS 
+##     65     62     59     36     54     56     98     50     90     31 
+## 
+## $`Melasma Mole`
+##     CC     OH     DT     HL HL_Biv     OG     EM     OB     FG     FS 
+##     65     62     59     64     54     56     98     50     90     31 
+## 
+## $`Mescal Leech`
+##     CC     OH     DT     HL HL_Biv     OG     EM     OB     FG     FS 
+##     65     62     59    125     54     56     98     50      2     31 
+## 
+## $`Mesh Gazelle`
+##     CC     OH     DT     HL HL_Biv     OG     EM     OB     FG     FS 
+##     65     62     59    125     54     56     98     32     90     31 
+## 
+## $`Mesh Toad`
+##     CC     OH     DT     HL HL_Biv     OG     EM     OB     FG     FS 
+##     65     62     59    125     54     56     98     50     13     31 
+## 
+## $`Mesole Mammal`
+##     CC     OH     DT     HL HL_Biv     OG     EM     OB     FG     FS 
+##     27     45     23    121     42     47     74      6     14     19 
+## 
+## $`Mesole Moth`
+##     CC     OH     DT     HL HL_Biv     OG     EM     OB     FG     FS 
+##     56      1      3     90     54     56     98     50     90     31 
+## 
+## $`Messe Mammal`
+##     CC     OH     DT     HL HL_Biv     OG     EM     OB     FG     FS 
+##     65     62     59    125     21     56     98     28     90     31 
+## 
+## $`Mete Bobcat`
+##     CC     OH     DT     HL HL_Biv     OG     EM     OB     FG     FS 
+##     65     62     59     78     54     56     98     50     90     31 
+## 
+## $`Mobable Bass`
+##     CC     OH     DT     HL HL_Biv     OG     EM     OB     FG     FS 
+##     65     62     59    125     54     56     98     50     74     31 
+## 
+## $`Mobbable Flea`
+##     CC     OH     DT     HL HL_Biv     OG     EM     OB     FG     FS 
+##     65     62     59     26     54     56     98     50     90     31 
+## 
+## $`Molest Goose`
+##     CC     OH     DT     HL HL_Biv     OG     EM     OB     FG     FS 
+##     40     41     33     96     34     53     84     27     70      9 
+## 
+## $`Momble Goat`
+##     CC     OH     DT     HL HL_Biv     OG     EM     OB     FG     FS 
+##     65     62     59     60     54     56     98     50     90     31 
+## 
+## $`Mystax Stoat`
+##     CC     OH     DT     HL HL_Biv     OG     EM     OB     FG     FS 
+##     57     16     55    125     54     56     98     50     90     31 
+## 
+## $`Obsolete Flea`
+##     CC     OH     DT     HL HL_Biv     OG     EM     OB     FG     FS 
+##     65     62     59     31     54     56     98     50     90     31 
+## 
+## $`Obtest Sole`
+##     CC     OH     DT     HL HL_Biv     OG     EM     OB     FG     FS 
+##     65     62     59    125     54     56     65     50     90     31 
+## 
+## $`Octadecyl Bee`
+##     CC     OH     DT     HL HL_Biv     OG     EM     OB     FG     FS 
+##     65     62     59    125     54     56     98      4     90     31 
+## 
+## $`Octose Hedgehog`
+##     CC     OH     DT     HL HL_Biv     OG     EM     OB     FG     FS 
+##     65      9     59    125     54     56     98     50     90     31 
+## 
+## $`Oda Camel`
+##     CC     OH     DT     HL HL_Biv     OG     EM     OB     FG     FS 
+##     65     62     59     57     54     56     98     50     90     31 
+## 
+## $`Oda Gayal`
+##     CC     OH     DT     HL HL_Biv     OG     EM     OB     FG     FS 
+##     65     62     59    125     54     56     98     50     79     31 
+## 
+## $`Odso Coyote`
+##     CC     OH     DT     HL HL_Biv     OG     EM     OB     FG     FS 
+##     65     62     59     22     54     56     64     50     61     16 
+## 
+## $`Odso Eagle`
+##     CC     OH     DT     HL HL_Biv     OG     EM     OB     FG     FS 
+##     65     62     59     46     54      4      4     50     26     31 
 ## 
 ## $`Offcast Goose`
-##  [1]  58 125  54  62  65  31  50  90  98  56</code></pre>
+##     CC     OH     DT     HL HL_Biv     OG     EM     OB     FG     FS 
+##     65     62     59    125     54     56     98     50     90     31 
+## 
+## $`Ohelo Eel`
+##     CC     OH     DT     HL HL_Biv     OG     EM     OB     FG     FS 
+##     65     62     59    125     54     56     98     50     32     31 
+## 
+## $`Oleose Sloth`
+##     CC     OH     DT     HL HL_Biv     OG     EM     OB     FG     FS 
+##     65     62     59    125     39     56     98     50     90     31 
+## 
+## $`Oogamete Mole`
+##     CC     OH     DT     HL HL_Biv     OG     EM     OB     FG     FS 
+##     55     11     57     17     52     22     97     39     85     30 
+## 
+## $`Ootheca Moth`
+##     CC     OH     DT     HL HL_Biv     OG     EM     OB     FG     FS 
+##     65     62     59    123     54     25     98     41     90     31 
+## 
+## $`Oothecal Eel`
+##     CC     OH     DT     HL HL_Biv     OG     EM     OB     FG     FS 
+##     65     40     59    111     41     56     98     50     90     31 
+## 
+## $`Osmose Sloth`
+##     CC     OH     DT     HL HL_Biv     OG     EM     OB     FG     FS 
+##     65     62     59    125     54     56     67     50     66     31 
+## 
+## $`Oxazole Goose`
+##     CC     OH     DT     HL HL_Biv     OG     EM     OB     FG     FS 
+##     65     62     59    125     54     56     23     50     90     31 
+## 
+## $`Oxy Hedgehog`
+##     CC     OH     DT     HL HL_Biv     OG     EM     OB     FG     FS 
+##     35     62     59    125     54     56     98     50     90     31 
+## 
+## $`Saccade Bee`
+##     CC     OH     DT     HL HL_Biv     OG     EM     OB     FG     FS 
+##     42     62     46     11     51     46     60     34     16     18 
+## 
+## $`Sachem Bobcat`
+##     CC     OH     DT     HL HL_Biv     OG     EM     OB     FG     FS 
+##     65     62     59    125     54     56     34     50     90     31 
+## 
+## $`Safe Gazelle`
+##     CC     OH     DT     HL HL_Biv     OG     EM     OB     FG     FS 
+##     65     44     59    125     54     56     98     50     90     31 
+## 
+## $`Salaam Smelt`
+##     CC     OH     DT     HL HL_Biv     OG     EM     OB     FG     FS 
+##     65     62     59    125     54     56     98     50      3     31 
+## 
+## $`Salable Bee`
+##     CC     OH     DT     HL HL_Biv     OG     EM     OB     FG     FS 
+##     65     62     59     65     54     56     54     50     90     31 
+## 
+## $`Salat Bobcat`
+##     CC     OH     DT     HL HL_Biv     OG     EM     OB     FG     FS 
+##     10      8      1      2      6     56     98     38     90     31 
+## 
+## $`Sambal Sloth`
+##     CC     OH     DT     HL HL_Biv     OG     EM     OB     FG     FS 
+##     65     62     59    125     54     41     98     50     90     31 
+## 
+## $`Scallola Bee`
+##     CC     OH     DT     HL HL_Biv     OG     EM     OB     FG     FS 
+##     65     25     59     35     54     56     71     50     90     31 
+## 
+## $`Scaly Beetle`
+##     CC     OH     DT     HL HL_Biv     OG     EM     OB     FG     FS 
+##     65     19     59    108     20     56     98     24     90     31 
+## 
+## $`Seeable Flea`
+##     CC     OH     DT     HL HL_Biv     OG     EM     OB     FG     FS 
+##     65     62     59     85     54     56     48     50     90     31 
+## 
+## $`Seeable Goat`
+##     CC     OH     DT     HL HL_Biv     OG     EM     OB     FG     FS 
+##     65     62     31    125     54     56     98     50     90     31 
+## 
+## $`Seemable Bass`
+##     CC     OH     DT     HL HL_Biv     OG     EM     OB     FG     FS 
+##     65     62     59     82     54     56     80     50     90     31 
+## 
+## $`Selfheal Bat`
+##     CC     OH     DT     HL HL_Biv     OG     EM     OB     FG     FS 
+##     65     62     59    112     54     56     98     50     90     31 
+## 
+## $`Sellable Boa`
+##     CC     OH     DT     HL HL_Biv     OG     EM     OB     FG     FS 
+##     58     57     53      5     14     34     93     47     86     27 
+## 
+## $`Semball Goat`
+##     CC     OH     DT     HL HL_Biv     OG     EM     OB     FG     FS 
+##     65     62     59    125     35     56     98     10     90     31 
+## 
+## $`Settle Smelt`
+##     CC     OH     DT     HL HL_Biv     OG     EM     OB     FG     FS 
+##     65     62     59    125     30     56     98     50     90     31 
+## 
+## $`Shabble Sole`
+##     CC     OH     DT     HL HL_Biv     OG     EM     OB     FG     FS 
+##     65     62     59     28     54     56     98     50     90     31 
+## 
+## $`Shalt Cattle`
+##     CC     OH     DT     HL HL_Biv     OG     EM     OB     FG     FS 
+##     33     62     59    125     54     56     98     50     90     31 
+## 
+## $`Shammy Stoat`
+##     CC     OH     DT     HL HL_Biv     OG     EM     OB     FG     FS 
+##      6     62     59     21     54     56     98     50     90     31 
+## 
+## $`Shoad Bee`
+##     CC     OH     DT     HL HL_Biv     OG     EM     OB     FG     FS 
+##     65     62     59    125     54     11     17     12     21     31 
+## 
+## $`Shoddy Smelt`
+##     CC     OH     DT     HL HL_Biv     OG     EM     OB     FG     FS 
+##     65     39     30    125     54     56     98     30     90     31 
+## 
+## $`Shole Gazelle`
+##     CC     OH     DT     HL HL_Biv     OG     EM     OB     FG     FS 
+##     65     62     59    125     54     17     40     50     49     31 
+## 
+## $`Shotty Moth`
+##     CC     OH     DT     HL HL_Biv     OG     EM     OB     FG     FS 
+##     65     62     59     25     54     56     98     50     90     31 
+## 
+## $`Small Smelt`
+##     CC     OH     DT     HL HL_Biv     OG     EM     OB     FG     FS 
+##     65     62     59    125     54     56     47     50     90     31 
+## 
+## $`Smeech Clam`
+##     CC     OH     DT     HL HL_Biv     OG     EM     OB     FG     FS 
+##     31     62     59    109     54     37     41     22     59     31 
+## 
+## $`Smeech Sloth`
+##     CC     OH     DT     HL HL_Biv     OG     EM     OB     FG     FS 
+##     65     62     59     40     54     56     98     50     90     31 
+## 
+## $`Smolt Bat`
+##     CC     OH     DT     HL HL_Biv     OG     EM     OB     FG     FS 
+##     65     62     50     61     54     10     29     50     27     31 
+## 
+## $`Smolt Beetle`
+##     CC     OH     DT     HL HL_Biv     OG     EM     OB     FG     FS 
+##     65     62     59    125     54     56     98     50     57     31 
+## 
+## $`Soggy Bat`
+##     CC     OH     DT     HL HL_Biv     OG     EM     OB     FG     FS 
+##     28     23     24     94     13     30     15     50     58      6 
+## 
+## $`Somegate Cat`
+##     CC     OH     DT     HL HL_Biv     OG     EM     OB     FG     FS 
+##     65     62     59    125     54     56     82     15     90     31 
+## 
+## $`Soshed Boa`
+##     CC     OH     DT     HL HL_Biv     OG     EM     OB     FG     FS 
+##     47     46     21     12     40     48     10     35     12     21 
+## 
+## $`Stable Camel`
+##     CC     OH     DT     HL HL_Biv     OG     EM     OB     FG     FS 
+##     38     62     32    125     54     56     98     50     90     31 
+## 
+## $`Staboy Gayal`
+##     CC     OH     DT     HL HL_Biv     OG     EM     OB     FG     FS 
+##     65     62     59    125     54     56     70     50     65     31 
+## 
+## $`Stagy Beetle`
+##     CC     OH     DT     HL HL_Biv     OG     EM     OB     FG     FS 
+##     62     53     17    119     11     23     90     46     89     24 
+## 
+## $`Stagy Cod`
+##     CC     OH     DT     HL HL_Biv     OG     EM     OB     FG     FS 
+##     65     62     59     54     54      8      3     50     22     31 
+## 
+## $`Statable Bat`
+##     CC     OH     DT     HL HL_Biv     OG     EM     OB     FG     FS 
+##     65     62     59    125     54     56     98     50     90      5 
+## 
+## $`Statesboy Cat`
+##     CC     OH     DT     HL HL_Biv     OG     EM     OB     FG     FS 
+##     17     17     59     53     54     44     13     50     68     15 
+## 
+## $`Stomatal Goat`
+##     CC     OH     DT     HL HL_Biv     OG     EM     OB     FG     FS 
+##     65     62     59    125     54     56     63     50     90     31 
+## 
+## $`Stooge Booby`
+##     CC     OH     DT     HL HL_Biv     OG     EM     OB     FG     FS 
+##     65     62     59     70     54     26     49     50     90     31 
+## 
+## $`Table Beetle`
+##     CC     OH     DT     HL HL_Biv     OG     EM     OB     FG     FS 
+##     65     62     59     69     54     56     98     50     90     31 
+## 
+## $`Tabog Smelt`
+##     CC     OH     DT     HL HL_Biv     OG     EM     OB     FG     FS 
+##     19     62     59    125     54     56     98     50     90     31 
+## 
+## $`Talose Smelt`
+##     CC     OH     DT     HL HL_Biv     OG     EM     OB     FG     FS 
+##     65     62     59    100     54     56     98     18     90     31 
+## 
+## $`Tameless Fly`
+##     CC     OH     DT     HL HL_Biv     OG     EM     OB     FG     FS 
+##      8      7     51    124     15     21     94     44     82     29 
+## 
+## $`Tastable Bat`
+##     CC     OH     DT     HL HL_Biv     OG     EM     OB     FG     FS 
+##     63     54     13    118      9     32     92     48     88     23 
+## 
+## $`Tasty Bat`
+##     CC     OH     DT     HL HL_Biv     OG     EM     OB     FG     FS 
+##     65     62     59    125     54     12     31     50     36     31 
+## 
+## $`Tasty Ocelot`
+##     CC     OH     DT     HL HL_Biv     OG     EM     OB     FG     FS 
+##     65     62     59     77     54     56     56     50     23     31 
+## 
+## $`Tat Hedgehog`
+##     CC     OH     DT     HL HL_Biv     OG     EM     OB     FG     FS 
+##     65     62     59     62     54     56     98     50     90     31 
+## 
+## $`Teach Beetle`
+##     CC     OH     DT     HL HL_Biv     OG     EM     OB     FG     FS 
+##     65     62     43     97     38     56     98     50     90     31 
+## 
+## $`Teasable Eel`
+##     CC     OH     DT     HL HL_Biv     OG     EM     OB     FG     FS 
+##     65     62     59    102     54     56     98     50     90     31 
+## 
+## $`Teethy Goose`
+##     CC     OH     DT     HL HL_Biv     OG     EM     OB     FG     FS 
+##     51     14     19    125     54     56     98     50     90     31 
+## 
+## $`Testy Coyote`
+##     CC     OH     DT     HL HL_Biv     OG     EM     OB     FG     FS 
+##     65     62     59    125     54     39     98     50     90     31 
+## 
+## $`Thallodal Cat`
+##     CC     OH     DT     HL HL_Biv     OG     EM     OB     FG     FS 
+##     53     49     59     76     54     45     83     50     80     20 
+## 
+## $`Toastable Fox`
+##     CC     OH     DT     HL HL_Biv     OG     EM     OB     FG     FS 
+##     32     22     29    114     43     43     72     21     63     12 
+## 
+## $`Toshy Cat`
+##     CC     OH     DT     HL HL_Biv     OG     EM     OB     FG     FS 
+##     65     62     59     34     54     56     98     50     90     31 
+## 
+## $`Tylose Moose`
+##     CC     OH     DT     HL HL_Biv     OG     EM     OB     FG     FS 
+##     13     20      5     16      5     56     98     40     90     31 
+## 
+## $`Yabble Goose`
+##     CC     OH     DT     HL HL_Biv     OG     EM     OB     FG     FS 
+##     50     62     59    125     45     56     98     50     90     31 
+## 
+## $`Yex Cheetah`
+##     CC     OH     DT     HL HL_Biv     OG     EM     OB     FG     FS 
+##     65     62     59    125     54     56     46     50     25     31 
+## 
+## $`Zax Cheetah`
+##     CC     OH     DT     HL HL_Biv     OG     EM     OB     FG     FS 
+##     52     51     14    125     54     56     98     50     90     31 
+## 
+## $`Zee Leech`
+##     CC     OH     DT     HL HL_Biv     OG     EM     OB     FG     FS 
+##     65     62     59     56     54     56     98     50     90     31</code></pre>
 <pre class="r"><code># Unweighted
 sort(unlist(lapply(overall_rankings, mean)))</code></pre>
-<pre><code>##     Booze Leech       Loamy Fly   Toastable Fox   Ale Damselfly       Soggy Bat 
-##            11.5            30.2            33.3            33.4            33.5 
-##    Salat Bobcat     Excyst Flea     Cloam Gayal      Soshed Boa     Adlay Stoat 
-##            34.6            35.1            35.4            38.0            38.8 
-##    Godhead Bass      Dale Leech   Mesole Mammal      Odso Eagle    Boost Beetle 
-##            39.3            39.6            40.3            40.3            40.9 
-##       Stagy Cod  Algal Hedgehog   Statesboy Cat    Eldest Leech       Fly Booby 
-##            40.9            41.3            41.4            41.6            41.6 
-##   Glottal Sloth   Chattel Moose    Tastable Bat       Smolt Bat       Beest Bee 
-##            42.3            42.8            43.8            44.1            44.3 
-##   Chalaco Eagle       Shoad Bee      Fable Sole    Tameless Fly     Saccade Bee 
-##            44.6            45.7            46.1            46.1            46.5 
-##       Haec Moth     Calymma Cod    Cest Gazelle   Ambassy Llama       Glazy Fly 
-##            46.7            46.9            47.0            47.2            47.2 
-##   Exhalable Cat    Sellable Boa   Comal Cheetah    Catty Bobcat   Floatable Bee 
-##            47.5            47.7            47.8            48.0            48.3 
-##   Azoxazole Eel    Attest Eagle    Molest Goose     Smeech Clam     Healthy Eel 
-##            48.9            49.3            49.5            49.9            50.9 
-##   Oogamete Mole     Odso Coyote    Fathead Moth   Foeless Stoat    Foldless Fly 
-##            50.9            50.9            50.9            50.9            51.3 
-##    Gabgab Moose    Tylose Moose       Cloam Bee     Cystose Eel    Female Goose 
-##            51.5            51.6            51.6            51.7            52.1 
-##    Bestayed Boa     Emyd Mammal       Doest Cod       Tasty Bat   Becomma Eagle 
-##            52.3            52.4            52.4            52.5            52.7 
-##    Feelable Eel     Last Cattle    Shammy Stoat    Classy Camel    Scallola Bee 
-##            52.9            52.9            53.1            53.3            53.4 
-##    Tasty Ocelot     Mesole Moth    Bal Hedgehog   Fest Hedgehog   Datable Llama 
-##            53.4            53.5            53.8            53.9            54.0 
-##       Adlay Bee   Albahaca Mole    Stagy Beetle   Shole Gazelle    Stooge Booby 
-##            54.1            54.5            54.8            55.2            55.6 
-##      Doodle Fox   Acyloxy Booby    Amomal Llama   Choosy Beetle    Behead Gayal 
-##            56.1            56.2            56.2            56.5            56.6 
-##   Thallodal Cat    Babloh Camel     Cloacal Bee       Last Flea     Egest Gayal 
-##            56.6            56.8            57.0            57.0            57.0 
-##     Yex Cheetah    Scaly Beetle     Ambassy Fox    Fall Gazelle     Salable Bee 
-##            57.3            57.5            57.5            57.9            58.6 
-##    Mystax Stoat    Cottagey Boa     Shotty Moth    Bolete Eagle   Mobbable Flea 
-##            58.8            58.8            59.0            59.0            59.1 
+<pre><code>##     Booze Leech   Ale Damselfly      Soshed Boa    Eldest Leech       Loamy Fly 
+##            13.8            28.5            29.2            31.0            31.1 
+##    Salat Bobcat       Soggy Bat     Excyst Flea     Cloam Gayal    Tylose Moose 
+##            34.0            34.1            35.2            36.0            37.4 
+##     Saccade Bee   Statesboy Cat     Adlay Stoat    Godhead Bass      Dale Leech 
+##            38.6            39.0            39.1            39.4            39.7 
+##      Odso Eagle    Boost Beetle       Stagy Cod       Fly Booby   Mesole Mammal 
+##            40.1            40.2            40.8            41.7            41.8 
+##   Chattel Moose   Glottal Sloth       Smolt Bat      Fable Sole   Azoxazole Eel 
+##            42.7            43.3            43.9            44.0            44.1 
+##   Chalaco Eagle       Beest Bee   Toastable Fox       Shoad Bee  Algal Hedgehog 
+##            44.2            44.4            45.1            45.7            46.3 
+##   Oogamete Mole   Ambassy Llama       Haec Moth    Sellable Boa   Exhalable Cat 
+##            46.5            47.1            47.3            47.4            47.4 
+##    Tameless Fly    Cest Gazelle   Comal Cheetah       Glazy Fly    Foldless Fly 
+##            47.5            47.7            47.7            48.0            48.6 
+##   Floatable Bee    Molest Goose    Attest Eagle     Smeech Clam     Healthy Eel 
+##            48.6            48.7            49.2            50.5            50.7 
+##    Fathead Moth   Foeless Stoat     Odso Coyote     Emyd Mammal    Gabgab Moose 
+##            50.8            50.8            50.9            51.5            51.6 
+##       Cloam Bee     Cystose Eel    Female Goose    Bestayed Boa       Doest Cod 
+##            51.7            51.7            52.1            52.2            52.4 
+##       Tasty Bat    Shammy Stoat   Becomma Eagle     Last Cattle     Mesole Moth 
+##            52.5            52.7            52.7            52.8            52.9 
+##    Feelable Eel    Classy Camel    Tasty Ocelot    Stagy Beetle    Scallola Bee 
+##            53.2            53.2            53.3            53.4            53.6 
+##   Fest Hedgehog    Tastable Bat   Datable Llama   Albahaca Mole       Adlay Bee 
+##            53.8            54.0            54.0            54.5            54.7 
+##   Shole Gazelle    Close Mammal    Bal Hedgehog    Stooge Booby      Doodle Fox 
+##            55.2            55.5            55.6            55.6            56.1 
+##   Acyloxy Booby   Choosy Beetle    Babloh Camel   Thallodal Cat    Scaly Beetle 
+##            56.2            56.4            56.7            56.9            57.0 
+##    Amomal Llama     Cloacal Bee       Last Flea     Egest Gayal     Calymma Cod 
+##            57.0            57.0            57.0            57.0            57.2 
+##     Yex Cheetah     Ambassy Fox    Catty Bobcat     Salable Bee    Teethy Goose 
+##            57.3            57.5            57.6            58.6            58.8 
+##    Cottagey Boa     Shotty Moth    Bolete Eagle   Helmless Flea   Mobbable Flea 
+##            58.8            59.0            59.0            59.1            59.1 
 ##     Locable Dog    Shabble Sole       Flosh Bat   Obsolete Flea       Toshy Cat 
 ##            59.2            59.3            59.5            59.6            59.9 
-##  Emblossom Moth    Seeable Flea     Megohm Toad    Mescal Leech   Boatable Clam 
-##            59.9            60.0            60.1            60.1            60.1 
-##   Cacodoxy Mole    Salaam Smelt     Fledge Goat    Mallee Smelt    Smeech Sloth 
-##            60.2            60.2            60.3            60.4            60.5 
-##  Fathom Gazelle    Chatsome Eel    Teethy Goose    Leadable Eel   Callable Flea 
-##            60.5            60.9            60.9            60.9            61.0 
-##       Mesh Toad      Hemal Toad     Zax Cheetah    Leasable Eel    Bless Cattle 
-##            61.0            61.1            61.2            61.2            61.3 
-##     Medal Goose       Hoggy Cat     Delete Bass   Oxazole Goose    Foothalt Fly 
-##            61.3            61.3            61.4            61.4            61.5 
-##     Cotty Leech      Hosel Bass    Loadless Cat     Dagoba Moth     Bombo Eagle 
-##            61.5            61.6            61.7            61.7            61.8 
-##       Zee Leech    Goosy Beetle       Oda Camel       Eclat Fly    Lob Hedgehog 
-##            62.1            62.1            62.2            62.3            62.3 
-##    Effable Goat    Teach Beetle    Azoxy Beetle     Momble Goat   Sachem Bobcat 
-##            62.3            62.4            62.4            62.5            62.5 
-##   Gageable Flea    Tat Hedgehog    Hoose Bobcat    Oothecal Eel  Cymbalo Coyote 
-##            62.6            62.7            62.7            62.8            62.8 
-##    Melasma Mole     Lathy Smelt   Helmless Flea   Effable Stoat    Bobble Booby 
-##            62.9            63.0            63.1            63.1            63.2 
-##       Ohelo Eel    Stable Camel     Albetad Eel    Talose Smelt    Lofty Mammal 
-##            63.2            63.3            63.3            63.3            63.3 
-##    Table Beetle   Seemable Bass       Agee Mole Octose Hedgehog    Gest Cheetah 
+##    Seeable Flea  Emblossom Moth   Gageable Flea     Megohm Toad   Cacodoxy Mole 
+##            60.0            60.0            60.1            60.1            60.2 
+##    Mescal Leech   Boatable Clam     Fledge Goat    Salaam Smelt    Mallee Smelt 
+##            60.2            60.2            60.3            60.3            60.4 
+##    Bless Cattle    Smeech Sloth  Fathom Gazelle    Chatsome Eel   Callable Flea 
+##            60.5            60.5            60.6            61.0            61.0 
+##      Hemal Toad     Medal Goose       Mesh Toad     Delete Bass   Oxazole Goose 
+##            61.1            61.3            61.3            61.4            61.5 
+##      Hosel Bass    Leadable Eel     Cotty Leech    Loadless Cat    Shoddy Smelt 
+##            61.6            61.6            61.6            61.7            61.8 
+##     Dagoba Moth    Foothalt Fly     Bombo Eagle     Zax Cheetah       Zee Leech 
+##            61.8            61.9            61.9            62.1            62.1 
+##    Leasable Eel       Oda Camel    Lob Hedgehog       Eclat Fly    Azoxy Beetle 
+##            62.1            62.2            62.2            62.3            62.4 
+##     Momble Goat   Sachem Bobcat    Tat Hedgehog    Melasma Mole   Seemable Bass 
+##            62.5            62.6            62.7            62.9            62.9 
+##    Teach Beetle   Effable Stoat    Semball Goat     Lathy Smelt    Mystax Stoat 
+##            63.0            63.1            63.1            63.1            63.2 
+##  Cymbalo Coyote       Ohelo Eel     Albetad Eel    Talose Smelt    Table Beetle 
+##            63.2            63.2            63.3            63.3            63.4 
+##    Hoose Bobcat    Effable Goat       Agee Mole    Messe Mammal    Osmose Sloth 
 ##            63.4            63.4            63.4            63.5            63.5 
-##    Osmose Sloth      Commot Dog   Decollete Fly    Leech Beetle    Boxy Gazelle 
-##            63.5            63.6            63.6            63.7            63.7 
-##   Ashamed Eagle     Tabog Smelt    Somegate Cat    Faff Cheetah    Staboy Gayal 
-##            63.7            63.7            63.7            63.7            63.7 
-##    Hoodshy Toad    Semball Goat     Small Smelt    Elatcha Toad    Shoddy Smelt 
-##            63.8            63.8            63.8            63.9            63.9 
-##      Loathe Fox    Asbest Smelt      Eme Cattle     Affable Cod    Choosy Sloth 
-##            64.0            64.0            64.0            64.1            64.2 
-##     Mete Bobcat   Caddle Bobcat   Octadecyl Bee    Masoola Moth    Close Mammal 
-##            64.3            64.3            64.3            64.4            64.4 
-##  Beggable Moose    Dyeable Flea    Haggaday Cod     Bebog Smelt      Hamble Fox 
-##            64.5            64.7            64.8            64.8            64.9 
-##    Gemeled Flea    Dashy Beetle   Bedabble Toad    Ootheca Moth    Bafta Beetle 
-##            65.0            65.0            65.0            65.1            65.1 
-##    Shalt Cattle   Coestate Clam    Bafta Cattle    Lactam Smelt    Messe Mammal 
-##            65.1            65.2            65.2            65.3            65.3 
-##    Oxy Hedgehog   Stomatal Goat  Lactam Gazelle    Settle Smelt    Aldose Booby 
-##            65.3            65.4            65.6            65.6            65.6 
-##    Leafless Boa     Obtest Sole    Smolt Beetle      Gobble Eel    Leadable Boa 
-##            65.6            65.6            65.7            65.7            65.9 
-##    Goodsome Eel    Malady Moose   Flathat Stoat    Eatable Clam    Seeable Goat 
-##            66.0            66.0            66.0            66.0            66.1 
-##   Bolete Mammal    Cabal Cattle    Caecal Booby    Fleysome Cod    Statable Bat 
-##            66.2            66.3            66.3            66.3            66.3 
-##    Oleose Sloth    Yabble Goose    Boxy Cheetah    Fathead Flea    Faceable Eel 
-##            66.4            66.4            66.4            66.5            66.6 
-##    Bloody Eagle    Baldhead Boa    Coscet Goose    Gala Cheetah    Mesh Gazelle 
-##            66.8            66.8            66.8            66.8            66.9 
-##    Haggaday Bee    Teasable Eel  Hebdomad Leech    Safe Gazelle     Daghesh Cod 
+##    Stable Camel      Commot Dog    Bobble Booby Octose Hedgehog    Faff Cheetah 
+##            63.6            63.6            63.6            63.7            63.7 
+##    Staboy Gayal   Decollete Fly    Behead Gayal    Boxy Gazelle    Somegate Cat 
+##            63.7            63.7            63.8            63.8            63.9 
+##     Small Smelt      Loathe Fox    Lofty Mammal    Gest Cheetah      Eme Cattle 
+##            63.9            64.0            64.0            64.0            64.0 
+##    Oothecal Eel   Ashamed Eagle     Affable Cod    Asbest Smelt     Mete Bobcat 
+##            64.1            64.1            64.1            64.2            64.3 
+##   Caddle Bobcat    Choosy Sloth    Hoodshy Toad     Tabog Smelt   Octadecyl Bee 
+##            64.3            64.3            64.4            64.4            64.4 
+##    Leech Beetle  Beggable Moose     Daghesh Cod    Dyeable Flea    Elatcha Toad 
+##            64.5            64.5            64.5            64.7            64.8 
+##    Ootheca Moth    Gemeled Flea      Hamble Fox     Bebog Smelt    Goosy Beetle 
+##            64.8            64.9            64.9            64.9            65.0 
+##    Haggaday Cod   Bedabble Toad    Bafta Beetle    Dashy Beetle   Coestate Clam 
+##            65.0            65.0            65.1            65.1            65.2 
+##    Baldhead Boa    Aldose Booby   Stomatal Goat  Lactam Gazelle    Smolt Beetle 
+##            65.3            65.5            65.5            65.6            65.7 
+##     Obtest Sole    Masoola Moth    Goodsome Eel    Shalt Cattle      Gobble Eel 
+##            65.7            65.8            65.8            65.8            65.8 
+##    Leadable Boa    Acyloxy Clam    Bafta Cattle    Caecal Booby    Oxy Hedgehog 
+##            65.9            65.9            65.9            66.0            66.0 
+##    Leafless Boa   Flathat Stoat    Eatable Clam    Seeable Goat    Lactam Smelt 
+##            66.1            66.1            66.1            66.2            66.2 
+##    Malady Moose    Fall Gazelle   Bolete Mammal    Statable Bat    Settle Smelt 
+##            66.2            66.3            66.3            66.4            66.6 
+##    Yabble Goose    Teasable Eel  Hebdomad Leech    Amethyst Cod    Fleysome Cod 
+##            66.6            66.7            66.7            66.8            66.8 
+##    Gala Cheetah    Cabal Cattle    Coscet Goose    Boxy Cheetah    Haggaday Bee 
 ##            66.9            67.0            67.0            67.0            67.0 
-##    Amethyst Eel    Acyloxy Clam   Malaxable Fox    Doghead Bass    Testy Coyote 
-##            67.1            67.1            67.1            67.2            67.2 
-##    Amethyst Cod    Dotal Ocelot    Gladeye Moth    Mobable Bass    Sambal Sloth 
-##            67.3            67.3            67.3            67.4            67.4 
-##       Chose Dog    Selfheal Bat    Ghetto Camel      Bold Stoat       Oda Gayal 
-##            67.5            67.6            67.6            67.7            67.9 
-##  Delegable Toad    Loessal Flea   Offcast Goose 
-##            68.7            68.7            68.9</code></pre>
+##    Amethyst Eel    Faceable Eel    Safe Gazelle    Mesh Gazelle   Malaxable Fox 
+##            67.1            67.1            67.2            67.2            67.2 
+##    Bloody Eagle    Fathead Flea    Dotal Ocelot    Testy Coyote    Mobable Bass 
+##            67.3            67.3            67.3            67.3            67.4 
+##    Gladeye Moth    Oleose Sloth    Doghead Bass       Chose Dog    Sambal Sloth 
+##            67.4            67.5            67.5            67.5            67.5 
+##      Bold Stoat    Selfheal Bat       Hoggy Cat    Ghetto Camel       Oda Gayal 
+##            67.6            67.7            67.7            67.8            67.9 
+##    Loessal Flea  Delegable Toad   Offcast Goose 
+##            68.8            68.9            69.0</code></pre>
 <pre class="r"><code># Weighted
 sort(unlist(lapply(overall_rankings, function(x) mean(rep(unlist(x), contest_weights)))))</code></pre>
-<pre><code>##     Cloam Gayal    Salat Bobcat     Booze Leech    Boost Beetle   Toastable Fox 
-##        13.57085        13.79352        14.91296        25.05466        25.33401 
-##    Tastable Bat   Glottal Sloth   Ale Damselfly     Excyst Flea    Catty Bobcat 
-##        26.39271        26.69231        30.50202        31.35425        32.70040 
-##       Loamy Fly     Calymma Cod    Cest Gazelle    Gabgab Moose       Soggy Bat 
-##        33.12551        33.98988        34.21862        34.92713        35.56478 
-##    Sellable Boa    Foldless Fly    Bal Hedgehog    Eldest Leech    Tylose Moose 
-##        35.70850        38.24696        39.58300        40.77126        43.22672 
-##    Shammy Stoat   Floatable Bee   Oogamete Mole       Adlay Bee      Fable Sole 
-##        43.73279        44.22672        44.25304        44.44130        44.84615 
-##   Statesboy Cat    Behead Gayal     Mesole Moth    Tameless Fly   Chalaco Eagle 
-##        45.10729        45.25101        45.55466        45.63765        46.07085 
-##   Mesole Mammal     Odso Coyote   Chattel Moose      Dale Leech    Scallola Bee 
-##        46.68421        46.70850        46.86235        47.40891        47.74899 
-##    Fall Gazelle    Molest Goose      Soshed Boa    Feelable Eel       Fly Booby 
-##        47.88259        47.97571        48.26518        48.59109        49.04049 
-##   Ambassy Llama    Godhead Bass    Cottagey Boa   Fest Hedgehog     Shotty Moth 
-##        49.19636        49.67409        49.70445        49.87652        50.10931 
-##    Female Goose   Mobbable Flea    Shabble Sole       Glazy Fly      Odso Eagle 
-##        50.29555        50.31174        50.71660        50.76721        50.92510 
-##       Flosh Bat    Bestayed Boa   Obsolete Flea   Exhalable Cat  Algal Hedgehog 
-##        51.12146        51.22065        51.32389        51.57490        51.68421 
-##   Comal Cheetah       Toshy Cat    Stagy Beetle   Azoxazole Eel     Megohm Toad 
-##        51.79757        51.93117        52.00405        52.11336        52.33603 
-##       Stagy Cod   Cacodoxy Mole       Smolt Bat    Mallee Smelt    Smeech Sloth 
-##        52.46356        52.53846        52.81377        52.94332        53.14575 
-##       Cloam Bee   Choosy Beetle     Saccade Bee     Last Cattle    Fathead Moth 
-##        53.23887        53.51619        53.53644        53.54656        53.98988 
-##     Adlay Stoat   Callable Flea    Bless Cattle     Medal Goose     Delete Bass 
-##        54.00000        54.15789        54.76518        54.76518        54.96761 
-##    Mystax Stoat      Hosel Bass    Attest Eagle    Scaly Beetle    Loadless Cat 
-##        55.37247        55.37247        55.53036        55.55466        55.57490 
-##   Thallodal Cat       Zee Leech     Locable Dog    Classy Camel       Oda Camel 
-##        56.07287        56.38462        56.48583        56.56073        56.58704 
-##      Doodle Fox       Eclat Fly    Teach Beetle    Azoxy Beetle     Momble Goat 
-##        56.77328        56.78947        56.99190        56.99190        57.19433 
-##     Emyd Mammal     Salable Bee     Zax Cheetah    Tat Hedgehog    Melasma Mole 
-##        57.38259        57.49393        57.59919        57.59919        58.00405 
-##     Healthy Eel    Stooge Booby     Fledge Goat   Effable Stoat    Tasty Ocelot 
-##        58.10526        58.12146        58.14170        58.40891        58.48583 
-##    Lob Hedgehog    Bolete Eagle   Foeless Stoat    Table Beetle   Gageable Flea 
-##        58.81377        58.86235        58.97773        59.01619        59.31984 
-##      Commot Dog    Boxy Gazelle    Babloh Camel     Smeech Clam    Effable Goat 
-##        59.42105        59.62348        59.77733        59.78340        60.02834 
-##       Haec Moth   Helmless Flea    Oothecal Eel      Loathe Fox    Teethy Goose 
-##        60.06680        60.12955        60.12955        60.23077        60.43320 
-##   Acyloxy Booby       Beest Bee    Goosy Beetle     Mete Bobcat     Albetad Eel 
-##        60.45749        60.66397        60.73684        60.83806        60.86235 
-##    Amomal Llama    Masoola Moth    Close Mammal   Seemable Bass    Seeable Flea 
-##        60.91498        61.04049        61.04049        61.43725        61.44534 
-##    Dyeable Flea    Stable Camel    Haggaday Cod    Chatsome Eel      Hamble Fox 
-##        61.64777        61.85020        61.85020        62.01215        62.05263 
-##    Gemeled Flea    Leasable Eel    Bafta Beetle   Coestate Clam   Caddle Bobcat 
-##        62.25506        62.35628        62.45749        62.65992        62.70040 
-##    Elatcha Toad    Lactam Smelt  Lactam Gazelle    Settle Smelt  Beggable Moose 
-##        62.86235        62.86235        63.46964        63.46964        63.47773 
-##    Leech Beetle  Cymbalo Coyote    Talose Smelt    Leadable Boa    Leadable Eel 
-##        63.67206        63.97571        63.99595        64.07692        64.11741 
-##    Lofty Mammal    Goodsome Eel    Hoodshy Toad    Bobble Booby    Hoose Bobcat 
-##        64.15789        64.27935        64.36032        64.38057        64.40486 
-##    Seeable Goat Octose Hedgehog    Gest Cheetah    Cabal Cattle    Caecal Booby 
-##        64.48178        64.68421        64.68421        64.88664        64.88664 
-##     Tabog Smelt    Oleose Sloth    Foothalt Fly       Shoad Bee    Messe Mammal 
-##        64.88664        65.08907        65.21053        65.32996        65.61538 
-##    Bloody Eagle    Baldhead Boa    Teasable Eel  Hebdomad Leech    Shalt Cattle 
-##        65.89879        65.89879        66.30364        66.30364        66.30364 
-##    Bafta Cattle   Ashamed Eagle    Semball Goat    Amethyst Eel    Acyloxy Clam 
-##        66.40486        66.41700        66.46559        66.50607        66.50607 
-##    Oxy Hedgehog    Shoddy Smelt    Yabble Goose    Leafless Boa    Aldose Booby 
-##        66.50607        66.66802        66.70850        66.80972        66.87045 
-##     Cystose Eel    Amethyst Cod    Asbest Smelt   Becomma Eagle    Malady Moose 
-##        66.87854        66.91093        67.06073        67.09514        67.21457 
-##   Flathat Stoat       Doest Cod       Tasty Bat    Selfheal Bat    Fleysome Cod 
-##        67.21457        67.39879        67.43927        67.51822        67.51822 
-##    Statable Bat    Boxy Cheetah   Datable Llama   Albahaca Mole    Faceable Eel 
-##        67.51822        67.61943        67.71862        67.79352        67.82186 
-##     Cloacal Bee     Yex Cheetah       Last Flea   Shole Gazelle     Egest Gayal 
-##        67.87045        67.88259        67.89474        67.92510        67.94332 
-##     Ambassy Fox    Coscet Goose    Mescal Leech    Salaam Smelt    Safe Gazelle 
-##        67.99393        68.02429        68.19028        68.21255        68.22672 
-##     Daghesh Cod    Choosy Sloth  Fathom Gazelle   Octadecyl Bee       Mesh Toad 
-##        68.22672        68.24696        68.27935        68.28745        68.39069 
-##      Hemal Toad    Doghead Bass    Somegate Cat       Hoggy Cat    Dashy Beetle 
-##        68.41296        68.42915        68.45749        68.45749        68.57085 
-##  Emblossom Moth   Boatable Clam       Ohelo Eel       Agee Mole   Oxazole Goose 
-##        68.69231        68.74899        68.88057        68.92510        68.93522 
-##     Cotty Leech     Dagoba Moth    Faff Cheetah     Bombo Eagle      Eme Cattle 
-##        68.95142        68.98381        68.99190        69.00000        69.05870 
-##     Affable Cod   Sachem Bobcat    Osmose Sloth    Staboy Gayal    Fathead Flea 
-##        69.08097        69.11336        69.13563        69.16194        69.17814 
-##     Lathy Smelt   Bedabble Toad     Small Smelt    Mesh Gazelle    Smolt Beetle 
-##        69.19433        69.28138        69.32389        69.34008        69.43725 
-##    Ootheca Moth   Stomatal Goat   Decollete Fly     Obtest Sole      Gobble Eel 
-##        69.55263        69.58300        69.61336        69.61538        69.63158 
-##     Bebog Smelt  Delegable Toad    Dotal Ocelot   Malaxable Fox    Gala Cheetah 
-##        69.73482        69.74494        69.79352        69.80364        69.80972 
-##    Mobable Bass    Haggaday Bee       Chose Dog    Eatable Clam    Ghetto Camel 
-##        69.81579        69.82591        69.83806        69.85628        69.86032 
-##   Bolete Mammal      Bold Stoat       Oda Gayal    Testy Coyote    Gladeye Moth 
-##        69.87652        69.88259        69.92713        69.97773        69.98785 
-##    Sambal Sloth    Loessal Flea   Offcast Goose 
-##        69.99798        70.12955        70.14980</code></pre>
+<pre><code>##    Salat Bobcat     Booze Leech     Cloam Gayal    Tylose Moose    Eldest Leech 
+##        13.60241        14.08434        15.40964        18.95181        21.19277 
+##   Ale Damselfly     Excyst Flea    Boost Beetle      Soshed Boa    Cest Gazelle 
+##        22.83133        29.98795        33.12048        34.08434        34.56627 
+##       Soggy Bat      Fable Sole   Azoxazole Eel   Glottal Sloth   Statesboy Cat 
+##        34.62651        35.14458        35.91566        36.65060        37.84337 
+##    Tameless Fly    Feelable Eel    Foldless Fly      Dale Leech   Oogamete Mole 
+##        38.46988        40.06024        40.49398        41.40964        41.44578 
+##     Adlay Stoat    Shammy Stoat       Loamy Fly     Saccade Bee    Sellable Boa 
+##        41.50602        41.50602        42.22892        42.38554        42.68675 
+##     Mesole Moth   Toastable Fox    Gabgab Moose   Mesole Mammal       Adlay Bee 
+##        43.79518        44.98795        45.60241        46.30120        46.61446 
+##    Catty Bobcat    Molest Goose       Beest Bee   Chalaco Eagle    Scallola Bee 
+##        47.77108        47.93976        49.93976        50.37349        50.85542 
+##    Close Mammal   Helmless Flea    Bal Hedgehog    Tastable Bat   Chattel Moose 
+##        51.24096        51.31325        51.38554        52.15663        52.25301 
+##    Godhead Bass    Stagy Beetle       Glazy Fly     Locable Dog    Teethy Goose 
+##        52.32530        52.36145        52.37349        52.49398        52.54217 
+##   Floatable Bee      Odso Eagle   Gageable Flea       Fly Booby     Odso Coyote 
+##        52.74699        53.02410        53.40964        53.49398        54.16867 
+##     Healthy Eel       Stagy Cod   Ambassy Llama       Smolt Bat   Exhalable Cat 
+##        54.24096        54.25301        54.39759        54.59036        54.78313 
+##       Cloam Bee   Comal Cheetah    Amomal Llama    Classy Camel    Female Goose 
+##        54.95181        55.00000        55.36145        55.48193        55.48193 
+##    Scaly Beetle   Fest Hedgehog    Cottagey Boa    Bestayed Boa     Shotty Moth 
+##        55.50602        55.53012        56.01205        56.22892        56.30120 
+##   Mobbable Flea     Emyd Mammal     Smeech Clam    Leasable Eel    Shabble Sole 
+##        56.44578        56.48193        56.54217        56.59036        56.73494 
+##  Cymbalo Coyote       Flosh Bat   Obsolete Flea   Thallodal Cat     Calymma Cod 
+##        56.78313        57.02410        57.16867        57.32530        57.44578 
+##       Toshy Cat    Bobble Booby     Last Cattle     Megohm Toad    Bless Cattle 
+##        57.60241        57.74699        57.81928        57.89157        57.91566 
+##    Fathead Moth    Attest Eagle   Cacodoxy Mole     Zax Cheetah    Mallee Smelt 
+##        57.93976        58.01205        58.03614        58.18072        58.32530 
+##   Choosy Beetle    Smeech Sloth   Callable Flea    Lob Hedgehog     Medal Goose 
+##        58.32530        58.46988        59.19277        59.28916        59.62651 
+##     Tabog Smelt    Stable Camel     Delete Bass     Daghesh Cod      Hosel Bass 
+##        59.67470        59.69880        59.77108        59.91566        60.06024 
+##    Stooge Booby    Loadless Cat    Leadable Eel    Mystax Stoat   Foeless Stoat 
+##        60.18072        60.20482        60.30120        60.39759        60.39759 
+##    Gest Cheetah       Haec Moth       Zee Leech      Doodle Fox       Oda Camel 
+##        60.44578        60.71084        60.78313        60.78313        60.92771 
+##     Salable Bee       Eclat Fly    Tasty Ocelot    Azoxy Beetle     Momble Goat 
+##        61.02410        61.07229        61.19277        61.21687        61.36145 
+##    Shoddy Smelt    Tat Hedgehog     Fledge Goat    Teach Beetle    Chatsome Eel 
+##        61.50602        61.65060        61.67470        61.69880        61.74699 
+## Octose Hedgehog    Effable Goat    Melasma Mole    Bolete Eagle   Effable Stoat 
+##        61.81928        61.91566        61.93976        61.96386        62.22892 
+##    Babloh Camel   Acyloxy Booby    Table Beetle  Algal Hedgehog      Commot Dog 
+##        62.37349        62.61446        62.66265        62.72289        62.95181 
+##    Foothalt Fly    Shalt Cattle    Oothecal Eel    Behead Gayal    Boxy Gazelle 
+##        62.97590        63.04819        63.14458        63.24096        63.24096 
+##    Bafta Cattle    Dyeable Flea      Loathe Fox    Oxy Hedgehog    Elatcha Toad 
+##        63.28916        63.50602        63.53012        63.53012        63.67470 
+##    Seeable Flea    Leafless Boa    Gemeled Flea     Albetad Eel     Mete Bobcat 
+##        63.77108        63.77108        63.84337        63.84337        63.96386 
+##       Shoad Bee   Seemable Bass    Goosy Beetle      Hamble Fox   Ashamed Eagle 
+##        64.06024        64.10843        64.51807        64.83133        64.95181 
+##    Haggaday Cod    Bafta Beetle   Caddle Bobcat   Coestate Clam    Baldhead Boa 
+##        64.97590        65.12048        65.16867        65.26506        65.40964 
+##    Messe Mammal    Fleysome Cod    Leadable Boa    Masoola Moth  Beggable Moose 
+##        65.45783        65.45783        65.53012        65.55422        65.69880 
+##       Doest Cod       Tasty Bat  Lactam Gazelle    Yabble Goose    Asbest Smelt 
+##        65.72289        65.72289        65.84337        65.84337        65.84337 
+##    Boxy Cheetah    Seeable Goat    Hoodshy Toad    Malady Moose    Goodsome Eel 
+##        65.93976        66.03614        66.03614        66.03614        66.13253 
+##   Datable Llama    Faceable Eel    Acyloxy Clam   Albahaca Mole    Talose Smelt 
+##        66.13253        66.18072        66.27711        66.30120        66.37349 
+##    Caecal Booby   Shole Gazelle     Cystose Eel    Lactam Smelt   Becomma Eagle 
+##        66.42169        66.49398        66.59036        66.71084        66.83133 
+##    Fall Gazelle    Semball Goat    Leech Beetle    Hoose Bobcat    Settle Smelt 
+##        66.85542        67.04819        67.07229        67.24096        67.28916 
+##    Coscet Goose    Teasable Eel  Hebdomad Leech    Lofty Mammal    Amethyst Eel 
+##        67.38554        67.43373        67.43373        67.50602        67.55422 
+##    Amethyst Cod    Safe Gazelle    Cabal Cattle     Cloacal Bee       Last Flea 
+##        67.57831        67.72289        67.86747        67.86747        67.86747 
+##     Egest Gayal    Bloody Eagle     Yex Cheetah     Ambassy Fox   Decollete Fly 
+##        67.86747        67.89157        67.93976        67.98795        68.20482 
+##    Doghead Bass   Boatable Clam    Oleose Sloth  Emblossom Moth    Mescal Leech 
+##        68.22892        68.54217        68.59036        68.59036        68.63855 
+##    Salaam Smelt    Aldose Booby  Fathom Gazelle    Ootheca Moth     Bebog Smelt 
+##        68.66265        68.71084        68.73494        68.75904        68.78313 
+##      Hemal Toad    Selfheal Bat       Mesh Toad   Oxazole Goose     Cotty Leech 
+##        68.85542        68.87952        68.90361        68.95181        68.97590 
+##     Dagoba Moth     Bombo Eagle   Sachem Bobcat     Lathy Smelt       Ohelo Eel 
+##        69.02410        69.04819        69.21687        69.33735        69.36145 
+##    Eatable Clam       Agee Mole    Osmose Sloth   Bolete Mammal    Faff Cheetah 
+##        69.36145        69.40964        69.43373        69.45783        69.48193 
+##    Staboy Gayal    Somegate Cat     Small Smelt      Eme Cattle     Affable Cod 
+##        69.48193        69.53012        69.53012        69.55422        69.57831 
+##    Choosy Sloth   Octadecyl Bee   Bedabble Toad    Dashy Beetle   Stomatal Goat 
+##        69.62651        69.65060        69.79518        69.81928        69.91566 
+##    Testy Coyote    Smolt Beetle     Obtest Sole      Gobble Eel    Gladeye Moth 
+##        69.93976        69.96386        69.96386        69.98795        69.98795 
+##    Sambal Sloth    Gala Cheetah    Haggaday Bee    Mesh Gazelle   Malaxable Fox 
+##        70.03614        70.25301        70.27711        70.32530        70.32530 
+##    Fathead Flea    Dotal Ocelot    Mobable Bass       Chose Dog   Flathat Stoat 
+##        70.34940        70.34940        70.37349        70.39759        70.40964 
+##      Bold Stoat    Statable Bat       Hoggy Cat    Ghetto Camel       Oda Gayal 
+##        70.42169        70.44578        70.44578        70.46988        70.49398 
+##  Delegable Toad    Loessal Flea   Offcast Goose 
+##        70.59036        70.66265        70.75904</code></pre>
 <pre class="r"><code># Example of weights applied to ranks
 rep(unlist(overall_rankings[1]), contest_weights)</code></pre>
-<pre><code>##  Cloam Gayal1  Cloam Gayal1  Cloam Gayal1  Cloam Gayal1  Cloam Gayal1 
-##             1             1             1             1             1 
-##  Cloam Gayal1  Cloam Gayal1  Cloam Gayal1  Cloam Gayal1  Cloam Gayal1 
-##             1             1             1             1             1 
-##  Cloam Gayal1  Cloam Gayal1  Cloam Gayal1  Cloam Gayal1  Cloam Gayal1 
-##             1             1             1             1             1 
-##  Cloam Gayal1  Cloam Gayal1  Cloam Gayal1  Cloam Gayal1  Cloam Gayal1 
-##             1             1             1             1             1 
-##  Cloam Gayal1  Cloam Gayal1  Cloam Gayal1  Cloam Gayal1  Cloam Gayal1 
-##             1             1             1             1             1 
-##  Cloam Gayal1  Cloam Gayal1  Cloam Gayal1  Cloam Gayal1  Cloam Gayal1 
-##             1             1             1             1             1 
-##  Cloam Gayal1  Cloam Gayal1  Cloam Gayal1  Cloam Gayal1  Cloam Gayal1 
-##             1             1             1             1             1 
-##  Cloam Gayal1  Cloam Gayal1  Cloam Gayal1  Cloam Gayal1  Cloam Gayal1 
-##             1             1             1             1             1 
-##  Cloam Gayal1  Cloam Gayal1  Cloam Gayal1  Cloam Gayal1  Cloam Gayal1 
-##             1             1             1             1             1 
-##  Cloam Gayal1  Cloam Gayal1  Cloam Gayal1  Cloam Gayal1  Cloam Gayal1 
-##             1             1             1             1             1 
-##  Cloam Gayal1  Cloam Gayal1  Cloam Gayal1  Cloam Gayal1  Cloam Gayal1 
-##             1             1             1             1             1 
-##  Cloam Gayal1  Cloam Gayal1  Cloam Gayal1  Cloam Gayal1  Cloam Gayal1 
-##             1             1             1             1             1 
-##  Cloam Gayal1  Cloam Gayal1  Cloam Gayal1  Cloam Gayal1  Cloam Gayal1 
-##             1             1             1             1             1 
-##  Cloam Gayal1  Cloam Gayal1  Cloam Gayal1  Cloam Gayal1  Cloam Gayal1 
-##             1             1             1             1             1 
-##  Cloam Gayal1  Cloam Gayal1  Cloam Gayal1  Cloam Gayal1  Cloam Gayal1 
-##             1             1             1             1             1 
-##  Cloam Gayal1  Cloam Gayal1  Cloam Gayal1  Cloam Gayal1  Cloam Gayal1 
-##             1             1             1             1             1 
-##  Cloam Gayal1  Cloam Gayal1  Cloam Gayal1  Cloam Gayal1  Cloam Gayal1 
-##             1             1             1             1             1 
-##  Cloam Gayal1  Cloam Gayal1  Cloam Gayal1  Cloam Gayal1  Cloam Gayal1 
-##             1             1             1             1             1 
-##  Cloam Gayal1  Cloam Gayal1  Cloam Gayal1  Cloam Gayal1  Cloam Gayal1 
-##             1             1             1             1             1 
-##  Cloam Gayal1  Cloam Gayal1  Cloam Gayal1  Cloam Gayal1  Cloam Gayal1 
-##             1             1             1             1             1 
-##  Cloam Gayal2  Cloam Gayal2  Cloam Gayal2  Cloam Gayal2  Cloam Gayal2 
-##             1             1             1             1             1 
-##  Cloam Gayal2  Cloam Gayal2  Cloam Gayal2  Cloam Gayal2  Cloam Gayal2 
-##             1             1             1             1             1 
-##  Cloam Gayal2  Cloam Gayal2  Cloam Gayal2  Cloam Gayal2  Cloam Gayal2 
-##             1             1             1             1             1 
-##  Cloam Gayal2  Cloam Gayal2  Cloam Gayal2  Cloam Gayal2  Cloam Gayal2 
-##             1             1             1             1             1 
-##  Cloam Gayal2  Cloam Gayal2  Cloam Gayal2  Cloam Gayal2  Cloam Gayal2 
-##             1             1             1             1             1 
-##  Cloam Gayal2  Cloam Gayal2  Cloam Gayal2  Cloam Gayal2  Cloam Gayal2 
-##             1             1             1             1             1 
-##  Cloam Gayal2  Cloam Gayal2  Cloam Gayal2  Cloam Gayal2  Cloam Gayal2 
-##             1             1             1             1             1 
-##  Cloam Gayal2  Cloam Gayal2  Cloam Gayal2  Cloam Gayal2  Cloam Gayal2 
-##             1             1             1             1             1 
-##  Cloam Gayal2  Cloam Gayal2  Cloam Gayal2  Cloam Gayal2  Cloam Gayal2 
-##             1             1             1             1             1 
-##  Cloam Gayal2  Cloam Gayal2  Cloam Gayal2  Cloam Gayal2  Cloam Gayal2 
-##             1             1             1             1             1 
-##  Cloam Gayal2  Cloam Gayal2  Cloam Gayal2  Cloam Gayal2  Cloam Gayal2 
-##             1             1             1             1             1 
-##  Cloam Gayal2  Cloam Gayal2  Cloam Gayal2  Cloam Gayal2  Cloam Gayal2 
-##             1             1             1             1             1 
-##  Cloam Gayal2  Cloam Gayal2  Cloam Gayal2  Cloam Gayal2  Cloam Gayal2 
-##             1             1             1             1             1 
-##  Cloam Gayal2  Cloam Gayal2  Cloam Gayal2  Cloam Gayal2  Cloam Gayal2 
-##             1             1             1             1             1 
-##  Cloam Gayal2  Cloam Gayal2  Cloam Gayal2  Cloam Gayal2  Cloam Gayal2 
-##             1             1             1             1             1 
-##  Cloam Gayal2  Cloam Gayal2  Cloam Gayal2  Cloam Gayal2  Cloam Gayal2 
-##             1             1             1             1             1 
-##  Cloam Gayal2  Cloam Gayal2  Cloam Gayal2  Cloam Gayal2  Cloam Gayal2 
-##             1             1             1             1             1 
-##  Cloam Gayal2  Cloam Gayal2  Cloam Gayal2  Cloam Gayal2  Cloam Gayal2 
-##             1             1             1             1             1 
-##  Cloam Gayal2  Cloam Gayal2  Cloam Gayal2  Cloam Gayal2  Cloam Gayal2 
-##             1             1             1             1             1 
-##  Cloam Gayal2  Cloam Gayal2  Cloam Gayal2  Cloam Gayal2  Cloam Gayal2 
-##             1             1             1             1             1 
-##  Cloam Gayal3  Cloam Gayal3  Cloam Gayal3  Cloam Gayal3  Cloam Gayal3 
-##            11            11            11            11            11 
-##  Cloam Gayal3  Cloam Gayal3  Cloam Gayal3  Cloam Gayal3  Cloam Gayal3 
-##            11            11            11            11            11 
-##  Cloam Gayal3  Cloam Gayal3  Cloam Gayal3  Cloam Gayal3  Cloam Gayal3 
-##            11            11            11            11            11 
-##  Cloam Gayal3  Cloam Gayal3  Cloam Gayal3  Cloam Gayal3  Cloam Gayal3 
-##            11            11            11            11            11 
-##  Cloam Gayal3  Cloam Gayal3  Cloam Gayal3  Cloam Gayal3  Cloam Gayal3 
-##            11            11            11            11            11 
-##  Cloam Gayal3  Cloam Gayal3  Cloam Gayal3  Cloam Gayal3  Cloam Gayal3 
-##            11            11            11            11            11 
-##  Cloam Gayal3  Cloam Gayal3  Cloam Gayal3  Cloam Gayal3  Cloam Gayal3 
-##            11            11            11            11            11 
-##  Cloam Gayal3  Cloam Gayal3  Cloam Gayal3  Cloam Gayal3  Cloam Gayal3 
-##            11            11            11            11            11 
-##  Cloam Gayal3  Cloam Gayal3  Cloam Gayal3  Cloam Gayal3  Cloam Gayal3 
-##            11            11            11            11            11 
-##  Cloam Gayal3  Cloam Gayal3  Cloam Gayal3  Cloam Gayal3  Cloam Gayal3 
-##            11            11            11            11            11 
-##  Cloam Gayal3  Cloam Gayal3  Cloam Gayal3  Cloam Gayal3  Cloam Gayal3 
-##            11            11            11            11            11 
-##  Cloam Gayal3  Cloam Gayal3  Cloam Gayal3  Cloam Gayal3  Cloam Gayal3 
-##            11            11            11            11            11 
-##  Cloam Gayal3  Cloam Gayal3  Cloam Gayal3  Cloam Gayal3  Cloam Gayal3 
-##            11            11            11            11            11 
-##  Cloam Gayal3  Cloam Gayal3  Cloam Gayal3  Cloam Gayal3  Cloam Gayal3 
-##            11            11            11            11            11 
-##  Cloam Gayal3  Cloam Gayal3  Cloam Gayal3  Cloam Gayal3  Cloam Gayal3 
-##            11            11            11            11            11 
-##  Cloam Gayal3  Cloam Gayal3  Cloam Gayal3  Cloam Gayal3  Cloam Gayal3 
-##            11            11            11            11            11 
-##  Cloam Gayal3  Cloam Gayal3  Cloam Gayal3  Cloam Gayal3  Cloam Gayal3 
-##            11            11            11            11            11 
-##  Cloam Gayal3  Cloam Gayal3  Cloam Gayal3  Cloam Gayal3  Cloam Gayal3 
-##            11            11            11            11            11 
-##  Cloam Gayal3  Cloam Gayal3  Cloam Gayal3  Cloam Gayal3  Cloam Gayal3 
-##            11            11            11            11            11 
-##  Cloam Gayal3  Cloam Gayal3  Cloam Gayal3  Cloam Gayal3  Cloam Gayal3 
-##            11            11            11            11            11 
-##  Cloam Gayal4  Cloam Gayal4  Cloam Gayal4  Cloam Gayal4  Cloam Gayal4 
-##             5             5             5             5             5 
-##  Cloam Gayal4  Cloam Gayal4  Cloam Gayal4  Cloam Gayal4  Cloam Gayal4 
-##             5             5             5             5             5 
-##  Cloam Gayal4  Cloam Gayal4  Cloam Gayal4  Cloam Gayal4  Cloam Gayal4 
-##             5             5             5             5             5 
-##  Cloam Gayal4  Cloam Gayal4  Cloam Gayal4  Cloam Gayal4  Cloam Gayal4 
-##             5             5             5             5             5 
-##  Cloam Gayal4  Cloam Gayal4  Cloam Gayal4  Cloam Gayal4  Cloam Gayal4 
-##             5             5             5             5             5 
-##  Cloam Gayal4  Cloam Gayal4  Cloam Gayal4  Cloam Gayal4  Cloam Gayal4 
-##             5             5             5             5             5 
-##  Cloam Gayal4  Cloam Gayal4  Cloam Gayal4  Cloam Gayal4  Cloam Gayal4 
-##             5             5             5             5             5 
-##  Cloam Gayal4  Cloam Gayal4  Cloam Gayal4  Cloam Gayal4  Cloam Gayal4 
-##             5             5             5             5             5 
-##  Cloam Gayal4  Cloam Gayal4  Cloam Gayal4  Cloam Gayal4  Cloam Gayal4 
-##             5             5             5             5             5 
-##  Cloam Gayal4  Cloam Gayal4  Cloam Gayal4  Cloam Gayal4  Cloam Gayal4 
-##             5             5             5             5             5 
-##  Cloam Gayal5  Cloam Gayal5  Cloam Gayal5  Cloam Gayal5  Cloam Gayal5 
-##            11            11            11            11            11 
-##  Cloam Gayal5  Cloam Gayal5  Cloam Gayal5  Cloam Gayal5  Cloam Gayal5 
-##            11            11            11            11            11 
-##  Cloam Gayal5  Cloam Gayal5  Cloam Gayal5  Cloam Gayal5  Cloam Gayal5 
-##            11            11            11            11            11 
-##  Cloam Gayal5  Cloam Gayal5  Cloam Gayal5  Cloam Gayal5  Cloam Gayal5 
-##            11            11            11            11            11 
-##  Cloam Gayal5  Cloam Gayal5  Cloam Gayal5  Cloam Gayal5  Cloam Gayal5 
-##            11            11            11            11            11 
-##  Cloam Gayal5  Cloam Gayal5  Cloam Gayal5  Cloam Gayal5  Cloam Gayal5 
-##            11            11            11            11            11 
-##  Cloam Gayal5  Cloam Gayal5  Cloam Gayal5  Cloam Gayal5  Cloam Gayal5 
-##            11            11            11            11            11 
-##  Cloam Gayal5  Cloam Gayal5  Cloam Gayal5  Cloam Gayal5  Cloam Gayal5 
-##            11            11            11            11            11 
-##  Cloam Gayal5  Cloam Gayal5  Cloam Gayal5  Cloam Gayal5  Cloam Gayal5 
-##            11            11            11            11            11 
-##  Cloam Gayal5  Cloam Gayal5  Cloam Gayal5  Cloam Gayal5  Cloam Gayal5 
-##            11            11            11            11            11 
-##  Cloam Gayal6  Cloam Gayal6  Cloam Gayal6  Cloam Gayal6  Cloam Gayal6 
-##            31            31            31            31            31 
-##  Cloam Gayal6  Cloam Gayal6  Cloam Gayal6  Cloam Gayal6  Cloam Gayal6 
-##            31            31            31            31            31 
-##  Cloam Gayal6  Cloam Gayal6  Cloam Gayal6  Cloam Gayal6  Cloam Gayal6 
-##            31            31            31            31            31 
-##  Cloam Gayal6  Cloam Gayal6  Cloam Gayal6  Cloam Gayal6  Cloam Gayal6 
-##            31            31            31            31            31 
-##  Cloam Gayal6  Cloam Gayal6  Cloam Gayal6  Cloam Gayal6  Cloam Gayal6 
-##            31            31            31            31            31 
-##  Cloam Gayal6  Cloam Gayal6  Cloam Gayal6  Cloam Gayal6  Cloam Gayal6 
-##            31            31            31            31            31 
-##  Cloam Gayal6  Cloam Gayal6  Cloam Gayal6  Cloam Gayal6  Cloam Gayal6 
-##            31            31            31            31            31 
-##  Cloam Gayal6  Cloam Gayal6  Cloam Gayal6  Cloam Gayal6  Cloam Gayal6 
-##            31            31            31            31            31 
-##  Cloam Gayal6  Cloam Gayal6  Cloam Gayal6  Cloam Gayal6  Cloam Gayal6 
-##            31            31            31            31            31 
-##  Cloam Gayal6  Cloam Gayal6  Cloam Gayal6  Cloam Gayal6  Cloam Gayal6 
-##            31            31            31            31            31 
-##  Cloam Gayal7  Cloam Gayal7  Cloam Gayal7  Cloam Gayal7  Cloam Gayal7 
-##            50            50            50            50            50 
-##  Cloam Gayal7  Cloam Gayal7  Cloam Gayal7  Cloam Gayal7  Cloam Gayal7 
-##            50            50            50            50            50 
-##  Cloam Gayal7  Cloam Gayal7  Cloam Gayal7  Cloam Gayal7  Cloam Gayal7 
-##            50            50            50            50            50 
-##  Cloam Gayal7  Cloam Gayal7  Cloam Gayal7  Cloam Gayal7  Cloam Gayal7 
-##            50            50            50            50            50 
-##  Cloam Gayal8  Cloam Gayal8  Cloam Gayal8  Cloam Gayal8  Cloam Gayal8 
-##            90            90            90            90            90 
-##  Cloam Gayal8  Cloam Gayal8  Cloam Gayal8  Cloam Gayal8  Cloam Gayal8 
-##            90            90            90            90            90 
-##  Cloam Gayal8  Cloam Gayal9  Cloam Gayal9  Cloam Gayal9  Cloam Gayal9 
-##            90            98            98            98            98 
-##  Cloam Gayal9  Cloam Gayal9  Cloam Gayal9  Cloam Gayal9 Cloam Gayal10 
-##            98            98            98            98            56 
-## Cloam Gayal10 Cloam Gayal10 Cloam Gayal10 Cloam Gayal10 
-##            56            56            56            56</code></pre>
+<pre><code>##     Salat Bobcat.CC     Salat Bobcat.CC     Salat Bobcat.CC     Salat Bobcat.CC 
+##                  10                  10                  10                  10 
+##     Salat Bobcat.CC     Salat Bobcat.CC     Salat Bobcat.CC     Salat Bobcat.CC 
+##                  10                  10                  10                  10 
+##     Salat Bobcat.CC     Salat Bobcat.CC     Salat Bobcat.CC     Salat Bobcat.CC 
+##                  10                  10                  10                  10 
+##     Salat Bobcat.CC     Salat Bobcat.CC     Salat Bobcat.CC     Salat Bobcat.CC 
+##                  10                  10                  10                  10 
+##     Salat Bobcat.CC     Salat Bobcat.CC     Salat Bobcat.CC     Salat Bobcat.CC 
+##                  10                  10                  10                  10 
+##     Salat Bobcat.CC     Salat Bobcat.CC     Salat Bobcat.CC     Salat Bobcat.CC 
+##                  10                  10                  10                  10 
+##     Salat Bobcat.CC     Salat Bobcat.CC     Salat Bobcat.CC     Salat Bobcat.CC 
+##                  10                  10                  10                  10 
+##     Salat Bobcat.CC     Salat Bobcat.CC     Salat Bobcat.CC     Salat Bobcat.CC 
+##                  10                  10                  10                  10 
+##     Salat Bobcat.CC     Salat Bobcat.CC     Salat Bobcat.CC     Salat Bobcat.CC 
+##                  10                  10                  10                  10 
+##     Salat Bobcat.CC     Salat Bobcat.CC     Salat Bobcat.CC     Salat Bobcat.CC 
+##                  10                  10                  10                  10 
+##     Salat Bobcat.CC     Salat Bobcat.CC     Salat Bobcat.CC     Salat Bobcat.CC 
+##                  10                  10                  10                  10 
+##     Salat Bobcat.CC     Salat Bobcat.CC     Salat Bobcat.CC     Salat Bobcat.CC 
+##                  10                  10                  10                  10 
+##     Salat Bobcat.CC     Salat Bobcat.CC     Salat Bobcat.CC     Salat Bobcat.CC 
+##                  10                  10                  10                  10 
+##     Salat Bobcat.CC     Salat Bobcat.CC     Salat Bobcat.CC     Salat Bobcat.CC 
+##                  10                  10                  10                  10 
+##     Salat Bobcat.CC     Salat Bobcat.CC     Salat Bobcat.CC     Salat Bobcat.CC 
+##                  10                  10                  10                  10 
+##     Salat Bobcat.CC     Salat Bobcat.CC     Salat Bobcat.CC     Salat Bobcat.CC 
+##                  10                  10                  10                  10 
+##     Salat Bobcat.CC     Salat Bobcat.CC     Salat Bobcat.CC     Salat Bobcat.CC 
+##                  10                  10                  10                  10 
+##     Salat Bobcat.CC     Salat Bobcat.CC     Salat Bobcat.CC     Salat Bobcat.CC 
+##                  10                  10                  10                  10 
+##     Salat Bobcat.CC     Salat Bobcat.CC     Salat Bobcat.CC     Salat Bobcat.CC 
+##                  10                  10                  10                  10 
+##     Salat Bobcat.CC     Salat Bobcat.CC     Salat Bobcat.CC     Salat Bobcat.CC 
+##                  10                  10                  10                  10 
+##     Salat Bobcat.CC     Salat Bobcat.CC     Salat Bobcat.CC     Salat Bobcat.CC 
+##                  10                  10                  10                  10 
+##     Salat Bobcat.CC     Salat Bobcat.CC     Salat Bobcat.CC     Salat Bobcat.CC 
+##                  10                  10                  10                  10 
+##     Salat Bobcat.CC     Salat Bobcat.CC     Salat Bobcat.CC     Salat Bobcat.CC 
+##                  10                  10                  10                  10 
+##     Salat Bobcat.CC     Salat Bobcat.CC     Salat Bobcat.CC     Salat Bobcat.CC 
+##                  10                  10                  10                  10 
+##     Salat Bobcat.CC     Salat Bobcat.CC     Salat Bobcat.CC     Salat Bobcat.CC 
+##                  10                  10                  10                  10 
+##     Salat Bobcat.OH     Salat Bobcat.OH     Salat Bobcat.OH     Salat Bobcat.OH 
+##                   8                   8                   8                   8 
+##     Salat Bobcat.OH     Salat Bobcat.OH     Salat Bobcat.OH     Salat Bobcat.OH 
+##                   8                   8                   8                   8 
+##     Salat Bobcat.OH     Salat Bobcat.OH     Salat Bobcat.OH     Salat Bobcat.OH 
+##                   8                   8                   8                   8 
+##     Salat Bobcat.OH     Salat Bobcat.OH     Salat Bobcat.OH     Salat Bobcat.OH 
+##                   8                   8                   8                   8 
+##     Salat Bobcat.OH     Salat Bobcat.OH     Salat Bobcat.OH     Salat Bobcat.OH 
+##                   8                   8                   8                   8 
+##     Salat Bobcat.OH     Salat Bobcat.OH     Salat Bobcat.OH     Salat Bobcat.OH 
+##                   8                   8                   8                   8 
+##     Salat Bobcat.OH     Salat Bobcat.OH     Salat Bobcat.OH     Salat Bobcat.OH 
+##                   8                   8                   8                   8 
+##     Salat Bobcat.OH     Salat Bobcat.OH     Salat Bobcat.OH     Salat Bobcat.OH 
+##                   8                   8                   8                   8 
+##     Salat Bobcat.OH     Salat Bobcat.OH     Salat Bobcat.OH     Salat Bobcat.OH 
+##                   8                   8                   8                   8 
+##     Salat Bobcat.OH     Salat Bobcat.OH     Salat Bobcat.OH     Salat Bobcat.OH 
+##                   8                   8                   8                   8 
+##     Salat Bobcat.OH     Salat Bobcat.OH     Salat Bobcat.OH     Salat Bobcat.OH 
+##                   8                   8                   8                   8 
+##     Salat Bobcat.OH     Salat Bobcat.OH     Salat Bobcat.OH     Salat Bobcat.OH 
+##                   8                   8                   8                   8 
+##     Salat Bobcat.OH     Salat Bobcat.OH     Salat Bobcat.OH     Salat Bobcat.OH 
+##                   8                   8                   8                   8 
+##     Salat Bobcat.OH     Salat Bobcat.OH     Salat Bobcat.OH     Salat Bobcat.OH 
+##                   8                   8                   8                   8 
+##     Salat Bobcat.OH     Salat Bobcat.OH     Salat Bobcat.OH     Salat Bobcat.OH 
+##                   8                   8                   8                   8 
+##     Salat Bobcat.OH     Salat Bobcat.OH     Salat Bobcat.OH     Salat Bobcat.OH 
+##                   8                   8                   8                   8 
+##     Salat Bobcat.OH     Salat Bobcat.OH     Salat Bobcat.OH     Salat Bobcat.OH 
+##                   8                   8                   8                   8 
+##     Salat Bobcat.OH     Salat Bobcat.OH     Salat Bobcat.DT     Salat Bobcat.DT 
+##                   8                   8                   1                   1 
+##     Salat Bobcat.DT     Salat Bobcat.DT     Salat Bobcat.DT     Salat Bobcat.DT 
+##                   1                   1                   1                   1 
+##     Salat Bobcat.DT     Salat Bobcat.DT     Salat Bobcat.DT     Salat Bobcat.DT 
+##                   1                   1                   1                   1 
+##     Salat Bobcat.DT     Salat Bobcat.DT     Salat Bobcat.DT     Salat Bobcat.DT 
+##                   1                   1                   1                   1 
+##     Salat Bobcat.DT     Salat Bobcat.DT     Salat Bobcat.DT     Salat Bobcat.DT 
+##                   1                   1                   1                   1 
+##     Salat Bobcat.DT     Salat Bobcat.DT     Salat Bobcat.DT     Salat Bobcat.DT 
+##                   1                   1                   1                   1 
+##     Salat Bobcat.DT     Salat Bobcat.DT     Salat Bobcat.DT     Salat Bobcat.DT 
+##                   1                   1                   1                   1 
+##     Salat Bobcat.DT     Salat Bobcat.DT     Salat Bobcat.DT     Salat Bobcat.DT 
+##                   1                   1                   1                   1 
+##     Salat Bobcat.DT     Salat Bobcat.DT     Salat Bobcat.DT     Salat Bobcat.DT 
+##                   1                   1                   1                   1 
+##     Salat Bobcat.DT     Salat Bobcat.DT     Salat Bobcat.DT     Salat Bobcat.DT 
+##                   1                   1                   1                   1 
+##     Salat Bobcat.DT     Salat Bobcat.DT     Salat Bobcat.DT     Salat Bobcat.DT 
+##                   1                   1                   1                   1 
+##     Salat Bobcat.DT     Salat Bobcat.DT     Salat Bobcat.DT     Salat Bobcat.DT 
+##                   1                   1                   1                   1 
+##     Salat Bobcat.DT     Salat Bobcat.DT     Salat Bobcat.DT     Salat Bobcat.DT 
+##                   1                   1                   1                   1 
+##     Salat Bobcat.DT     Salat Bobcat.DT     Salat Bobcat.DT     Salat Bobcat.DT 
+##                   1                   1                   1                   1 
+##     Salat Bobcat.DT     Salat Bobcat.DT     Salat Bobcat.DT     Salat Bobcat.DT 
+##                   1                   1                   1                   1 
+##     Salat Bobcat.DT     Salat Bobcat.DT     Salat Bobcat.DT     Salat Bobcat.DT 
+##                   1                   1                   1                   1 
+##     Salat Bobcat.DT     Salat Bobcat.DT     Salat Bobcat.DT     Salat Bobcat.DT 
+##                   1                   1                   1                   1 
+##     Salat Bobcat.DT     Salat Bobcat.DT     Salat Bobcat.DT     Salat Bobcat.DT 
+##                   1                   1                   1                   1 
+##     Salat Bobcat.HL     Salat Bobcat.HL     Salat Bobcat.HL     Salat Bobcat.HL 
+##                   2                   2                   2                   2 
+##     Salat Bobcat.HL     Salat Bobcat.HL     Salat Bobcat.HL     Salat Bobcat.HL 
+##                   2                   2                   2                   2 
+##     Salat Bobcat.HL     Salat Bobcat.HL     Salat Bobcat.HL     Salat Bobcat.HL 
+##                   2                   2                   2                   2 
+##     Salat Bobcat.HL     Salat Bobcat.HL     Salat Bobcat.HL     Salat Bobcat.HL 
+##                   2                   2                   2                   2 
+##     Salat Bobcat.HL     Salat Bobcat.HL     Salat Bobcat.HL     Salat Bobcat.HL 
+##                   2                   2                   2                   2 
+##     Salat Bobcat.HL     Salat Bobcat.HL     Salat Bobcat.HL     Salat Bobcat.HL 
+##                   2                   2                   2                   2 
+##     Salat Bobcat.HL     Salat Bobcat.HL     Salat Bobcat.HL     Salat Bobcat.HL 
+##                   2                   2                   2                   2 
+##     Salat Bobcat.HL     Salat Bobcat.HL     Salat Bobcat.HL     Salat Bobcat.HL 
+##                   2                   2                   2                   2 
+##     Salat Bobcat.HL     Salat Bobcat.HL     Salat Bobcat.HL     Salat Bobcat.HL 
+##                   2                   2                   2                   2 
+##     Salat Bobcat.HL     Salat Bobcat.HL     Salat Bobcat.HL     Salat Bobcat.HL 
+##                   2                   2                   2                   2 
+##     Salat Bobcat.HL     Salat Bobcat.HL     Salat Bobcat.HL     Salat Bobcat.HL 
+##                   2                   2                   2                   2 
+##     Salat Bobcat.HL     Salat Bobcat.HL     Salat Bobcat.HL     Salat Bobcat.HL 
+##                   2                   2                   2                   2 
+##     Salat Bobcat.HL     Salat Bobcat.HL     Salat Bobcat.HL     Salat Bobcat.HL 
+##                   2                   2                   2                   2 
+##     Salat Bobcat.HL     Salat Bobcat.HL     Salat Bobcat.HL     Salat Bobcat.HL 
+##                   2                   2                   2                   2 
+##     Salat Bobcat.HL     Salat Bobcat.HL     Salat Bobcat.HL     Salat Bobcat.HL 
+##                   2                   2                   2                   2 
+## Salat Bobcat.HL_Biv Salat Bobcat.HL_Biv Salat Bobcat.HL_Biv Salat Bobcat.HL_Biv 
+##                   6                   6                   6                   6 
+## Salat Bobcat.HL_Biv Salat Bobcat.HL_Biv Salat Bobcat.HL_Biv Salat Bobcat.HL_Biv 
+##                   6                   6                   6                   6 
+## Salat Bobcat.HL_Biv Salat Bobcat.HL_Biv Salat Bobcat.HL_Biv Salat Bobcat.HL_Biv 
+##                   6                   6                   6                   6 
+## Salat Bobcat.HL_Biv Salat Bobcat.HL_Biv Salat Bobcat.HL_Biv Salat Bobcat.HL_Biv 
+##                   6                   6                   6                   6 
+## Salat Bobcat.HL_Biv Salat Bobcat.HL_Biv Salat Bobcat.HL_Biv Salat Bobcat.HL_Biv 
+##                   6                   6                   6                   6 
+## Salat Bobcat.HL_Biv Salat Bobcat.HL_Biv Salat Bobcat.HL_Biv Salat Bobcat.HL_Biv 
+##                   6                   6                   6                   6 
+## Salat Bobcat.HL_Biv Salat Bobcat.HL_Biv Salat Bobcat.HL_Biv Salat Bobcat.HL_Biv 
+##                   6                   6                   6                   6 
+## Salat Bobcat.HL_Biv Salat Bobcat.HL_Biv Salat Bobcat.HL_Biv Salat Bobcat.HL_Biv 
+##                   6                   6                   6                   6 
+## Salat Bobcat.HL_Biv Salat Bobcat.HL_Biv Salat Bobcat.HL_Biv Salat Bobcat.HL_Biv 
+##                   6                   6                   6                   6 
+## Salat Bobcat.HL_Biv Salat Bobcat.HL_Biv Salat Bobcat.HL_Biv Salat Bobcat.HL_Biv 
+##                   6                   6                   6                   6 
+## Salat Bobcat.HL_Biv Salat Bobcat.HL_Biv Salat Bobcat.HL_Biv Salat Bobcat.HL_Biv 
+##                   6                   6                   6                   6 
+## Salat Bobcat.HL_Biv Salat Bobcat.HL_Biv Salat Bobcat.HL_Biv Salat Bobcat.HL_Biv 
+##                   6                   6                   6                   6 
+## Salat Bobcat.HL_Biv Salat Bobcat.HL_Biv Salat Bobcat.HL_Biv Salat Bobcat.HL_Biv 
+##                   6                   6                   6                   6 
+## Salat Bobcat.HL_Biv Salat Bobcat.HL_Biv Salat Bobcat.HL_Biv Salat Bobcat.HL_Biv 
+##                   6                   6                   6                   6 
+## Salat Bobcat.HL_Biv Salat Bobcat.HL_Biv Salat Bobcat.HL_Biv Salat Bobcat.HL_Biv 
+##                   6                   6                   6                   6 
+##     Salat Bobcat.OG     Salat Bobcat.OG     Salat Bobcat.OG     Salat Bobcat.OG 
+##                  56                  56                  56                  56 
+##     Salat Bobcat.OG     Salat Bobcat.OG     Salat Bobcat.OG     Salat Bobcat.OG 
+##                  56                  56                  56                  56 
+##     Salat Bobcat.OG     Salat Bobcat.OG     Salat Bobcat.OG     Salat Bobcat.OG 
+##                  56                  56                  56                  56 
+##     Salat Bobcat.OG     Salat Bobcat.OG     Salat Bobcat.OG     Salat Bobcat.OG 
+##                  56                  56                  56                  56 
+##     Salat Bobcat.OG     Salat Bobcat.OG     Salat Bobcat.OG     Salat Bobcat.OG 
+##                  56                  56                  56                  56 
+##     Salat Bobcat.EM     Salat Bobcat.EM     Salat Bobcat.EM     Salat Bobcat.EM 
+##                  98                  98                  98                  98 
+##     Salat Bobcat.EM     Salat Bobcat.EM     Salat Bobcat.EM     Salat Bobcat.EM 
+##                  98                  98                  98                  98 
+##     Salat Bobcat.EM     Salat Bobcat.EM     Salat Bobcat.OB     Salat Bobcat.OB 
+##                  98                  98                  38                  38 
+##     Salat Bobcat.OB     Salat Bobcat.OB     Salat Bobcat.OB     Salat Bobcat.OB 
+##                  38                  38                  38                  38 
+##     Salat Bobcat.OB     Salat Bobcat.OB     Salat Bobcat.OB     Salat Bobcat.OB 
+##                  38                  38                  38                  38 
+##     Salat Bobcat.FG     Salat Bobcat.FG     Salat Bobcat.FG     Salat Bobcat.FG 
+##                  90                  90                  90                  90 
+##     Salat Bobcat.FG     Salat Bobcat.FG     Salat Bobcat.FG     Salat Bobcat.FG 
+##                  90                  90                  90                  90 
+##     Salat Bobcat.FG     Salat Bobcat.FG     Salat Bobcat.FS     Salat Bobcat.FS 
+##                  90                  90                  31                  31 
+##     Salat Bobcat.FS     Salat Bobcat.FS     Salat Bobcat.FS 
+##                  31                  31                  31</code></pre>
 </div>
 
 

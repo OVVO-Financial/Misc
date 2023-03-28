@@ -26,7 +26,7 @@ repeat{
   if(!weekend && !holiday){
     if((data.table::hour(start.time)==9 && data.table::minute(start.time)>=30) ||  (data.table::hour(start.time)>=10 && (start.time < as.POSIXct("16:02:00", format = "%H:%M:%S")))){ 
       # Check for early close / holiday with active index
-      if(as.numeric(start.time - quantmod::getQuote("^GSPC", what = yahooQF("marketstate")), units = "secs")<60){
+      {
         TIMEOUT = TRUE
         while(TIMEOUT){
           TIMEOUT = FALSE

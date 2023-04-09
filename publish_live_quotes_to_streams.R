@@ -48,7 +48,7 @@ repeat{
       
       Sys.sleep(max(0, 60-eclipsed))
     } else {
-      if(data.table::minute(start.time)>=59){  
+      if(data.table::minute(start.time)>=45){  
         yarx_securities_raw = jsonlite::fromJSON("https://raw.githubusercontent.com/microprediction/microprediction/master/microprediction/live/xraytickers.json")
         yarx_securities = toupper(as.character(unlist(c('fxe', 'gld', 'uso', 'qqq', 'iwm', 'shy', 'ief', 'tlt', 'hyg', 'spy', 'oef', 'brk.b', 'meta', 'vz', 'wba', 'wfc', 'wmt', 'xom', yarx_securities_raw))))
         yarx_securities = gsub(pattern = ".", replacement = "-", x = yarx_securities, fixed = TRUE)
@@ -58,10 +58,9 @@ repeat{
         rdps_securities = toupper(as.character(unlist(rdps_securities_raw)))
         
         combined_securities = c(yarx_securities, rdps_securities)
-        
-        print(paste0("Market closed: ", start.time))
-        Sys.sleep(1770)
       }
+      print(paste0("Market closed: ", start.time))
+      Sys.sleep(1770)
     }
   }  else { 
     if(weekend) print(paste0("Weekend: ", start.time))

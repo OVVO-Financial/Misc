@@ -60,7 +60,7 @@ repeat{
         combined_securities = c(yarx_securities, rdps_securities)
       }
       print(paste0("Market closed: ", start.time))
-      Sys.sleep(1770)
+      if(data.table::hour(start.time)==9) Sys.sleep(60) else Sys.sleep(1770)
     }
   }  else { 
     if(weekend) print(paste0("Weekend: ", start.time))

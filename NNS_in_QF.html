@@ -462,7 +462,7 @@ Fred Viole
 <h3 id="more-equivalences">More Equivalences</h3>
 <p>LPM degree 0 is the eCDF for any distribution</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href=""></a>LPM.CDF <span class="ot">=</span> <span class="fu">LPM</span>(<span class="at">degree =</span> <span class="dv">0</span>,<span class="at">target =</span> <span class="fu">sort</span>(x),<span class="at">variable =</span> x)</span>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href=""></a>LPM.CDF <span class="ot">=</span> <span class="fu">LPM</span>(<span class="at">degree =</span> <span class="dv">0</span>, <span class="at">target =</span> <span class="fu">sort</span>(x), <span class="at">variable =</span> x)</span>
 <span id="cb13-2"><a href=""></a></span>
 <span id="cb13-3"><a href=""></a><span class="fu">plot</span>(<span class="fu">ecdf</span>(x))</span>
 <span id="cb13-4"><a href=""></a><span class="fu">points</span>(<span class="fu">sort</span>(x), LPM.CDF, <span class="at">col=</span><span class="st">'red'</span>)</span>
@@ -474,7 +474,7 @@ Fred Viole
 <h2></h2>
 <h3 id="more-cdfs-and-pdfs">More CDFs and PDFs</h3>
 
-<img data-src="cdf_pdf.png" class="quarto-figure quarto-figure-center r-stretch"><p>Still empirical CDFs, all we’ve done is increase the <span style="color: red;"> <strong><em>degree</em></strong> </span></p>
+<img data-src="cdf_pdf.png" class="quarto-figure quarto-figure-center r-stretch"><p>Still empirical CDFs, all we’ve done is increase the <span style="color: red;"><strong><em>degree</em></strong></span></p>
 </section>
 <section id="section-3" class="slide level2">
 <h2></h2>
@@ -563,6 +563,15 @@ Fred Viole
 
 <img data-src="portfolio_objective.png" class="quarto-figure quarto-figure-center r-stretch"><p>Consistent for all risk preferences!</p>
 </section>
+<section id="section-13" class="slide level2">
+<h2></h2>
+<h3>
+SSD Efficient Set of S&amp;P 500
+</h3>
+<div style="text-align: center;">
+<video width="640" height="360" controls=""> <source src="SSD.mp4" type="video/mp4"> Your browser does not support the video tag. </video>
+</div>
+</section>
 <section id="expected-partial-moments" class="slide level2">
 <h2>Expected Partial Moments</h2>
 <p>Longer post and paper link on conditioning returns via entropy proxies</p>
@@ -576,14 +585,14 @@ Fred Viole
 <li><p>Stochastic Portfolio Theory (SPT) values growth rates but ignores investor preferences — <strong><em>how</em></strong> you achieve final wealth matters!</p></li>
 </ul>
 </section>
-<section id="section-13" class="slide level2">
+<section id="section-14" class="slide level2">
 <h2></h2>
 
 <img data-src="Harry.jpg" class="quarto-figure quarto-figure-center r-stretch"></section>
-<section id="section-14" class="slide level2">
+<section id="section-15" class="slide level2">
 <h2></h2>
 <h3 id="options-pricing">Options Pricing</h3>
-<p>An obvious extension is to use <span style="color: steelblue;"> UPM </span> for calls and <span style="color: red;"> LPM </span> for puts</p>
+<p>An obvious extension is to use <span style="color: steelblue;">UPM</span> for calls and <span style="color: red;">LPM</span> for puts</p>
 
 <img data-src="Histogram.png" class="quarto-figure quarto-figure-center r-stretch"><p>No more N(d1) and N(d2)!</p>
 </section>
@@ -591,9 +600,9 @@ Fred Viole
 <h2>Partial Moments in the Wild</h2>
 <p>To showcase the effectiveness of NNS in quantitative finance, I’ve designed the following applications:</p>
 <ul>
-<li><p>MacroNow nowcasting <br> <a href="https://ovvo.shinyapps.io/macronow_intro">https://ovvo.shinyapps.io/macronow_intro</a></p></li>
-<li><p>Options <br> <a href="https://ovvo.shinyapps.io/options_intro">https://ovvo.shinyapps.io/options_intro</a></p></li>
-<li><p>Portfolio <br> <a href="https://ovvo.shinyapps.io/portfolio_intro">https://ovvo.shinyapps.io/portfolio_intro</a></p></li>
+<li><p>MacroNow nowcasting <br> <a href="https://ovvo.shinyapps.io/macronow_intro" class="uri">https://ovvo.shinyapps.io/macronow_intro</a></p></li>
+<li><p>Options <br> <a href="https://ovvo.shinyapps.io/options_intro" class="uri">https://ovvo.shinyapps.io/options_intro</a></p></li>
+<li><p>Portfolio <br> <a href="https://ovvo.shinyapps.io/portfolio_intro" class="uri">https://ovvo.shinyapps.io/portfolio_intro</a></p></li>
 </ul>
 </section>
 <section id="more-informed-dispersion-measures" class="slide level2 smaller">
@@ -603,7 +612,7 @@ Fred Viole
 <p><span class="math display">\[ RD_t^{\color{red}{LPM}} = \sqrt{\sum_{i=1}^{N} w_i \left[ \max(0, R_{I,t} - R_{i,t}) \right]^2} \]</span></p>
 <p><span class="math display">\[ RD_t^{\color{steelblue}{UPM}} = \sqrt{\sum_{i=1}^{N} w_i \left[ \max(0, R_{i,t} - R_{I,t}) \right]^2} \]</span></p>
 </section>
-<section id="section-15" class="slide level2">
+<section id="section-16" class="slide level2">
 <h2></h2>
 
 <img data-src="SPY_results.png" class="quarto-figure quarto-figure-center r-stretch"></section>

@@ -407,7 +407,7 @@ Fred Viole
 <h1>Introduction to Partial Moments</h1>
 
 </section>
-<section id="section" class="slide level2 smaller">
+<section id="section" class="slide level2 smaller center">
 <h2></h2>
 <h3 id="q.-what-are-partial-moments">Q. What are partial moments?</h3>
 <h3 id="a.-the-elements-of-variance.">A. The elements of variance.</h3>
@@ -418,7 +418,7 @@ Fred Viole
 \left[\max(0, variable_t - \color{steelblue}{target})\right]^\color{red}{degree} \]</span></p>
 <p>Time-series or cross-sectional</p>
 </section>
-<section id="partial-moment-equivalences" class="slide level2 smaller">
+<section id="partial-moment-equivalences" class="slide level2 smaller center">
 <h2>Partial Moment Equivalences</h2>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href=""></a><span class="fu">library</span>(NNS)</span>
@@ -457,7 +457,7 @@ Fred Viole
 </div>
 </div>
 </section>
-<section id="section-1" class="slide level2">
+<section id="section-1" class="slide level2 center">
 <h2></h2>
 <h3 id="more-equivalences">More Equivalences</h3>
 <p>LPM degree 0 is the eCDF for any distribution</p>
@@ -470,18 +470,18 @@ Fred Viole
 
 </div>
 <img data-src="NNS_in_QF_files/figure-revealjs/more_equiv-1.png" class="quarto-figure quarto-figure-center r-stretch" width="960"></section>
-<section id="section-2" class="slide level2">
+<section id="section-2" class="slide level2 center">
 <h2></h2>
 <h3 id="more-cdfs-and-pdfs">More CDFs and PDFs</h3>
 
 <img data-src="cdf_pdf.png" class="quarto-figure quarto-figure-center r-stretch"><p>Still empirical CDFs, all we’ve done is increase the <span style="color: red;"><strong><em>degree</em></strong></span></p>
 </section>
-<section id="section-3" class="slide level2">
+<section id="section-3" class="slide level2 center">
 <h2></h2>
-<h3 id="stochastic-dominant-efficient-sets">Stochastic Dominant Efficient Sets</h3>
+<h3 id="comparing-cdfs-led-to-stochastic-dominant-efficient-sets">Comparing CDFs Led to Stochastic Dominant Efficient Sets</h3>
 
 <img data-src="SD.png" class="quarto-figure quarto-figure-center r-stretch"></section>
-<section id="section-4" class="slide level2">
+<section id="section-4" class="slide level2 center">
 <h2></h2>
 <h3 id="multivariate">Multivariate</h3>
 
@@ -490,39 +490,48 @@ Fred Viole
 <p><span class="math display">\[DUPM(degree, target, x,y) = \frac{1}{T} \sum_{t=1}^{T} \left[\max(0, target - x_t)\right]^{degree} \left[\max(0, y_t - target)\right]^{degree}\]</span></p>
 </div>
 </section>
-<section id="section-5" class="slide level2">
+<section id="section-5" class="slide level2 center">
 <h2></h2>
 <h3 id="covariance-equivalence">Covariance Equivalence</h3>
 
 <img data-src="cov_matrix_partial_moments.png" class="quarto-figure quarto-figure-center r-stretch"></section>
-<section id="section-6" class="slide level2">
+<section id="section-6" class="slide level2 center">
 <h2></h2>
 <h3 id="copulas">Copulas</h3>
 
 <img data-src="copulas.png" class="quarto-figure quarto-figure-center r-stretch"></section>
-<section id="section-7" class="slide level2">
+<section id="section-7" class="slide level2 center">
 <h2></h2>
 <h3 id="partitioning-led-to">Partitioning Led to:</h3>
 <p>Nonlinear Correlation &amp; Dependence</p>
 
 <img data-src="correlation.png" class="quarto-figure quarto-figure-center r-stretch"><p>Compared to Mutual Information, Distance Correlation, Chatterjee’s Xi…</p>
 </section>
-<section id="section-8" class="slide level2">
+<section id="section-8" class="slide level2 center">
 <h2></h2>
 <h3 id="partitioning-also-led-to">Partitioning Also Led to:</h3>
 <p>Nonlinear Regression</p>
 
 <img data-src="partition_regression.PNG" class="quarto-figure quarto-figure-center r-stretch" width="405"><p>Offers dynamic bandwidth solution</p>
 </section>
-<section id="section-9" class="slide level2">
+<section id="section-9" class="slide level2 center">
+<h2></h2>
+<h3 id="multivariate-regression">Multivariate Regression</h3>
+
+<img data-src="mult_reg.gif" class="quarto-figure quarto-figure-center r-stretch"><ul>
+<li><p>Similar to kNN regression…clusters instead of observations <br></p></li>
+<li><p><span class="math inline">\(k\)</span>-fold cross-validation for number of clusters</p></li>
+</ul>
+</section>
+<section id="section-10" class="slide level2 center">
 <h2></h2>
 <h3 id="nonlinear-regression-led-to">Nonlinear Regression Led to:</h3>
 
 <img data-src="NNS_in_QF_files/figure-revealjs/arma8-1.png" width="960" class="r-stretch"><p>and a multivariate extension via a nonparametric vector autoregression!</p>
 </section>
-<section id="section-10" class="slide level2">
+<section id="section-11" class="slide level2 center">
 <h2></h2>
-<h3 id="and-ultimately-led-to">And Ultimately Led to:</h3>
+<h3 id="and-ultimately-led-to-this-general-statisical-toolkit">And Ultimately Led to This General Statisical Toolkit:</h3>
 
 <img data-src="NNS_offers.png" class="quarto-figure quarto-figure-center r-stretch"></section></section>
 <section>
@@ -530,7 +539,7 @@ Fred Viole
 <h1>Finance Applications? You bet!</h1>
 
 </section>
-<section id="utility-theory" class="slide level2">
+<section id="utility-theory" class="slide level2 center">
 <h2>Utility Theory</h2>
 <ul>
 <li><p>Markowitz dedicated a quarter of his 1959 book to utility theory. Was it a waste of time? Absolutely not!</p></li>
@@ -538,32 +547,32 @@ Fred Viole
 <li><p>Partial moments are the <strong><em>perfect</em></strong> method to achieve this. Summary statistics just don’t cut it!</p></li>
 </ul>
 </section>
-<section id="utility-functions" class="slide level2">
+<section id="utility-functions" class="slide level2 center">
 <h2>Utility Functions</h2>
 
 <img data-src="Utility.png" class="quarto-figure quarto-figure-center r-stretch" width="2314"><p>NOBODY is linear wrt losses! <br> <br> Risk-aversion and loss-aversion are two distinct preferences</p>
 </section>
-<section id="section-11" class="slide level2">
+<section id="section-12" class="slide level2 center">
 <h2></h2>
 <h3 id="utility-embedded-into-covariance-matrix">Utility Embedded Into Covariance Matrix</h3>
 
 <img data-src="cov_matrix_deconstruction.png" class="quarto-figure quarto-figure-center r-stretch"></section>
-<section id="matrix-properties" class="slide level2">
+<section id="matrix-properties" class="slide level2 center">
 <h2>Matrix Properties</h2>
 <h3 id="positive-semi-definite">Positive Semi-Definite</h3>
 
 <img data-src="PSD.jfif" class="quarto-figure quarto-figure-center r-stretch"></section>
-<section id="section-12" class="slide level2">
+<section id="section-13" class="slide level2 center">
 <h2></h2>
 <h3 id="transposes-of-one-another">Transposes of One Another</h3>
 
 <img data-src="divergent_properties.jfif" class="quarto-figure quarto-figure-center r-stretch"></section>
-<section id="logical-objective-functions" class="slide level2">
+<section id="logical-objective-functions" class="slide level2 center">
 <h2>Logical Objective Functions</h2>
 
 <img data-src="portfolio_objective.png" class="quarto-figure quarto-figure-center r-stretch"><p>Consistent for all risk preferences!</p>
 </section>
-<section id="section-13" class="slide level2">
+<section id="section-14" class="slide level2 center">
 <h2></h2>
 <h3>
 SSD Efficient Set of S&amp;P 500
@@ -572,12 +581,12 @@ SSD Efficient Set of S&amp;P 500
 <video width="640" height="360" controls=""> <source src="SSD.mp4" type="video/mp4"> Your browser does not support the video tag. </video>
 </div>
 </section>
-<section id="expected-partial-moments" class="slide level2">
+<section id="expected-partial-moments" class="slide level2 center">
 <h2>Expected Partial Moments</h2>
 <p>Longer post and paper link on conditioning returns via entropy proxies</p>
 
 <img data-src="Expected_PM.png" class="quarto-figure quarto-figure-center r-stretch"></section>
-<section id="other-portfolio-theories" class="slide level2">
+<section id="other-portfolio-theories" class="slide level2 center">
 <h2>Other Portfolio “Theories”</h2>
 <ul>
 <li><p>Diversification for its own sake, with no identified utility function or preference being satisfied.</p></li>
@@ -585,18 +594,18 @@ SSD Efficient Set of S&amp;P 500
 <li><p>Stochastic Portfolio Theory (SPT) values growth rates but ignores investor preferences — <strong><em>how</em></strong> you achieve final wealth matters!</p></li>
 </ul>
 </section>
-<section id="section-14" class="slide level2">
+<section id="section-15" class="slide level2 center">
 <h2></h2>
 
 <img data-src="Harry.jpg" class="quarto-figure quarto-figure-center r-stretch"></section>
-<section id="section-15" class="slide level2">
+<section id="section-16" class="slide level2 center">
 <h2></h2>
 <h3 id="options-pricing">Options Pricing</h3>
 <p>An obvious extension is to use <span style="color: steelblue;">UPM</span> for calls and <span style="color: red;">LPM</span> for puts</p>
 
-<img data-src="Histogram.png" class="quarto-figure quarto-figure-center r-stretch"><p>No more N(d1) and N(d2)!</p>
+<img data-src="Histogram.png" class="quarto-figure quarto-figure-center r-stretch"><p>No more <span class="math inline">\(N(d1)\)</span> and <span class="math inline">\(N(d2)\)</span>!</p>
 </section>
-<section id="partial-moments-in-the-wild" class="slide level2">
+<section id="partial-moments-in-the-wild" class="slide level2 center">
 <h2>Partial Moments in the Wild</h2>
 <p>To showcase the effectiveness of NNS in quantitative finance, I’ve designed the following applications:</p>
 <ul>
@@ -605,18 +614,18 @@ SSD Efficient Set of S&amp;P 500
 <li><p>Portfolio <br> <a href="https://ovvo.shinyapps.io/portfolio_intro" class="uri">https://ovvo.shinyapps.io/portfolio_intro</a></p></li>
 </ul>
 </section>
-<section id="more-informed-dispersion-measures" class="slide level2 smaller">
+<section id="more-informed-dispersion-measures" class="slide level2 smaller center">
 <h2>More Informed Dispersion Measures</h2>
 <p><span class="math display">\[ RD_t = \sqrt{\sum_{i=1}^{N} w_i (R_{i,t} - R_{I,t})^2} \]</span></p>
 <p>where <span class="math inline">\(R_{I,t} = \sum_{i=1}^{N} w_i R_{i,t}\)</span> for <span class="math inline">\(N\)</span> index members</p>
 <p><span class="math display">\[ RD_t^{\color{red}{LPM}} = \sqrt{\sum_{i=1}^{N} w_i \left[ \max(0, R_{I,t} - R_{i,t}) \right]^2} \]</span></p>
 <p><span class="math display">\[ RD_t^{\color{steelblue}{UPM}} = \sqrt{\sum_{i=1}^{N} w_i \left[ \max(0, R_{i,t} - R_{I,t}) \right]^2} \]</span></p>
 </section>
-<section id="section-16" class="slide level2">
+<section id="section-17" class="slide level2 center">
 <h2></h2>
 
 <img data-src="SPY_results.png" class="quarto-figure quarto-figure-center r-stretch"></section>
-<section id="follow-on-linkedin" class="slide level2">
+<section id="follow-on-linkedin" class="slide level2 center">
 <h2>Follow on LinkedIn</h2>
 
 <img data-src="OL_qr.png" class="quarto-figure quarto-figure-center r-stretch"><div class="quarto-auto-generated-content">
@@ -705,7 +714,7 @@ SSD Efficient Set of S&amp;P 500
         disableLayout: false,
 
         // Vertical centering of slides
-        center: false,
+        center: true,
 
         // Enables touch navigation on devices with touch input
         touch: true,

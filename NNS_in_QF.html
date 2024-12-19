@@ -422,10 +422,9 @@ Fred Viole
 <h2>Partial Moment Equivalences</h2>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href=""></a><span class="fu">library</span>(NNS)</span>
-<span id="cb1-2"><a href=""></a></span>
-<span id="cb1-3"><a href=""></a><span class="fu">set.seed</span>(<span class="dv">123</span>); x <span class="ot">=</span> <span class="fu">rnorm</span>(<span class="dv">100</span>); y <span class="ot">=</span> <span class="fu">rnorm</span>(<span class="dv">100</span>)</span>
-<span id="cb1-4"><a href=""></a></span>
-<span id="cb1-5"><a href=""></a><span class="fu">mean</span>(x)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-2"><a href=""></a><span class="fu">set.seed</span>(<span class="dv">123</span>); x <span class="ot">=</span> <span class="fu">rnorm</span>(<span class="dv">100</span>); y <span class="ot">=</span> <span class="fu">rnorm</span>(<span class="dv">100</span>)</span>
+<span id="cb1-3"><a href=""></a></span>
+<span id="cb1-4"><a href=""></a><span class="fu">mean</span>(x)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 0.09040591</code></pre>
 </div>
@@ -433,27 +432,33 @@ Fred Viole
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 0.09040591</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href=""></a><span class="fu">var</span>(x)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href=""></a><span class="co"># Sample Variance (base R):</span></span>
+<span id="cb5-2"><a href=""></a><span class="fu">var</span>(x)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 0.8332328</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href=""></a><span class="co"># Sample Variance:</span></span>
-<span id="cb7-2"><a href=""></a><span class="fu">UPM</span>(<span class="dv">2</span>, <span class="fu">mean</span>(x), x) <span class="sc">+</span> <span class="fu">LPM</span>(<span class="dv">2</span>, <span class="fu">mean</span>(x), x)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb7-2"><a href=""></a>(<span class="fu">UPM</span>(<span class="dv">2</span>, <span class="fu">mean</span>(x), x) <span class="sc">+</span> <span class="fu">LPM</span>(<span class="dv">2</span>, <span class="fu">mean</span>(x), x)) <span class="sc">*</span> (<span class="fu">length</span>(x) <span class="sc">/</span> (<span class="fu">length</span>(x) <span class="sc">-</span> <span class="dv">1</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.8332328</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href=""></a><span class="co"># Population Adjustment of Sample Variance (base R):</span></span>
+<span id="cb9-2"><a href=""></a><span class="fu">var</span>(x) <span class="sc">*</span> ((<span class="fu">length</span>(x) <span class="sc">-</span> <span class="dv">1</span>) <span class="sc">/</span> <span class="fu">length</span>(x))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 0.8249005</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href=""></a><span class="co"># Population Variance:</span></span>
-<span id="cb9-2"><a href=""></a>(<span class="fu">UPM</span>(<span class="dv">2</span>, <span class="fu">mean</span>(x), x) <span class="sc">+</span> <span class="fu">LPM</span>(<span class="dv">2</span>, <span class="fu">mean</span>(x), x))<span class="sc">*</span>(<span class="fu">length</span>(x)<span class="sc">/</span>(<span class="fu">length</span>(x)<span class="sc">-</span><span class="dv">1</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href=""></a><span class="co"># Population Variance:</span></span>
+<span id="cb11-2"><a href=""></a><span class="fu">UPM</span>(<span class="dv">2</span>, <span class="fu">mean</span>(x), x) <span class="sc">+</span> <span class="fu">LPM</span>(<span class="dv">2</span>, <span class="fu">mean</span>(x), x)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.8332328</code></pre>
+<pre><code>[1] 0.8249005</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href=""></a><span class="co"># Variance is also the co-variance of itself:</span></span>
-<span id="cb11-2"><a href=""></a>{(<span class="fu">Co.LPM</span>(<span class="at">degree_lpm =</span> <span class="dv">1</span>, <span class="at">x =</span> x, <span class="at">y =</span> x, <span class="at">target_x =</span> <span class="fu">mean</span>(x), <span class="at">target_y =</span> <span class="fu">mean</span>(x))</span>
-<span id="cb11-3"><a href=""></a>  <span class="sc">+</span> <span class="fu">Co.UPM</span>(<span class="at">degree_upm =</span> <span class="dv">1</span>, x, x, <span class="fu">mean</span>(x), <span class="fu">mean</span>(x))</span>
-<span id="cb11-4"><a href=""></a>  <span class="sc">-</span> <span class="fu">D.LPM</span>(<span class="at">degree_lpm =</span> <span class="dv">1</span>, <span class="at">degree_upm =</span> <span class="dv">1</span>, x, x, <span class="fu">mean</span>(x), <span class="fu">mean</span>(x))</span>
-<span id="cb11-5"><a href=""></a>  <span class="sc">-</span> <span class="fu">D.UPM</span>(<span class="dv">1</span>, <span class="dv">1</span>, x, x, <span class="fu">mean</span>(x), <span class="fu">mean</span>(x)))}<span class="sc">*</span>(<span class="fu">length</span>(x)<span class="sc">/</span>(<span class="fu">length</span>(x)<span class="sc">-</span><span class="dv">1</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href=""></a><span class="co"># Variance is also the co-variance of itself:</span></span>
+<span id="cb13-2"><a href=""></a>{(<span class="fu">Co.LPM</span>(<span class="at">degree_lpm =</span> <span class="dv">1</span>, <span class="at">x =</span> x, <span class="at">y =</span> x, <span class="at">target_x =</span> <span class="fu">mean</span>(x), <span class="at">target_y =</span> <span class="fu">mean</span>(x))</span>
+<span id="cb13-3"><a href=""></a>  <span class="sc">+</span> <span class="fu">Co.UPM</span>(<span class="at">degree_upm =</span> <span class="dv">1</span>, x, x, <span class="fu">mean</span>(x), <span class="fu">mean</span>(x))</span>
+<span id="cb13-4"><a href=""></a>  <span class="sc">-</span> <span class="fu">D.LPM</span>(<span class="at">degree_lpm =</span> <span class="dv">1</span>, <span class="at">degree_upm =</span> <span class="dv">1</span>, x, x, <span class="fu">mean</span>(x), <span class="fu">mean</span>(x))</span>
+<span id="cb13-5"><a href=""></a>  <span class="sc">-</span> <span class="fu">D.UPM</span>(<span class="dv">1</span>, <span class="dv">1</span>, x, x, <span class="fu">mean</span>(x), <span class="fu">mean</span>(x)))}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.8332328</code></pre>
+<pre><code>[1] 0.8249005</code></pre>
 </div>
 </div>
 </section>
@@ -462,11 +467,11 @@ Fred Viole
 <h3 id="more-equivalences">More Equivalences</h3>
 <p>LPM degree 0 is the eCDF for any distribution</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href=""></a>LPM.CDF <span class="ot">=</span> <span class="fu">LPM</span>(<span class="at">degree =</span> <span class="dv">0</span>, <span class="at">target =</span> <span class="fu">sort</span>(x), <span class="at">variable =</span> x)</span>
-<span id="cb13-2"><a href=""></a></span>
-<span id="cb13-3"><a href=""></a><span class="fu">plot</span>(<span class="fu">ecdf</span>(x))</span>
-<span id="cb13-4"><a href=""></a><span class="fu">points</span>(<span class="fu">sort</span>(x), LPM.CDF, <span class="at">col=</span><span class="st">'red'</span>)</span>
-<span id="cb13-5"><a href=""></a><span class="fu">legend</span>(<span class="st">'left'</span>, <span class="at">legend =</span> <span class="fu">c</span>(<span class="st">'ecdf'</span>,<span class="st">'LPM.CDF'</span>), <span class="at">fill=</span><span class="fu">c</span>(<span class="st">'black'</span>,<span class="st">'red'</span>), <span class="at">border=</span><span class="cn">NA</span>, <span class="at">bty=</span><span class="st">'n'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href=""></a>LPM.CDF <span class="ot">=</span> <span class="fu">LPM</span>(<span class="at">degree =</span> <span class="dv">0</span>, <span class="at">target =</span> <span class="fu">sort</span>(x), <span class="at">variable =</span> x)</span>
+<span id="cb15-2"><a href=""></a></span>
+<span id="cb15-3"><a href=""></a><span class="fu">plot</span>(<span class="fu">ecdf</span>(x))</span>
+<span id="cb15-4"><a href=""></a><span class="fu">points</span>(<span class="fu">sort</span>(x), LPM.CDF, <span class="at">col=</span><span class="st">'red'</span>)</span>
+<span id="cb15-5"><a href=""></a><span class="fu">legend</span>(<span class="st">'left'</span>, <span class="at">legend =</span> <span class="fu">c</span>(<span class="st">'ecdf'</span>,<span class="st">'LPM.CDF'</span>), <span class="at">fill=</span><span class="fu">c</span>(<span class="st">'black'</span>,<span class="st">'red'</span>), <span class="at">border=</span><span class="cn">NA</span>, <span class="at">bty=</span><span class="st">'n'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
 </div>
 <img data-src="NNS_in_QF_files/figure-revealjs/more_equiv-1.png" class="quarto-figure quarto-figure-center r-stretch" width="960"></section>
@@ -547,10 +552,22 @@ Fred Viole
 <li><p>Partial moments are the <strong><em>perfect</em></strong> method to achieve this. Summary statistics just don’t cut it!</p></li>
 </ul>
 </section>
+<section id="lets-revisit-degrees" class="slide level2 center">
+<h2>Let’s Revisit Degrees</h2>
+<div style="font-size: 0.5em;">
+<p><span class="math display">\[LPM(\color{red}{n}, \color{steelblue}{target}, variable) = \frac{1}{T}\sum_{t=1}^{T}
+\left[\max(0, \color{steelblue}{target} - variable_t)\right]^\color{red}{n} \]</span></p>
+<p><span class="math display">\[UPM(\color{blue}{q}, \color{steelblue}{target}, variable) = \frac{1}{T}\sum_{t=1}^{T}
+\left[\max(0, variable_t - \color{steelblue}{target})\right]^\color{blue}{q} \]</span></p>
+</div>
+<p>loss-aversion: <span class="math inline">\(\color{red}{n}\)</span></p>
+<p>gain-seeking: <span class="math inline">\(\color{blue}{q}\)</span></p>
+
+<img data-src="pm_n_q.jpg" class="quarto-figure quarto-figure-center r-stretch" width="2314"></section>
 <section id="utility-functions" class="slide level2 center">
 <h2>Utility Functions</h2>
 
-<img data-src="Utility.png" class="quarto-figure quarto-figure-center r-stretch" width="2314"><p>NOBODY is linear wrt losses! <br> <br> Risk-aversion and loss-aversion are two distinct preferences</p>
+<img data-src="Utility.png" class="quarto-figure quarto-figure-center r-stretch" width="2314"><p>NOBODY is linear <span class="math inline">\((\color{red}{n} = 1)\)</span> wrt losses! <br> <br> Risk-aversion <span class="math inline">\((\color{red}{n}:\color{blue}{q})\)</span> and loss-aversion <span class="math inline">\((\color{red}{n})\)</span> are two distinct preferences</p>
 </section>
 <section id="section-12" class="slide level2 center">
 <h2></h2>
@@ -570,7 +587,7 @@ Fred Viole
 <section id="logical-objective-functions" class="slide level2 center">
 <h2>Logical Objective Functions</h2>
 
-<img data-src="portfolio_objective.png" class="quarto-figure quarto-figure-center r-stretch"><p>Consistent for all risk preferences!</p>
+<img data-src="portfolio_objective.png" class="quarto-figure quarto-figure-center r-stretch"><p>Consistent objective for all risk preferences!</p>
 </section>
 <section id="section-14" class="slide level2 center">
 <h2></h2>
@@ -621,8 +638,8 @@ SSD Efficient Set of S&amp;P 500
 <p><span class="math display">\[ RD_t^{\color{red}{LPM}} = \sqrt{\sum_{i=1}^{N} w_i \left[ \max(0, R_{I,t} - R_{i,t}) \right]^2} \]</span></p>
 <p><span class="math display">\[ RD_t^{\color{steelblue}{UPM}} = \sqrt{\sum_{i=1}^{N} w_i \left[ \max(0, R_{i,t} - R_{I,t}) \right]^2} \]</span></p>
 </section>
-<section id="section-17" class="slide level2 center">
-<h2></h2>
+<section id="better-stats-to-arb" class="slide level2 center">
+<h2>Better Stats to Arb</h2>
 
 <img data-src="SPY_results.png" class="quarto-figure quarto-figure-center r-stretch"></section>
 <section id="follow-on-linkedin" class="slide level2 center">

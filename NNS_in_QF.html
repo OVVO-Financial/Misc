@@ -524,8 +524,8 @@ Fred Viole
 <h3 id="multivariate-regression">Multivariate Regression</h3>
 
 <img data-src="mult_reg.gif" class="quarto-figure quarto-figure-center r-stretch"><ul>
-<li><p>Similar to kNN regression…clusters instead of observations <br></p></li>
-<li><p><span class="math inline">\(k\)</span>-fold cross-validation for number of clusters</p></li>
+<li><p>Similar to kNN regression… cluster centroids instead of observations <br></p></li>
+<li><p><span class="math inline">\(k\)</span>-fold cross-validation for number of centroids</p></li>
 </ul>
 </section>
 <section id="section-10" class="slide level2 center">
@@ -534,9 +534,25 @@ Fred Viole
 
 <img data-src="NNS_in_QF_files/figure-revealjs/arma8-1.png" width="960" class="r-stretch"><p>and a multivariate extension via a nonparametric vector autoregression!</p>
 </section>
+<section id="generative-and-synthetic-data" class="slide level2 center">
+<h2>Generative and Synthetic Data</h2>
+<h3 id="maximum-entropy-bootstrap-for-time-series">Maximum Entropy Bootstrap for Time-Series</h3>
+<p>Specify a <span class="math inline">\(rho\)</span> or <span class="math inline">\(drift\)</span> for any replicate… ensures <span class="math inline">\(\rho \in [-1,1]\)</span> correlation spectrum is covered.<br>
+<br> Standard IID MC or block bootstrap cannot accomplish this.</p>
+</section>
 <section id="section-11" class="slide level2 center">
 <h2></h2>
-<h3 id="and-ultimately-led-to-this-general-statisical-toolkit">And Ultimately Led to This General Statisical Toolkit:</h3>
+<h3 id="static-drift">Static Drift</h3>
+
+<img data-src="static_target_drift.png" class="quarto-figure quarto-figure-center r-stretch"></section>
+<section id="section-12" class="slide level2 center">
+<h2></h2>
+<h3 id="specify-a-drift-for-replicates">Specify a Drift for Replicates</h3>
+<h3 id="rfr-seems-useful">(RfR seems useful!)</h3>
+
+<img data-src="target_drift.png" class="quarto-figure quarto-figure-center r-stretch"></section>
+<section id="ultimately-led-to-this-general-statisical-toolkit" class="slide level2 center">
+<h2>Ultimately Led to This General Statisical Toolkit:</h2>
 
 <img data-src="NNS_offers.png" class="quarto-figure quarto-figure-center r-stretch"></section></section>
 <section>
@@ -569,7 +585,7 @@ Fred Viole
 
 <img data-src="Utility.png" class="quarto-figure quarto-figure-center r-stretch" width="2314"><p>NOBODY is linear <span class="math inline">\((\color{red}{n} = 1)\)</span> wrt losses! <br> <br> Risk-aversion <span class="math inline">\((\color{red}{n}:\color{blue}{q})\)</span> and loss-aversion <span class="math inline">\((\color{red}{n})\)</span> are two distinct preferences</p>
 </section>
-<section id="section-12" class="slide level2 center">
+<section id="section-13" class="slide level2 center">
 <h2></h2>
 <h3 id="utility-embedded-into-covariance-matrix">Utility Embedded Into Covariance Matrix</h3>
 
@@ -579,7 +595,7 @@ Fred Viole
 <h3 id="positive-semi-definite">Positive Semi-Definite</h3>
 
 <img data-src="PSD.jfif" class="quarto-figure quarto-figure-center r-stretch"></section>
-<section id="section-13" class="slide level2 center">
+<section id="section-14" class="slide level2 center">
 <h2></h2>
 <h3 id="transposes-of-one-another">Transposes of One Another</h3>
 
@@ -589,7 +605,7 @@ Fred Viole
 
 <img data-src="portfolio_objective.png" class="quarto-figure quarto-figure-center r-stretch"><p>Consistent objective for all risk preferences!</p>
 </section>
-<section id="section-14" class="slide level2 center">
+<section id="section-15" class="slide level2 center">
 <h2></h2>
 <h3>
 SSD Efficient Set of S&amp;P 500
@@ -611,11 +627,11 @@ SSD Efficient Set of S&amp;P 500
 <li><p>Stochastic Portfolio Theory (SPT) values growth rates but ignores investor preferences — <strong><em>how</em></strong> you achieve final wealth matters!</p></li>
 </ul>
 </section>
-<section id="section-15" class="slide level2 center">
+<section id="section-16" class="slide level2 center">
 <h2></h2>
 
 <img data-src="Harry.jpg" class="quarto-figure quarto-figure-center r-stretch"></section>
-<section id="section-16" class="slide level2 center">
+<section id="section-17" class="slide level2 center">
 <h2></h2>
 <h3 id="options-pricing">Options Pricing</h3>
 <p>An obvious extension is to use <span style="color: steelblue;">UPM</span> for calls and <span style="color: red;">LPM</span> for puts</p>

@@ -537,8 +537,11 @@ Fred Viole
 <section id="generative-and-synthetic-data" class="slide level2 center">
 <h2>Generative and Synthetic Data</h2>
 <h3 id="maximum-entropy-bootstrap-for-time-series">Maximum Entropy Bootstrap for Time-Series</h3>
-<p>Specify a <span class="math inline">\(rho\)</span> or <span class="math inline">\(drift\)</span> for any replicate… ensures <span class="math inline">\(\rho \in [-1,1]\)</span> correlation spectrum is covered.<br>
-<br> Standard IID MC or block bootstrap cannot accomplish this.</p>
+<ul>
+<li>Specify a <code>rho</code> or <code>drift</code> for any replicate… ensures <span class="math inline">\(\rho \in [-1,1]\)</span> correlation spectrum is covered.<br>
+<br></li>
+<li>Standard IID MC or block bootstrap cannot accomplish this.</li>
+</ul>
 </section>
 <section id="section-11" class="slide level2 center">
 <h2></h2>
@@ -560,6 +563,18 @@ Fred Viole
 <h1>Finance Applications? You bet!</h1>
 
 </section>
+<section id="stress-testing" class="slide level2 center">
+<h2>Stress Testing</h2>
+<ul>
+<li>Restrict observations to <span class="math inline">\(CLPM\)</span> and use <code>NNS.reg()</code>, maintains dependence structure</li>
+<li>Reverse the procedure… instead of what happens to portfolio if S&amp;P 500 drops 10%, what portfolio returns would lead to a 10% S&amp;P 500 drop? Distribution of scenarios.</li>
+</ul>
+<p><span style="font-size: 80%;"><a href="https://github.com/OVVO-Financial/Finance/blob/main/stress_test.md">https://github.com/OVVO-Financial/Finance/blob/main/stress_test.md</a></span></p>
+</section>
+<section id="distribution-of-losses" class="slide level2 center">
+<h2>Distribution of Losses</h2>
+
+<img data-src="mag_7_loss_distributions.png" class="quarto-figure quarto-figure-center r-stretch"></section>
 <section id="utility-theory" class="slide level2 center">
 <h2>Utility Theory</h2>
 <ul>

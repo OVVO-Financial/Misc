@@ -464,29 +464,54 @@ Fred Viole
 </section>
 <section id="section-1" class="slide level2 center">
 <h2></h2>
+<h3 id="skewness">Skewness</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href=""></a>PerformanceAnalytics<span class="sc">::</span><span class="fu">skewness</span>(x)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.06049948</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href=""></a>((<span class="fu">UPM</span>(<span class="dv">3</span>,<span class="fu">mean</span>(x),x)<span class="sc">-</span><span class="fu">LPM</span>(<span class="dv">3</span>,<span class="fu">mean</span>(x),x))<span class="sc">/</span>(<span class="fu">UPM</span>(<span class="dv">2</span>,<span class="fu">mean</span>(x),x)<span class="sc">+</span><span class="fu">LPM</span>(<span class="dv">2</span>,<span class="fu">mean</span>(x),x))<span class="sc">^</span>(<span class="dv">3</span><span class="sc">/</span><span class="dv">2</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.06049948</code></pre>
+</div>
+</div>
+<h3 id="kurtosis">Kurtosis</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href=""></a>PerformanceAnalytics<span class="sc">::</span><span class="fu">kurtosis</span>(x)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] -0.161053</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href=""></a>((<span class="fu">UPM</span>(<span class="dv">4</span>,<span class="fu">mean</span>(x),x)<span class="sc">+</span><span class="fu">LPM</span>(<span class="dv">4</span>,<span class="fu">mean</span>(x),x))<span class="sc">/</span>(<span class="fu">UPM</span>(<span class="dv">2</span>,<span class="fu">mean</span>(x),x)<span class="sc">+</span><span class="fu">LPM</span>(<span class="dv">2</span>,<span class="fu">mean</span>(x),x))<span class="sc">^</span><span class="dv">2</span>)<span class="sc">-</span><span class="dv">3</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] -0.161053</code></pre>
+</div>
+</div>
+</section>
+<section id="section-2" class="slide level2 center">
+<h2></h2>
 <h3 id="more-equivalences">More Equivalences</h3>
 <p>LPM degree 0 is the eCDF for any distribution</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href=""></a>LPM.CDF <span class="ot">=</span> <span class="fu">LPM</span>(<span class="at">degree =</span> <span class="dv">0</span>, <span class="at">target =</span> <span class="fu">sort</span>(x), <span class="at">variable =</span> x)</span>
-<span id="cb15-2"><a href=""></a></span>
-<span id="cb15-3"><a href=""></a><span class="fu">plot</span>(<span class="fu">ecdf</span>(x))</span>
-<span id="cb15-4"><a href=""></a><span class="fu">points</span>(<span class="fu">sort</span>(x), LPM.CDF, <span class="at">col=</span><span class="st">'red'</span>)</span>
-<span id="cb15-5"><a href=""></a><span class="fu">legend</span>(<span class="st">'left'</span>, <span class="at">legend =</span> <span class="fu">c</span>(<span class="st">'ecdf'</span>,<span class="st">'LPM.CDF'</span>), <span class="at">fill=</span><span class="fu">c</span>(<span class="st">'black'</span>,<span class="st">'red'</span>), <span class="at">border=</span><span class="cn">NA</span>, <span class="at">bty=</span><span class="st">'n'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href=""></a>LPM.CDF <span class="ot">=</span> <span class="fu">LPM</span>(<span class="at">degree =</span> <span class="dv">0</span>, <span class="at">target =</span> <span class="fu">sort</span>(x), <span class="at">variable =</span> x)</span>
+<span id="cb23-2"><a href=""></a></span>
+<span id="cb23-3"><a href=""></a><span class="fu">plot</span>(<span class="fu">ecdf</span>(x))</span>
+<span id="cb23-4"><a href=""></a><span class="fu">points</span>(<span class="fu">sort</span>(x), LPM.CDF, <span class="at">col=</span><span class="st">'red'</span>)</span>
+<span id="cb23-5"><a href=""></a><span class="fu">legend</span>(<span class="st">'left'</span>, <span class="at">legend =</span> <span class="fu">c</span>(<span class="st">'ecdf'</span>,<span class="st">'LPM.CDF'</span>), <span class="at">fill=</span><span class="fu">c</span>(<span class="st">'black'</span>,<span class="st">'red'</span>), <span class="at">border=</span><span class="cn">NA</span>, <span class="at">bty=</span><span class="st">'n'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
 </div>
 <img data-src="NNS_in_QF_files/figure-revealjs/more_equiv-1.png" class="quarto-figure quarto-figure-center r-stretch" width="960"></section>
-<section id="section-2" class="slide level2 center">
+<section id="section-3" class="slide level2 center">
 <h2></h2>
 <h3 id="more-cdfs-and-pdfs">More CDFs and PDFs</h3>
 
 <img data-src="cdf_pdf.png" class="quarto-figure quarto-figure-center r-stretch"><p>Still empirical CDFs, all we’ve done is increase the <span style="color: red;"><strong><em>degree</em></strong></span></p>
 </section>
-<section id="section-3" class="slide level2 center">
+<section id="section-4" class="slide level2 center">
 <h2></h2>
 <h3 id="comparing-cdfs-led-to-stochastic-dominant-efficient-sets">Comparing CDFs Led to Stochastic Dominant Efficient Sets</h3>
 
 <img data-src="SD.png" class="quarto-figure quarto-figure-center r-stretch"></section>
-<section id="section-4" class="slide level2 center">
+<section id="section-5" class="slide level2 center">
 <h2></h2>
 <h3 id="multivariate">Multivariate</h3>
 
@@ -495,31 +520,31 @@ Fred Viole
 <p><span class="math display">\[DUPM(degree, target, x,y) = \frac{1}{T} \sum_{t=1}^{T} \left[\max(0, target - x_t)\right]^{degree} \left[\max(0, y_t - target)\right]^{degree}\]</span></p>
 </div>
 </section>
-<section id="section-5" class="slide level2 center">
+<section id="section-6" class="slide level2 center">
 <h2></h2>
 <h3 id="covariance-equivalence">Covariance Equivalence</h3>
 
 <img data-src="cov_matrix_partial_moments.png" class="quarto-figure quarto-figure-center r-stretch"></section>
-<section id="section-6" class="slide level2 center">
+<section id="section-7" class="slide level2 center">
 <h2></h2>
 <h3 id="copulas">Copulas</h3>
 
 <img data-src="copulas.png" class="quarto-figure quarto-figure-center r-stretch"></section>
-<section id="section-7" class="slide level2 center">
+<section id="section-8" class="slide level2 center">
 <h2></h2>
 <h3 id="partitioning-led-to">Partitioning Led to:</h3>
 <p>Nonlinear Correlation &amp; Dependence</p>
 
 <img data-src="correlation.png" class="quarto-figure quarto-figure-center r-stretch"><p>Compared to Mutual Information, Distance Correlation, Chatterjee’s Xi…</p>
 </section>
-<section id="section-8" class="slide level2 center">
+<section id="section-9" class="slide level2 center">
 <h2></h2>
 <h3 id="partitioning-also-led-to">Partitioning Also Led to:</h3>
 <p>Nonlinear Regression</p>
 
 <img data-src="partition_regression.PNG" class="quarto-figure quarto-figure-center r-stretch" width="405"><p>Offers dynamic bandwidth solution</p>
 </section>
-<section id="section-9" class="slide level2 center">
+<section id="section-10" class="slide level2 center">
 <h2></h2>
 <h3 id="multivariate-regression">Multivariate Regression</h3>
 
@@ -532,12 +557,12 @@ Fred Viole
 <h2>Very good at extrapolation</h2>
 
 <img data-src="extrapolations.png" class="quarto-figure quarto-figure-center r-stretch"></section>
-<section id="section-10" class="slide level2 center">
+<section id="section-11" class="slide level2 center">
 <h2></h2>
 <h3 id="nonlinear-regression-led-to-time-series-forecasting">Nonlinear Regression Led to Time-Series Forecasting:</h3>
 
 <img data-src="arma.gif" class="quarto-figure quarto-figure-center r-stretch"></section>
-<section id="section-11" class="slide level2 center">
+<section id="section-12" class="slide level2 center">
 <h2></h2>
 <h3 id="time-series-forecasting-with-nonlinear-regression">Time-Series Forecasting with Nonlinear Regression</h3>
 
@@ -552,12 +577,12 @@ Fred Viole
 <li>Standard IID MC or block bootstrap cannot accomplish this.</li>
 </ul>
 </section>
-<section id="section-12" class="slide level2 center">
+<section id="section-13" class="slide level2 center">
 <h2></h2>
 <h3 id="static-drift">Static Drift</h3>
 
 <img data-src="static_target_drift.png" class="quarto-figure quarto-figure-center r-stretch"></section>
-<section id="section-13" class="slide level2 center">
+<section id="section-14" class="slide level2 center">
 <h2></h2>
 <h3 id="specify-a-drift-for-replicates">Specify a Drift for Replicates</h3>
 <h3 id="rfr-seems-useful">(RfR seems useful!)</h3>
@@ -609,7 +634,7 @@ Fred Viole
 
 <img data-src="Utility.png" class="quarto-figure quarto-figure-center r-stretch" width="2314"><p>NOBODY is linear <span class="math inline">\((\color{red}{n} = 1)\)</span> wrt losses! <br> <br> Risk-aversion <span class="math inline">\((\color{red}{n}:\color{blue}{q})\)</span> and loss-aversion <span class="math inline">\((\color{red}{n})\)</span> are two distinct preferences</p>
 </section>
-<section id="section-14" class="slide level2 center">
+<section id="section-15" class="slide level2 center">
 <h2></h2>
 <h3 id="utility-embedded-into-covariance-matrix">Utility Embedded Into Covariance Matrix</h3>
 
@@ -619,7 +644,7 @@ Fred Viole
 <h3 id="positive-semi-definite">Positive Semi-Definite</h3>
 
 <img data-src="PSD.jfif" class="quarto-figure quarto-figure-center r-stretch"></section>
-<section id="section-15" class="slide level2 center">
+<section id="section-16" class="slide level2 center">
 <h2></h2>
 <h3 id="transposes-of-one-another">Transposes of One Another</h3>
 
@@ -629,7 +654,7 @@ Fred Viole
 
 <img data-src="portfolio_objective.png" class="quarto-figure quarto-figure-center r-stretch"><p>Consistent objective for all risk preferences!</p>
 </section>
-<section id="section-16" class="slide level2 center">
+<section id="section-17" class="slide level2 center">
 <h2></h2>
 <h3>
 SSD Efficient Set of S&amp;P 500
@@ -651,11 +676,11 @@ SSD Efficient Set of S&amp;P 500
 <li><p>Stochastic Portfolio Theory (SPT) values growth rates but ignores investor preferences — <strong><em>how</em></strong> you achieve final wealth matters!</p></li>
 </ul>
 </section>
-<section id="section-17" class="slide level2 center">
+<section id="section-18" class="slide level2 center">
 <h2></h2>
 
 <img data-src="Harry.jpg" class="quarto-figure quarto-figure-center r-stretch"></section>
-<section id="section-18" class="slide level2 center">
+<section id="section-19" class="slide level2 center">
 <h2></h2>
 <h3 id="options-pricing">Options Pricing</h3>
 <p>An obvious extension is to use <span style="color: steelblue;">UPM</span> for calls and <span style="color: red;">LPM</span> for puts</p>

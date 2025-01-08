@@ -420,6 +420,7 @@ Fred Viole
 </section>
 <section id="partial-moment-equivalences" class="slide level2 smaller center">
 <h2>Partial Moment Equivalences</h2>
+<h3 id="mean">Mean</h3>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href=""></a><span class="fu">library</span>(NNS)</span>
 <span id="cb1-2"><a href=""></a><span class="fu">set.seed</span>(<span class="dv">123</span>); x <span class="ot">=</span> <span class="fu">rnorm</span>(<span class="dv">100</span>); y <span class="ot">=</span> <span class="fu">rnorm</span>(<span class="dv">100</span>)</span>
@@ -432,13 +433,20 @@ Fred Viole
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 0.09040591</code></pre>
 </div>
+</div>
+</section>
+<section id="section-1" class="slide level2 center">
+<h2></h2>
+<h3 id="variance">Variance</h3>
+<div class="cell">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href=""></a><span class="co"># Sample Variance (base R):</span></span>
 <span id="cb5-2"><a href=""></a><span class="fu">var</span>(x)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 0.8332328</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href=""></a><span class="co"># Sample Variance:</span></span>
-<span id="cb7-2"><a href=""></a>(<span class="fu">UPM</span>(<span class="dv">2</span>, <span class="fu">mean</span>(x), x) <span class="sc">+</span> <span class="fu">LPM</span>(<span class="dv">2</span>, <span class="fu">mean</span>(x), x)) <span class="sc">*</span> (<span class="fu">length</span>(x) <span class="sc">/</span> (<span class="fu">length</span>(x) <span class="sc">-</span> <span class="dv">1</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb7-2"><a href=""></a>mu_x <span class="ot">=</span> <span class="fu">mean</span>(x)</span>
+<span id="cb7-3"><a href=""></a>(<span class="fu">UPM</span>(<span class="dv">2</span>, mu_x, x) <span class="sc">+</span> <span class="fu">LPM</span>(<span class="dv">2</span>, mu_x, x)) <span class="sc">*</span> (<span class="fu">length</span>(x) <span class="sc">/</span> (<span class="fu">length</span>(x) <span class="sc">-</span> <span class="dv">1</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 0.8332328</code></pre>
 </div>
@@ -448,21 +456,21 @@ Fred Viole
 <pre><code>[1] 0.8249005</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href=""></a><span class="co"># Population Variance:</span></span>
-<span id="cb11-2"><a href=""></a><span class="fu">UPM</span>(<span class="dv">2</span>, <span class="fu">mean</span>(x), x) <span class="sc">+</span> <span class="fu">LPM</span>(<span class="dv">2</span>, <span class="fu">mean</span>(x), x)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb11-2"><a href=""></a><span class="fu">UPM</span>(<span class="dv">2</span>, mu_x, x) <span class="sc">+</span> <span class="fu">LPM</span>(<span class="dv">2</span>, mu_x, x)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 0.8249005</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href=""></a><span class="co"># Variance is also the co-variance of itself:</span></span>
-<span id="cb13-2"><a href=""></a>{(<span class="fu">Co.LPM</span>(<span class="at">degree_lpm =</span> <span class="dv">1</span>, <span class="at">x =</span> x, <span class="at">y =</span> x, <span class="at">target_x =</span> <span class="fu">mean</span>(x), <span class="at">target_y =</span> <span class="fu">mean</span>(x))</span>
-<span id="cb13-3"><a href=""></a>  <span class="sc">+</span> <span class="fu">Co.UPM</span>(<span class="at">degree_upm =</span> <span class="dv">1</span>, x, x, <span class="fu">mean</span>(x), <span class="fu">mean</span>(x))</span>
-<span id="cb13-4"><a href=""></a>  <span class="sc">-</span> <span class="fu">D.LPM</span>(<span class="at">degree_lpm =</span> <span class="dv">1</span>, <span class="at">degree_upm =</span> <span class="dv">1</span>, x, x, <span class="fu">mean</span>(x), <span class="fu">mean</span>(x))</span>
-<span id="cb13-5"><a href=""></a>  <span class="sc">-</span> <span class="fu">D.UPM</span>(<span class="dv">1</span>, <span class="dv">1</span>, x, x, <span class="fu">mean</span>(x), <span class="fu">mean</span>(x)))}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb13-2"><a href=""></a>{(<span class="fu">Co.LPM</span>(<span class="at">degree_lpm =</span> <span class="dv">1</span>, <span class="at">x =</span> x, <span class="at">y =</span> x, <span class="at">target_x =</span> mu_x, <span class="at">target_y =</span> mu_x)</span>
+<span id="cb13-3"><a href=""></a>  <span class="sc">+</span> <span class="fu">Co.UPM</span>(<span class="at">degree_upm =</span> <span class="dv">1</span>, x, x, mu_x, mu_x)</span>
+<span id="cb13-4"><a href=""></a>  <span class="sc">-</span> <span class="fu">D.LPM</span>(<span class="at">degree_lpm =</span> <span class="dv">1</span>, <span class="at">degree_upm =</span> <span class="dv">1</span>, x, x, mu_x, mu_x)</span>
+<span id="cb13-5"><a href=""></a>  <span class="sc">-</span> <span class="fu">D.UPM</span>(<span class="dv">1</span>, <span class="dv">1</span>, x, x, mu_x, mu_x))}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 0.8249005</code></pre>
 </div>
 </div>
 </section>
-<section id="section-1" class="slide level2 center">
+<section id="section-2" class="slide level2 center">
 <h2></h2>
 <h3 id="skewness">Skewness</h3>
 <div class="cell">
@@ -470,7 +478,7 @@ Fred Viole
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 0.06049948</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href=""></a>((<span class="fu">UPM</span>(<span class="dv">3</span>,<span class="fu">mean</span>(x),x)<span class="sc">-</span><span class="fu">LPM</span>(<span class="dv">3</span>,<span class="fu">mean</span>(x),x))<span class="sc">/</span>(<span class="fu">UPM</span>(<span class="dv">2</span>,<span class="fu">mean</span>(x),x)<span class="sc">+</span><span class="fu">LPM</span>(<span class="dv">2</span>,<span class="fu">mean</span>(x),x))<span class="sc">^</span>(<span class="dv">3</span><span class="sc">/</span><span class="dv">2</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href=""></a>((<span class="fu">UPM</span>(<span class="dv">3</span>, mu_x, x) <span class="sc">-</span> <span class="fu">LPM</span>(<span class="dv">3</span>, mu_x, x)) <span class="sc">/</span> (<span class="fu">UPM</span>(<span class="dv">2</span>, mu_x, x) <span class="sc">+</span> <span class="fu">LPM</span>(<span class="dv">2</span>, mu_x, x))<span class="sc">^</span>(<span class="dv">3</span><span class="sc">/</span><span class="dv">2</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 0.06049948</code></pre>
 </div>
@@ -481,13 +489,13 @@ Fred Viole
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] -0.161053</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href=""></a>((<span class="fu">UPM</span>(<span class="dv">4</span>,<span class="fu">mean</span>(x),x)<span class="sc">+</span><span class="fu">LPM</span>(<span class="dv">4</span>,<span class="fu">mean</span>(x),x))<span class="sc">/</span>(<span class="fu">UPM</span>(<span class="dv">2</span>,<span class="fu">mean</span>(x),x)<span class="sc">+</span><span class="fu">LPM</span>(<span class="dv">2</span>,<span class="fu">mean</span>(x),x))<span class="sc">^</span><span class="dv">2</span>)<span class="sc">-</span><span class="dv">3</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href=""></a>((<span class="fu">UPM</span>(<span class="dv">4</span>, mu_x,x) <span class="sc">+</span> <span class="fu">LPM</span>(<span class="dv">4</span>, mu_x,x)) <span class="sc">/</span> (<span class="fu">UPM</span>(<span class="dv">2</span>, mu_x, x) <span class="sc">+</span> <span class="fu">LPM</span>(<span class="dv">2</span>, mu_x, x))<span class="sc">^</span><span class="dv">2</span>) <span class="sc">-</span> <span class="dv">3</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] -0.161053</code></pre>
 </div>
 </div>
 </section>
-<section id="section-2" class="slide level2 center">
+<section id="section-3" class="slide level2 center">
 <h2></h2>
 <h3 id="more-equivalences">More Equivalences</h3>
 <p>LPM degree 0 is the eCDF for any distribution</p>
@@ -500,18 +508,18 @@ Fred Viole
 
 </div>
 <img data-src="NNS_in_QF_files/figure-revealjs/more_equiv-1.png" class="quarto-figure quarto-figure-center r-stretch" width="960"></section>
-<section id="section-3" class="slide level2 center">
+<section id="section-4" class="slide level2 center">
 <h2></h2>
 <h3 id="more-cdfs-and-pdfs">More CDFs and PDFs</h3>
 
 <img data-src="cdf_pdf.png" class="quarto-figure quarto-figure-center r-stretch"><p>Still empirical CDFs, all we’ve done is increase the <span style="color: red;"><strong><em>degree</em></strong></span></p>
 </section>
-<section id="section-4" class="slide level2 center">
+<section id="section-5" class="slide level2 center">
 <h2></h2>
 <h3 id="comparing-cdfs-led-to-stochastic-dominant-efficient-sets">Comparing CDFs Led to Stochastic Dominant Efficient Sets</h3>
 
 <img data-src="SD.png" class="quarto-figure quarto-figure-center r-stretch"></section>
-<section id="section-5" class="slide level2 center">
+<section id="section-6" class="slide level2 center">
 <h2></h2>
 <h3 id="multivariate">Multivariate</h3>
 
@@ -520,31 +528,31 @@ Fred Viole
 <p><span class="math display">\[DUPM(degree, target, x,y) = \frac{1}{T} \sum_{t=1}^{T} \left[\max(0, target - x_t)\right]^{degree} \left[\max(0, y_t - target)\right]^{degree}\]</span></p>
 </div>
 </section>
-<section id="section-6" class="slide level2 center">
+<section id="section-7" class="slide level2 center">
 <h2></h2>
 <h3 id="covariance-equivalence">Covariance Equivalence</h3>
 
 <img data-src="cov_matrix_partial_moments.png" class="quarto-figure quarto-figure-center r-stretch"></section>
-<section id="section-7" class="slide level2 center">
+<section id="section-8" class="slide level2 center">
 <h2></h2>
 <h3 id="copulas">Copulas</h3>
 
 <img data-src="copulas.png" class="quarto-figure quarto-figure-center r-stretch"></section>
-<section id="section-8" class="slide level2 center">
+<section id="section-9" class="slide level2 center">
 <h2></h2>
 <h3 id="partitioning-led-to">Partitioning Led to:</h3>
 <p>Nonlinear Correlation &amp; Dependence</p>
 
 <img data-src="correlation.png" class="quarto-figure quarto-figure-center r-stretch"><p>Compared to Mutual Information, Distance Correlation, Chatterjee’s Xi…</p>
 </section>
-<section id="section-9" class="slide level2 center">
+<section id="section-10" class="slide level2 center">
 <h2></h2>
 <h3 id="partitioning-also-led-to">Partitioning Also Led to:</h3>
 <p>Nonlinear Regression</p>
 
 <img data-src="partition_regression.PNG" class="quarto-figure quarto-figure-center r-stretch" width="405"><p>Offers dynamic bandwidth solution</p>
 </section>
-<section id="section-10" class="slide level2 center">
+<section id="section-11" class="slide level2 center">
 <h2></h2>
 <h3 id="multivariate-regression">Multivariate Regression</h3>
 
@@ -557,12 +565,12 @@ Fred Viole
 <h2>Very good at extrapolation</h2>
 
 <img data-src="extrapolations.png" class="quarto-figure quarto-figure-center r-stretch"></section>
-<section id="section-11" class="slide level2 center">
+<section id="section-12" class="slide level2 center">
 <h2></h2>
 <h3 id="nonlinear-regression-led-to-time-series-forecasting">Nonlinear Regression Led to Time-Series Forecasting:</h3>
 
 <img data-src="arma.gif" class="quarto-figure quarto-figure-center r-stretch"></section>
-<section id="section-12" class="slide level2 center">
+<section id="section-13" class="slide level2 center">
 <h2></h2>
 <h3 id="time-series-forecasting-with-nonlinear-regression">Time-Series Forecasting with Nonlinear Regression</h3>
 
@@ -577,12 +585,12 @@ Fred Viole
 <li>Standard IID MC or block bootstrap cannot accomplish this.</li>
 </ul>
 </section>
-<section id="section-13" class="slide level2 center">
+<section id="section-14" class="slide level2 center">
 <h2></h2>
 <h3 id="static-drift">Static Drift</h3>
 
 <img data-src="static_target_drift.png" class="quarto-figure quarto-figure-center r-stretch"></section>
-<section id="section-14" class="slide level2 center">
+<section id="section-15" class="slide level2 center">
 <h2></h2>
 <h3 id="specify-a-drift-for-replicates">Specify a Drift for Replicates</h3>
 <h3 id="rfr-seems-useful">(RfR seems useful!)</h3>
@@ -634,7 +642,7 @@ Fred Viole
 
 <img data-src="Utility.png" class="quarto-figure quarto-figure-center r-stretch" width="2314"><p>NOBODY is linear <span class="math inline">\((\color{red}{n} = 1)\)</span> wrt losses! <br> <br> Risk-aversion <span class="math inline">\((\color{red}{n}:\color{blue}{q})\)</span> and loss-aversion <span class="math inline">\((\color{red}{n})\)</span> are two distinct preferences</p>
 </section>
-<section id="section-15" class="slide level2 center">
+<section id="section-16" class="slide level2 center">
 <h2></h2>
 <h3 id="utility-embedded-into-covariance-matrix">Utility Embedded Into Covariance Matrix</h3>
 
@@ -644,7 +652,7 @@ Fred Viole
 <h3 id="positive-semi-definite">Positive Semi-Definite</h3>
 
 <img data-src="PSD.jfif" class="quarto-figure quarto-figure-center r-stretch"></section>
-<section id="section-16" class="slide level2 center">
+<section id="section-17" class="slide level2 center">
 <h2></h2>
 <h3 id="transposes-of-one-another">Transposes of One Another</h3>
 
@@ -654,7 +662,7 @@ Fred Viole
 
 <img data-src="portfolio_objective.png" class="quarto-figure quarto-figure-center r-stretch"><p>Consistent objective for all risk preferences!</p>
 </section>
-<section id="section-17" class="slide level2 center">
+<section id="section-18" class="slide level2 center">
 <h2></h2>
 <h3>
 SSD Efficient Set of S&amp;P 500
@@ -676,11 +684,11 @@ SSD Efficient Set of S&amp;P 500
 <li><p>Stochastic Portfolio Theory (SPT) values growth rates but ignores investor preferences — <strong><em>how</em></strong> you achieve final wealth matters!</p></li>
 </ul>
 </section>
-<section id="section-18" class="slide level2 center">
+<section id="section-19" class="slide level2 center">
 <h2></h2>
 
 <img data-src="Harry.jpg" class="quarto-figure quarto-figure-center r-stretch"></section>
-<section id="section-19" class="slide level2 center">
+<section id="section-20" class="slide level2 center">
 <h2></h2>
 <h3 id="options-pricing">Options Pricing</h3>
 <p>An obvious extension is to use <span style="color: steelblue;">UPM</span> for calls and <span style="color: red;">LPM</span> for puts</p>
@@ -710,7 +718,8 @@ SSD Efficient Set of S&amp;P 500
 <section id="follow-on-linkedin" class="slide level2 center">
 <h2>Follow on LinkedIn</h2>
 
-<img data-src="OL_qr.png" class="quarto-figure quarto-figure-center r-stretch"><div class="quarto-auto-generated-content">
+<img data-src="OL_qr.png" class="quarto-figure quarto-figure-center r-stretch">
+<div class="quarto-auto-generated-content">
 <div class="footer footer-default">
 
 </div>

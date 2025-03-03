@@ -416,9 +416,12 @@ Fred Viole
 \left[\max(0, \color{steelblue}{target} - variable_t)\right]^\color{red}{degree} \]</span></p>
 <p><span class="math display">\[UPM(\color{red}{degree}, \color{steelblue}{target}, variable) = \frac{1}{T}\sum_{t=1}^{T}
 \left[\max(0, variable_t - \color{steelblue}{target})\right]^\color{red}{degree} \]</span></p>
-<p>Time-series or cross-sectional</p>
+<ul>
+<li>Grounded in probability-weighted integration and rigorous measure theory <span class="math display">\[LPM(n, t, X) = \int_{-\infty}^{t} (t - x)^n \, dF(x)\]</span></li>
+<li>Time-series or cross-sectional</li>
+</ul>
 </section>
-<section id="partial-moment-equivalences" class="slide level2 smaller center">
+<section id="partial-moment-equivalences" class="slide level2 center">
 <h2>Partial Moment Equivalences</h2>
 <h3 id="mean">Mean</h3>
 <div class="cell">
@@ -489,7 +492,7 @@ Fred Viole
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] -0.161053</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href=""></a>((<span class="fu">UPM</span>(<span class="dv">4</span>, mu_x,x) <span class="sc">+</span> <span class="fu">LPM</span>(<span class="dv">4</span>, mu_x,x)) <span class="sc">/</span> (<span class="fu">UPM</span>(<span class="dv">2</span>, mu_x, x) <span class="sc">+</span> <span class="fu">LPM</span>(<span class="dv">2</span>, mu_x, x))<span class="sc">^</span><span class="dv">2</span>) <span class="sc">-</span> <span class="dv">3</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href=""></a>((<span class="fu">UPM</span>(<span class="dv">4</span>, mu_x, x) <span class="sc">+</span> <span class="fu">LPM</span>(<span class="dv">4</span>, mu_x, x)) <span class="sc">/</span> (<span class="fu">UPM</span>(<span class="dv">2</span>, mu_x, x) <span class="sc">+</span> <span class="fu">LPM</span>(<span class="dv">2</span>, mu_x, x))<span class="sc">^</span><span class="dv">2</span>) <span class="sc">-</span> <span class="dv">3</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] -0.161053</code></pre>
 </div>
@@ -523,40 +526,56 @@ Fred Viole
 <h2></h2>
 <h3 id="multivariate">Multivariate</h3>
 
-<img data-src="pm_quadrants.png" class="quarto-figure quarto-figure-center r-stretch"><div style="font-size: 0.5em;">
+<img data-src="pm_quadrants.png" class="quarto-figure quarto-figure-center r-stretch"></section>
+<section id="section-7" class="slide level2 center">
+<h2></h2>
+<div style="font-size: 0.5em;">
 <p><span class="math display">\[CLPM(degree, target, x, y) =  \frac{1}{T} \sum_{t=1}^{T} \left[\max(0, target - x_t)\right]^{degree} \left[\max(0, target - y_t)\right]^{degree}\]</span> <span class="math display">\[CUPM(degree, target, x, y) =  \frac{1}{T} \sum_{t=1}^{T} \left[\max(0,x_t - target)\right]^{degree} \left[\max(0, y_t - target)\right]^{degree}\]</span> <span class="math display">\[DLPM(degree, target, x, y) = \frac{1}{T} \sum_{t=1}^{T} \left[\max(0, x_t - target)\right]^{degree} \left[\max(0, target - y_t)\right]^{degree}\]</span></p>
 <p><span class="math display">\[DUPM(degree, target, x,y) = \frac{1}{T} \sum_{t=1}^{T} \left[\max(0, target - x_t)\right]^{degree} \left[\max(0, y_t - target)\right]^{degree}\]</span></p>
 </div>
 </section>
-<section id="section-7" class="slide level2 center">
+<section id="section-8" class="slide level2 center">
 <h2></h2>
 <h3 id="covariance-equivalence">Covariance Equivalence</h3>
 
 <img data-src="cov_matrix_partial_moments.png" class="quarto-figure quarto-figure-center r-stretch"></section>
-<section id="section-8" class="slide level2 center">
+<section id="section-9" class="slide level2 center">
 <h2></h2>
 <h3 id="copulas">Copulas</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href=""></a><span class="co"># Data</span></span>
+<span id="cb24-2"><a href=""></a><span class="fu">set.seed</span>(<span class="dv">123</span>); x <span class="ot">=</span> <span class="fu">rnorm</span>(<span class="dv">100</span>); y <span class="ot">=</span> <span class="fu">rnorm</span>(<span class="dv">100</span>); z <span class="ot">=</span> <span class="fu">expand.grid</span>(x, y)</span>
+<span id="cb24-3"><a href=""></a></span>
+<span id="cb24-4"><a href=""></a><span class="co"># Plot</span></span>
+<span id="cb24-5"><a href=""></a>rgl<span class="sc">::</span><span class="fu">plot3d</span>(z[,<span class="dv">1</span>], z[,<span class="dv">2</span>], <span class="fu">Co.LPM</span>(<span class="dv">0</span>, z[,<span class="dv">1</span>], z[,<span class="dv">2</span>], z[,<span class="dv">1</span>], z[,<span class="dv">2</span>]), <span class="at">col =</span> <span class="st">"red"</span>)</span>
+<span id="cb24-6"><a href=""></a></span>
+<span id="cb24-7"><a href=""></a><span class="co"># Uniform values</span></span>
+<span id="cb24-8"><a href=""></a>u_x <span class="ot">=</span> <span class="fu">LPM.ratio</span>(<span class="dv">0</span>, x, x); u_y <span class="ot">=</span> <span class="fu">LPM.ratio</span>(<span class="dv">0</span>, y, y); z <span class="ot">=</span> <span class="fu">expand.grid</span>(u_x, u_y)</span>
+<span id="cb24-9"><a href=""></a></span>
+<span id="cb24-10"><a href=""></a><span class="co"># Plot</span></span>
+<span id="cb24-11"><a href=""></a>rgl<span class="sc">::</span><span class="fu">plot3d</span>(z[,<span class="dv">1</span>], z[,<span class="dv">2</span>], <span class="fu">Co.LPM</span>(<span class="dv">0</span>, z[,<span class="dv">1</span>], z[,<span class="dv">2</span>], z[,<span class="dv">1</span>], z[,<span class="dv">2</span>]), <span class="at">col =</span> <span class="st">"blue"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 
-<img data-src="copulas.png" class="quarto-figure quarto-figure-center r-stretch"></section>
-<section id="section-9" class="slide level2 center">
+<img data-src="copulas2.png" class="quarto-figure quarto-figure-center r-stretch"></section>
+<section id="section-10" class="slide level2 center">
 <h2></h2>
 <h3 id="partitioning-led-to">Partitioning Led to:</h3>
 <p>Nonlinear Correlation &amp; Dependence</p>
 
 <img data-src="correlation.png" class="quarto-figure quarto-figure-center r-stretch"><p>Compared to Mutual Information, Distance Correlation, Chatterjee’s Xi…</p>
 </section>
-<section id="section-10" class="slide level2 center">
+<section id="section-11" class="slide level2 center">
 <h2></h2>
 <h3 id="partitioning-also-led-to">Partitioning Also Led to:</h3>
 <p>Nonlinear Regression</p>
 
 <img data-src="partition_regression.PNG" class="quarto-figure quarto-figure-center r-stretch" width="405"><p>Offers dynamic bandwidth solution</p>
 </section>
-<section id="section-11" class="slide level2 center">
+<section id="section-12" class="slide level2 center">
 <h2></h2>
 <h3 id="multivariate-regression">Multivariate Regression</h3>
 
-<img data-src="mult_reg.gif" class="quarto-figure quarto-figure-center r-stretch"><ul>
+<img data-src="mult_reg_progression.png" class="quarto-figure quarto-figure-center r-stretch"><ul>
 <li><p>Similar to kNN regression… cluster centroids instead of observations <br></p></li>
 <li><p><span class="math inline">\(k\)</span>-fold cross-validation for number of centroids</p></li>
 </ul>
@@ -565,16 +584,22 @@ Fred Viole
 <h2>Very good at extrapolation</h2>
 
 <img data-src="extrapolations.png" class="quarto-figure quarto-figure-center r-stretch"></section>
-<section id="section-12" class="slide level2 center">
+<section id="section-13" class="slide level2 center">
 <h2></h2>
 <h3 id="nonlinear-regression-led-to-time-series-forecasting">Nonlinear Regression Led to Time-Series Forecasting:</h3>
 
-<img data-src="arma.gif" class="quarto-figure quarto-figure-center r-stretch"></section>
-<section id="section-13" class="slide level2 center">
+<img data-src="NNS_ARMA_overview.png" class="quarto-figure quarto-figure-center r-stretch"></section>
+<section id="section-14" class="slide level2 center">
 <h2></h2>
 <h3 id="time-series-forecasting-with-nonlinear-regression">Time-Series Forecasting with Nonlinear Regression</h3>
+<div class="cell" data-layout-align="center" data-fig="true">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href=""></a><span class="fu">require</span>(forecast); <span class="fu">data</span>(taylor)</span>
+<span id="cb25-2"><a href=""></a></span>
+<span id="cb25-3"><a href=""></a><span class="fu">NNS.ARMA</span>(taylor, <span class="at">h =</span> <span class="dv">336</span>, <span class="at">training.set =</span> <span class="fu">length</span>(taylor)<span class="sc">-</span><span class="dv">336</span>, </span>
+<span id="cb25-4"><a href=""></a>         <span class="at">seasonal.factor =</span> <span class="dv">336</span>, <span class="at">plot =</span> <span class="cn">TRUE</span>, <span class="at">method =</span> <span class="st">'nonlin'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
-<img data-src="NNS_in_QF_files/figure-revealjs/arma8-1.png" width="960" class="r-stretch"><p>and a multivariate extension via a nonparametric vector autoregression!</p>
+</div>
+<img data-src="NNS_in_QF_files/figure-revealjs/arma8-1.png" class="quarto-figure quarto-figure-center r-stretch" width="1920"><p>and a multivariate extension via a nonparametric vector autoregression!</p>
 </section>
 <section id="generative-and-synthetic-data" class="slide level2 center">
 <h2>Generative and Synthetic Data</h2>
@@ -585,17 +610,30 @@ Fred Viole
 <li>Standard IID MC or block bootstrap cannot accomplish this.</li>
 </ul>
 </section>
-<section id="section-14" class="slide level2 center">
-<h2></h2>
-<h3 id="static-drift">Static Drift</h3>
-
-<img data-src="static_target_drift.png" class="quarto-figure quarto-figure-center r-stretch"></section>
 <section id="section-15" class="slide level2 center">
 <h2></h2>
-<h3 id="specify-a-drift-for-replicates">Specify a Drift for Replicates</h3>
-<h3 id="rfr-seems-useful">(RfR seems useful!)</h3>
+<h3 id="static-drift">Static Drift</h3>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href=""></a>boots <span class="ot">=</span> <span class="fu">NNS.meboot</span>(AirPassengers, <span class="at">reps =</span> <span class="dv">100</span>, <span class="at">rho =</span> <span class="fu">seq</span>(<span class="sc">-</span><span class="dv">1</span>, <span class="dv">1</span>, .<span class="dv">25</span>), </span>
+<span id="cb26-2"><a href=""></a>                   <span class="at">xmin =</span> <span class="dv">0</span>, <span class="at">target_drift_scale =</span> <span class="dv">1</span>)</span>
+<span id="cb26-3"><a href=""></a></span>
+<span id="cb26-4"><a href=""></a><span class="fu">matplot</span>(<span class="fu">do.call</span>(cbind, boots[<span class="st">"replicates"</span>, ]), <span class="at">type =</span> <span class="st">"l"</span>)</span>
+<span id="cb26-5"><a href=""></a><span class="fu">lines</span>(<span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(AirPassengers), AirPassengers, <span class="at">lwd =</span> <span class="dv">5</span>, <span class="at">col =</span> <span class="st">"red"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
-<img data-src="target_drift.png" class="quarto-figure quarto-figure-center r-stretch"></section>
+</div>
+<img data-src="NNS_in_QF_files/figure-revealjs/meboot-1.png" class="quarto-figure quarto-figure-center r-stretch" width="960"></section>
+<section id="section-16" class="slide level2 center">
+<h2></h2>
+<h3 id="specify-a-drift-for-replicates-rfr-perhaps">Specify a Drift for Replicates (RfR perhaps)</h3>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href=""></a>boots <span class="ot">=</span> <span class="fu">NNS.meboot</span>(AirPassengers, <span class="at">reps =</span> <span class="dv">100</span>, <span class="at">rho =</span> <span class="fu">seq</span>(<span class="sc">-</span><span class="dv">1</span>, <span class="dv">1</span>, .<span class="dv">25</span>), </span>
+<span id="cb27-2"><a href=""></a>                   <span class="at">xmin =</span> <span class="dv">0</span>, <span class="at">target_drift =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>)</span>
+<span id="cb27-3"><a href=""></a></span>
+<span id="cb27-4"><a href=""></a><span class="fu">matplot</span>(<span class="fu">do.call</span>(cbind, boots[<span class="st">"replicates"</span>, ]), <span class="at">type =</span> <span class="st">"l"</span>)</span>
+<span id="cb27-5"><a href=""></a><span class="fu">lines</span>(<span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(AirPassengers), AirPassengers, <span class="at">lwd =</span> <span class="dv">5</span>, <span class="at">col =</span> <span class="st">"red"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+
+</div>
+<img data-src="NNS_in_QF_files/figure-revealjs/meboot2-1.png" class="quarto-figure quarto-figure-center r-stretch" width="960"></section>
 <section id="ultimately-led-to-this-general-statisical-toolkit" class="slide level2 center">
 <h2>Ultimately Led to This General Statisical Toolkit:</h2>
 
@@ -642,7 +680,7 @@ Fred Viole
 
 <img data-src="Utility.png" class="quarto-figure quarto-figure-center r-stretch" width="2314"><p>NOBODY is linear <span class="math inline">\((\color{red}{n} = 1)\)</span> wrt losses! <br> <br> Risk-aversion <span class="math inline">\((\color{red}{n}:\color{blue}{q})\)</span> and loss-aversion <span class="math inline">\((\color{red}{n})\)</span> are two distinct preferences</p>
 </section>
-<section id="section-16" class="slide level2 center">
+<section id="section-17" class="slide level2 center">
 <h2></h2>
 <h3 id="utility-embedded-into-covariance-matrix">Utility Embedded Into Covariance Matrix</h3>
 
@@ -652,7 +690,7 @@ Fred Viole
 <h3 id="positive-semi-definite">Positive Semi-Definite</h3>
 
 <img data-src="PSD.jfif" class="quarto-figure quarto-figure-center r-stretch"></section>
-<section id="section-17" class="slide level2 center">
+<section id="section-18" class="slide level2 center">
 <h2></h2>
 <h3 id="transposes-of-one-another">Transposes of One Another</h3>
 
@@ -661,15 +699,6 @@ Fred Viole
 <h2>Logical Objective Functions</h2>
 
 <img data-src="portfolio_objective.png" class="quarto-figure quarto-figure-center r-stretch"><p>Consistent objective for all risk preferences!</p>
-</section>
-<section id="section-18" class="slide level2 center">
-<h2></h2>
-<h3>
-SSD Efficient Set of S&amp;P 500
-</h3>
-<div style="text-align: center;">
-<video width="640" height="360" controls=""> <source src="SSD.mp4" type="video/mp4"> Your browser does not support the video tag. </video>
-</div>
 </section>
 <section id="expected-partial-moments" class="slide level2 center">
 <h2>Expected Partial Moments</h2>
@@ -688,9 +717,16 @@ SSD Efficient Set of S&amp;P 500
 <h2></h2>
 
 <img data-src="Harry.jpg" class="quarto-figure quarto-figure-center r-stretch"></section>
-<section id="section-20" class="slide level2 center">
-<h2></h2>
-<h3 id="options-pricing">Options Pricing</h3>
+<section id="stochastic-dominant-clusters" class="slide level2 center">
+<h2>Stochastic Dominant Clusters</h2>
+
+<img data-src="SD_clusters.png" class="quarto-figure quarto-figure-center r-stretch"></section>
+<section id="sd-clusters-vs.-hrp-oos" class="slide level2 center">
+<h2>SD Clusters vs.&nbsp;HRP OOS</h2>
+
+<img data-src="SD_vs_HRP_OOS.png" class="quarto-figure quarto-figure-center r-stretch"></section>
+<section id="options-pricing" class="slide level2 center">
+<h2>Options Pricing</h2>
 <p>An obvious extension is to use <span style="color: steelblue;">UPM</span> for calls and <span style="color: red;">LPM</span> for puts</p>
 
 <img data-src="Histogram.png" class="quarto-figure quarto-figure-center r-stretch"><p>No more <span class="math inline">\(N(d1)\)</span> and <span class="math inline">\(N(d2)\)</span>!</p>
@@ -718,7 +754,11 @@ SSD Efficient Set of S&amp;P 500
 <section id="follow-on-linkedin" class="slide level2 center">
 <h2>Follow on LinkedIn</h2>
 
-<img data-src="OL_qr.png" class="quarto-figure quarto-figure-center r-stretch">
+<img data-src="OL_qr.png" class="quarto-figure quarto-figure-center r-stretch"></section>
+<section id="further-questions-ask-our-gpt" class="slide level2 center">
+<h2>Further Questions? Ask our GPT!</h2>
+
+<img data-src="OL_GPT.png" class="quarto-figure quarto-figure-center r-stretch">
 <div class="quarto-auto-generated-content">
 <div class="footer footer-default">
 
